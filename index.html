@@ -132,7 +132,7 @@ nav a:hover{
 }
 
 /* SERVICES */
-.services{
+.services, .contact{
   width:100%;
   padding:20px 60px 50px;
 }
@@ -190,10 +190,7 @@ footer{
   color:#94a3b8;
 }
 
-/* ========================= */
-/* 📱 MOBILE FIX (IMPORTANT) */
-/* ========================= */
-
+/* MOBILE FIX */
 @media(max-width:900px){
 
   header{
@@ -226,7 +223,7 @@ footer{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .services{
+  .services, .contact{
     padding:10px 20px 40px;
   }
 
@@ -236,13 +233,10 @@ footer{
 
 }
 
-/* extra small phones */
 @media(max-width:480px){
-
   .right{
     grid-template-columns:1fr;
   }
-
 }
 </style>
 </head>
@@ -276,35 +270,12 @@ footer{
 
     <div class="right">
 
-      <div class="card">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg">
-        <p>HTML</p>
-      </div>
-
-      <div class="card">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg">
-        <p>CSS</p>
-      </div>
-
-      <div class="card">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">
-        <p>JavaScript</p>
-      </div>
-
-      <div class="card">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">
-        <p>React</p>
-      </div>
-
-      <div class="card">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg">
-        <p>Node.js</p>
-      </div>
-
-      <div class="card">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">
-        <p>Python</p>
-      </div>
+      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"><p>HTML</p></div>
+      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"><p>CSS</p></div>
+      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"><p>JavaScript</p></div>
+      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"><p>React</p></div>
+      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"><p>Node.js</p></div>
+      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"><p>Python</p></div>
 
     </div>
 
@@ -312,50 +283,61 @@ footer{
 
 </section>
 
+<!-- SERVICES -->
 <section class="services" id="services">
+  <div class="title">Services i Offer</div>
 
-  <div class="title">Services I Offer</div>
+  <div class="service-grid">
+    <div class="service"><h3><span class="icon"></span>Website Development</h3><p>Modern responsive websites using full stack technologies.</p></div>
+    <div class="service"><h3><span class="icon"></span>Game Development</h3><p>Game systems and mechanics using Unity, C#, and C++.</p></div>
+    <div class="service"><h3><span class="icon"></span>Coding Tutorials</h3><p>Teach programming from beginner to advanced level.</p></div>
+    <div class="service"><h3><span class="icon"></span>Cybersecurity</h3><p>Learn security basics, ethical hacking, and protection.</p></div>
+    <div class="service"><h3><span class="icon"></span>Full Stack Projects</h3><p>Frontend, backend, and database complete systems.</p></div>
+    <div class="service"><h3><span class="icon"></span>Hire Me</h3><p>Available for websites, apps, games, and projects.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT (NEW UPGRADED SECTION) -->
+<section class="contact" id="contact">
+  <div class="title">Contact Me</div>
 
   <div class="service-grid">
 
     <div class="service">
-      <h3><span class="icon"></span>Website Development</h3>
-      <p>Modern responsive websites using full stack technologies.</p>
+      <h3><span class="icon"></span>Phone</h3>
+      <p>09531494285</p>
     </div>
 
     <div class="service">
-      <h3><span class="icon"></span>Game Development</h3>
-      <p>Game systems and mechanics using Unity, C#, and C++.</p>
+      <h3><span class="icon"></span>Email</h3>
+      <p><a href="mailto:lawnixusman@gmail.com" style="color:#00ffcc;text-decoration:none;">lawnixusman@gmail.com</a></p>
     </div>
 
     <div class="service">
-      <h3><span class="icon"></span>Coding Tutorials</h3>
-      <p>Teach programming from beginner to advanced level.</p>
+      <h3><span class="icon"></span>Facebook</h3>
+      <p>Ashraff Usman</p>
     </div>
 
     <div class="service">
-      <h3><span class="icon"></span>Cybersecurity</h3>
-      <p>Learn security basics, ethical hacking, and protection.</p>
+      <h3><span class="icon"></span>Location</h3>
+      <p>Philippines</p>
     </div>
 
     <div class="service">
-      <h3><span class="icon"></span>Full Stack Projects</h3>
-      <p>Frontend, backend, and database complete systems.</p>
+      <h3><span class="icon"></span>Available</h3>
+      <p>Freelance Web Dev • Game Dev • Cybersecurity</p>
     </div>
 
     <div class="service">
-      <h3><span class="icon"></span>Hire Me</h3>
-      <p>Available for websites, apps, games, and projects.</p>
+      <h3><span class="icon"></span>Status</h3>
+      <p>Open for Hiring</p>
     </div>
 
   </div>
-
 </section>
 
 <footer>
-  Contact NO: 09531494285 | Email: lawnixusman@gmail.com | Facebook: Ashraff Usman  
-  <br><br>
-  
+ Ashraff Usman | Full Stack Developer
 </footer>
 
 </body>
