@@ -73,13 +73,31 @@ header .logo .badge img{
 }
 nav{display:flex;align-items:center;}
 nav a{
+  position:relative;
   margin:0 14px;
   text-decoration:none;
   color:#9aa6b8;font-size:13px;font-weight:500;
   letter-spacing:.04em;text-transform:uppercase;
   transition:.25s;
 }
+nav a::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-6px;
+  transform:translateX(-50%);
+  width:0;
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,#00ffcc,#7c5cff);
+  box-shadow:0 0 10px rgba(0,255,204,.7);
+  transition:width .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+  opacity:0;
+}
 nav a:hover{color:#00ffcc;text-shadow:0 0 12px rgba(0,255,204,.4);}
+nav a:hover::after{width:60%;opacity:.7;}
+nav a.active{color:#00ffcc;text-shadow:0 0 14px rgba(0,255,204,.45);}
+nav a.active::after{width:100%;opacity:1;}
 
 /* hamburger */
 .menu-toggle{
@@ -553,9 +571,48 @@ footer .ft-name{
 /* prevent body scroll when nav is open */
 body.nav-locked{overflow:hidden;}
 
-/* reveal anim */
-.reveal{opacity:0;transform:translateY(30px);transition:1s cubic-bezier(.2,.8,.2,1);}
+/* ------ HEADER SCROLL STATE ------ */
+header{transition:background .35s ease, border-color .35s ease, box-shadow .35s ease, padding .35s ease;}
+header.scrolled{
+  background:rgba(5,7,12,.78);
+  border-bottom-color:rgba(0,255,204,.18);
+  box-shadow:0 10px 30px -18px rgba(0,0,0,.8);
+}
+
+/* ------ PAGE LOAD OPENER (hero) — slow & cinematic ------ */
+.opener{
+  opacity:0;
+  transform:translateY(36px);
+  transition:opacity 1.8s cubic-bezier(.2,.8,.2,1), transform 1.8s cubic-bezier(.2,.8,.2,1);
+  transition-delay:var(--d, 0ms);
+}
+body.loaded .opener{opacity:1;transform:none;}
+.opener.from-right{transform:translateX(40px);}
+body.loaded .opener.from-right{transform:none;}
+.opener.zoom{transform:scale(.9);transform-origin:center;}
+body.loaded .opener.zoom{transform:scale(1);}
+
+/* ------ SCROLL REVEAL ------ */
+.reveal{
+  opacity:0;
+  transform:translateY(36px);
+  transition:opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1);
+  will-change:opacity, transform;
+}
 .reveal.in{opacity:1;transform:none;}
+.reveal.from-left{transform:translateX(-40px);}
+.reveal.from-left.in{transform:none;}
+.reveal.from-right{transform:translateX(40px);}
+.reveal.from-right.in{transform:none;}
+
+/* staggered children — JS sets --i index, CSS converts to delay */
+.stagger > *{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
+  transition-delay:calc(var(--i, 0) * 90ms);
+}
+.stagger.in > *{opacity:1;transform:none;}
 
 /* respect users that prefer reduced motion */
 @media (prefers-reduced-motion: reduce){
@@ -593,18 +650,18 @@ body.nav-locked{overflow:hidden;}
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-left">
-    <span class="eyebrow">// Available for Projects</span>
-    <h1>I build the <span class="accent">web, games &amp; secure systems.</span></h1>
-    <div class="rotator" id="rotator" aria-live="polite">
+    <span class="eyebrow opener" style="--d:200ms">// Available for Projects</span>
+    <h1 class="opener" style="--d:500ms">i build the <span class="accent">web, games &amp; secure systems.</span></h1>
+    <div class="rotator opener" style="--d:850ms" id="rotator" aria-live="polite">
       <span class="pair" data-pair="0"><span class="word">Web Developer</span><span class="word">Game Developer</span></span>
     </div>
-    <p><span class="typewriter" data-typewriter data-text="I build modern websites, backend systems, games, and cybersecurity solutions. Focused on performance, clean UI, and real-world systems."></span></p>
-    <div class="hero-cta">
+    <p class="opener" style="--d:1150ms"><span class="typewriter" data-typewriter data-text="i build modern websites, backend systems, games, and cybersecurity solutions. Focused on performance, clean UI, and real-world systems."></span></p>
+    <div class="hero-cta opener" style="--d:1450ms">
       <a href="#contact" class="btn btn-primary">Get In Touch &rarr;</a>
       <a href="#services" class="btn btn-ghost">View Services</a>
     </div>
   </div>
-  <div class="hero-right">
+  <div class="hero-right opener zoom" style="--d:650ms">
     <canvas id="hero-canvas"></canvas>
   </div>
 </section>
@@ -613,11 +670,11 @@ body.nav-locked{overflow:hidden;}
 <section class="block reveal" id="about">
   <div class="section-eyebrow">// About</div>
   <h2 class="section-title">A young developer building real, shipped things.</h2>
-  <div class="about-grid">
+  <div class="about-grid stagger">
     <div class="about-card">
-      <h3>What I do</h3>
+      <h3>What i do</h3>
       <p><span class="typewriter" data-typewriter data-text="Full-stack web apps, game systems in Unity / C# / C++, and cybersecurity tooling. I focus on performance, clean UI and code that holds up under real users."></span></p>
-      <div class="stats">
+      <div class="stats stagger">
         <div class="stat">
           <div class="num"><span class="typewriter typewriter-num" data-typewriter data-text="22"></span></div>
           <div class="lbl"><span class="typewriter" data-typewriter data-text="Years Old"></span></div>
@@ -633,7 +690,7 @@ body.nav-locked{overflow:hidden;}
       </div>
     </div>
     <div class="about-card">
-      <h3>How I work</h3>
+      <h3>How i work</h3>
       <p><span class="typewriter" data-typewriter data-text="I ship fast, document as I go, and treat performance and security as features. I care about the end user — fast load times, clean responsive UI, and code that doesn't break in production."></span></p>
     </div>
   </div>
@@ -643,14 +700,16 @@ body.nav-locked{overflow:hidden;}
 <section class="block reveal" id="skills">
   <div class="section-eyebrow">// Tech Stack</div>
   <h2 class="section-title"><span class="typewriter" data-typewriter data-text="Skills & tools."></span></h2>
-  <p class="section-sub">The languages and frameworks I reach for daily.</p>
-  <!-- Row 1 — frontend & languages -->
-  <div class="skills-marquee" aria-label="Frontend skills">
-    <div class="skills-track" id="skillsTrackTop"></div>
-  </div>
-  <!-- Row 2 — backend, full stack & databases (scrolls the other way) -->
-  <div class="skills-marquee reverse" aria-label="Backend skills">
-    <div class="skills-track" id="skillsTrackBottom"></div>
+  <p class="section-sub">The languages and frameworks i reach for daily.</p>
+  <div class="stagger">
+    <!-- Row 1 — frontend & languages -->
+    <div class="skills-marquee" aria-label="Frontend skills">
+      <div class="skills-track" id="skillsTrackTop"></div>
+    </div>
+    <!-- Row 2 — backend, full stack & databases (scrolls the other way) -->
+    <div class="skills-marquee reverse" aria-label="Backend skills">
+      <div class="skills-track" id="skillsTrackBottom"></div>
+    </div>
   </div>
 </section>
 
@@ -659,7 +718,7 @@ body.nav-locked{overflow:hidden;}
   <div class="section-eyebrow">// Services</div>
   <h2 class="section-title"><span class="typewriter" data-typewriter data-text="What I can build for you."></span></h2>
   <p class="section-sub">From a one-page site to a full game system or a security audit — I work across the stack.</p>
-  <div class="services-grid">
+  <div class="services-grid stagger">
     <div class="service"><div class="num">01</div><h3>Website Development</h3><p><span class="typewriter" data-typewriter data-text="Modern responsive websites."></span></p></div>
     <div class="service"><div class="num">02</div><h3>Game Development</h3><p><span class="typewriter" data-typewriter data-text="Unity, C#, C++ systems."></span></p></div>
     <div class="service"><div class="num">03</div><h3>Coding Tutorials</h3><p><span class="typewriter" data-typewriter data-text="Beginner to advanced coding."></span></p></div>
@@ -675,7 +734,7 @@ body.nav-locked{overflow:hidden;}
   <h2 class="section-title"><span class="typewriter" data-typewriter data-text="Let's build something together."></span></h2>
   <p class="section-sub">Got an idea, a project, or a question? Drop a message — I usually reply within 24 hours.</p>
 
-  <div class="contact-grid">
+  <div class="contact-grid stagger">
     <form id="contact-form">
       <input type="text" name="name" placeholder="Your Name" autocomplete="name" required>
       <input type="email" name="email" placeholder="Your Email" autocomplete="email" inputmode="email" required>
@@ -684,7 +743,7 @@ body.nav-locked{overflow:hidden;}
       <button type="submit">Send Message</button>
     </form>
 
-    <div class="contact-cards">
+    <div class="contact-cards stagger">
       <a class="contact-card" href="https://www.facebook.com/ooot.OFFICIAL.ACCOUNT" target="_blank" rel="noopener">
         <div class="ico">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12H17l-.5 3h-2v7A10 10 0 0 0 22 12z"/></svg>
@@ -1130,14 +1189,75 @@ fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
 })();
 
 /* ====================================================
-   SCROLL REVEAL
+   PAGE LOAD OPENER — fade hero in once everything is parsed
 ==================================================== */
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+function fireLoaded(){ document.body.classList.add('loaded'); }
+if(document.readyState === 'complete' || document.readyState === 'interactive'){
+  requestAnimationFrame(fireLoaded);
+} else {
+  window.addEventListener('DOMContentLoaded', () => requestAnimationFrame(fireLoaded));
+}
+// safety — never leave hero invisible (opener takes ~3.3s total)
+setTimeout(fireLoaded, 3500);
+
+/* ====================================================
+   HEADER SCROLL STATE + ACTIVE NAV LINK HIGHLIGHT
+==================================================== */
+const headerEl = document.querySelector('header');
+const navLinks = Array.from(document.querySelectorAll('#primaryNav a'));
+const sections = navLinks
+  .map(a => document.querySelector(a.getAttribute('href')))
+  .filter(Boolean);
+
+function setActiveLink(id){
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
   });
-},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}
+
+let lastKnownScroll = 0, scrollTicking = false;
+function onScroll(){
+  lastKnownScroll = window.scrollY || document.documentElement.scrollTop;
+  if(!scrollTicking){
+    requestAnimationFrame(()=>{
+      // header morph
+      if(headerEl) headerEl.classList.toggle('scrolled', lastKnownScroll > 30);
+
+      // figure out which section is currently centered in the viewport
+      const probe = lastKnownScroll + innerHeight * 0.35;
+      let currentId = sections[0] && sections[0].id;
+      for(const sec of sections){
+        if(sec.offsetTop <= probe) currentId = sec.id;
+      }
+      if(currentId) setActiveLink(currentId);
+
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  }
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ====================================================
+   SCROLL REVEAL — sections fade in, staggered children cascade
+==================================================== */
+// number stagger children so CSS calc(--i * 90ms) gives them sequential delay
+document.querySelectorAll('.stagger').forEach(group => {
+  Array.from(group.children).forEach((child, i) => {
+    child.style.setProperty('--i', i);
+  });
+});
+
+const revealIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      revealIO.unobserve(e.target);
+    }
+  });
+},{threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal, .stagger').forEach(el => revealIO.observe(el));
 
 /* ====================================================
    CONTACT FORM (kept your EmailJS — same keys as before)
