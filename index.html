@@ -229,19 +229,37 @@ section.block{
 }
 .stat .lbl{color:#9aa6b8;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:6px;}
 
-/* ------ SKILLS ------ */
-.skills-grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
+/* ------ SKILLS — infinite scrolling marquee ------ */
+.skills-marquee{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
+}
+.skills-marquee + .skills-marquee{margin-top:18px;}
+.skills-track{
+  display:flex;
   gap:18px;
+  width:max-content;
+  animation:scroll-x 40s linear infinite;
+  will-change:transform;
+}
+.skills-marquee.reverse .skills-track{animation-direction:reverse;animation-duration:48s;}
+.skills-marquee:hover .skills-track{animation-play-state:paused;}
+@keyframes scroll-x{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);} /* track is duplicated, so 50% = one full set */
 }
 .skill{
   position:relative;
+  flex:0 0 auto;
+  width:150px;
   padding:22px 14px;border-radius:18px;
   background:linear-gradient(180deg,rgba(20,24,40,.7),rgba(10,12,20,.5));
   border:1px solid rgba(255,255,255,.06);
   text-align:center;
-  transition:.3s;
+  transition:transform .3s, border-color .3s, box-shadow .3s;
   overflow:hidden;
 }
 .skill::before{
@@ -249,20 +267,66 @@ section.block{
   background:radial-gradient(circle at 50% 0%,var(--c,#00ffcc) 0%,transparent 60%);
   opacity:.0;transition:.3s;
 }
-.skill:hover{transform:translateY(-6px);border-color:var(--c,#00ffcc);}
-.skill:hover::before{opacity:.18;}
+.skill:hover{transform:translateY(-6px);border-color:var(--c,#00ffcc);box-shadow:0 18px 40px -16px var(--c,#00ffcc);}
+.skill:hover::before{opacity:.22;}
 .skill .icon{
   width:48px;height:48px;margin:0 auto 12px;
   display:grid;place-items:center;border-radius:12px;
   background:rgba(0,0,0,.4);
   position:relative;z-index:1;
 }
-.skill .icon img{width:30px;height:30px;}
+.skill .icon img,.skill .icon svg{width:30px;height:30px;}
 .skill .name{
   position:relative;z-index:1;
   font-family:'Space Grotesk',sans-serif;font-size:14px;
   font-weight:600;color:#e6f1ff;letter-spacing:.02em;
 }
+
+/* ------ ROTATING HEADLINE TEXT ------ */
+.rotator{
+  display:inline-flex;flex-wrap:wrap;gap:.4em;
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;color:#9aa6b8;font-weight:400;
+  letter-spacing:.05em;margin-bottom:24px;
+  min-height:1.6em;
+}
+.rotator .pair{
+  display:inline-flex;gap:.6em;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.rotator .pair.in{opacity:1;transform:translateY(0);}
+.rotator .word{
+  position:relative;
+  padding:2px 10px;border-radius:999px;
+  background:rgba(0,255,204,.06);
+  border:1px solid rgba(0,255,204,.18);
+  color:#cbf6ec;
+  white-space:nowrap;
+}
+.rotator .word + .word{
+  background:rgba(124,92,255,.06);
+  border-color:rgba(124,92,255,.22);
+  color:#dcd1ff;
+}
+
+/* ------ TYPEWRITER ------ */
+.typewriter{
+  display:inline; /* preserves the surrounding paragraph flow */
+}
+.typewriter::after{
+  content:'';
+  display:inline-block;
+  width:2px;height:1em;
+  margin-left:2px;
+  vertical-align:-0.18em;
+  background:#00ffcc;
+  box-shadow:0 0 8px rgba(0,255,204,.6);
+  animation:caret-blink 1s steps(2,start) infinite;
+}
+@keyframes caret-blink{50%{opacity:0;}}
+/* keep block height stable while typing — applied via JS attr */
+[data-typewriter]{min-height:1.2em;}
 
 /* ------ SERVICES ------ */
 .services-grid{
@@ -397,8 +461,11 @@ footer .ft-name{
   #hero-canvas{max-height:380px;aspect-ratio:1/1;max-width:380px;margin:0 auto;}
   section.block{padding:80px 22px;}
   .about-grid{grid-template-columns:1fr;gap:24px;}
-  .skills-grid{grid-template-columns:repeat(3,1fr);}
+  .skill{width:130px;padding:18px 12px;}
+  .skills-track{gap:14px;animation-duration:32s;}
+  .skills-marquee.reverse .skills-track{animation-duration:38s;}
   .services-grid{grid-template-columns:1fr;}
+  .rotator{font-size:13px;}
   .contact-grid{grid-template-columns:1fr;}
   .stats{grid-template-columns:repeat(3,1fr);gap:10px;}
   .stat{padding:16px 6px;}
@@ -459,8 +526,8 @@ footer .ft-name{
   section.block{padding:70px 18px;}
   .section-sub{font-size:15.5px;margin-bottom:40px;}
   .about-card{padding:24px;}
-  .skills-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
-  .skill{padding:18px 10px;}
+  .skill{width:120px;padding:16px 10px;}
+  .skills-track{gap:12px;}
   .service{padding:22px;}
   .stats{gap:8px;}
   .stat{padding:14px 4px;}
@@ -521,8 +588,10 @@ body.nav-locked{overflow:hidden;}
   <div class="hero-left">
     <span class="eyebrow">// Available for Projects</span>
     <h1>I build the <span class="accent">web, games &amp; secure systems.</span></h1>
-    <h2>22 Year Old Web Developer · Game Developer · Cybersecurity</h2>
-    <p>I build modern websites, backend systems, games, and cybersecurity solutions. Focused on performance, clean UI, and real-world systems.</p>
+    <div class="rotator" id="rotator" aria-live="polite">
+      <span class="pair" data-pair="0"><span class="word">Web Developer</span><span class="word">Game Developer</span></span>
+    </div>
+    <p><span class="typewriter" data-typewriter data-text="I build modern websites, backend systems, games, and cybersecurity solutions. Focused on performance, clean UI, and real-world systems."></span></p>
     <div class="hero-cta">
       <a href="#contact" class="btn btn-primary">Get In Touch &rarr;</a>
       <a href="#services" class="btn btn-ghost">View Services</a>
@@ -540,16 +609,25 @@ body.nav-locked{overflow:hidden;}
   <div class="about-grid">
     <div class="about-card">
       <h3>What I do</h3>
-      <p>Full-stack web apps, game systems in Unity / C# / C++, and cybersecurity tooling. I focus on performance, clean UI and code that holds up under real users.</p>
+      <p><span class="typewriter" data-typewriter data-text="Full-stack web apps, game systems in Unity / C# / C++, and cybersecurity tooling. I focus on performance, clean UI and code that holds up under real users."></span></p>
       <div class="stats">
-        <div class="stat"><div class="num">22</div><div class="lbl">Years Old</div></div>
-        <div class="stat"><div class="num">3+</div><div class="lbl">Stacks</div></div>
-        <div class="stat"><div class="num">8</div><div class="lbl">Curiosity</div></div>
+        <div class="stat">
+          <div class="num"><span class="typewriter typewriter-num" data-typewriter data-text="22"></span></div>
+          <div class="lbl"><span class="typewriter" data-typewriter data-text="Years Old"></span></div>
+        </div>
+        <div class="stat">
+          <div class="num"><span class="typewriter typewriter-num" data-typewriter data-text="3+"></span></div>
+          <div class="lbl"><span class="typewriter" data-typewriter data-text="Stacks"></span></div>
+        </div>
+        <div class="stat">
+          <div class="num"><span class="typewriter typewriter-num" data-typewriter data-text="8"></span></div>
+          <div class="lbl"><span class="typewriter" data-typewriter data-text="Curiosity"></span></div>
+        </div>
       </div>
     </div>
     <div class="about-card">
       <h3>How I work</h3>
-      <p>I ship fast, document as I go, and treat performance and security as features. I care about the end user — fast load times, clean responsive UI, and code that doesn't break in production.</p>
+      <p><span class="typewriter" data-typewriter data-text="I ship fast, document as I go, and treat performance and security as features. I care about the end user — fast load times, clean responsive UI, and code that doesn't break in production."></span></p>
     </div>
   </div>
 </section>
@@ -557,37 +635,37 @@ body.nav-locked{overflow:hidden;}
 <!-- SKILLS -->
 <section class="block reveal" id="skills">
   <div class="section-eyebrow">// Tech Stack</div>
-  <h2 class="section-title">Skills &amp; tools.</h2>
+  <h2 class="section-title"><span class="typewriter" data-typewriter data-text="Skills & tools."></span></h2>
   <p class="section-sub">The languages and frameworks I reach for daily.</p>
-  <div class="skills-grid">
-    <div class="skill" style="--c:#e34f26"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML"></div><div class="name">HTML</div></div>
-    <div class="skill" style="--c:#264de4"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS"></div><div class="name">CSS</div></div>
-    <div class="skill" style="--c:#f7df1e"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"></div><div class="name">JavaScript</div></div>
-    <div class="skill" style="--c:#61dafb"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"></div><div class="name">React</div></div>
-    <div class="skill" style="--c:#3c873a"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"></div><div class="name">Node.js</div></div>
-    <div class="skill" style="--c:#3776ab"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div><div class="name">Python</div></div>
+  <!-- Row 1 — frontend & languages -->
+  <div class="skills-marquee" aria-label="Frontend skills">
+    <div class="skills-track" id="skillsTrackTop"></div>
+  </div>
+  <!-- Row 2 — backend, full stack & databases (scrolls the other way) -->
+  <div class="skills-marquee reverse" aria-label="Backend skills">
+    <div class="skills-track" id="skillsTrackBottom"></div>
   </div>
 </section>
 
 <!-- SERVICES -->
 <section class="block reveal" id="services">
   <div class="section-eyebrow">// Services</div>
-  <h2 class="section-title">What I can build for you.</h2>
+  <h2 class="section-title"><span class="typewriter" data-typewriter data-text="What I can build for you."></span></h2>
   <p class="section-sub">From a one-page site to a full game system or a security audit — I work across the stack.</p>
   <div class="services-grid">
-    <div class="service"><div class="num">01</div><h3>Website Development</h3><p>Modern responsive websites.</p></div>
-    <div class="service"><div class="num">02</div><h3>Game Development</h3><p>Unity, C#, C++ systems.</p></div>
-    <div class="service"><div class="num">03</div><h3>Coding Tutorials</h3><p>Beginner to advanced coding.</p></div>
-    <div class="service"><div class="num">04</div><h3>Cybersecurity</h3><p>Security learning &amp; protection.</p></div>
-    <div class="service"><div class="num">05</div><h3>Full Stack Projects</h3><p>Frontend + backend systems.</p></div>
-    <div class="service"><div class="num">06</div><h3>Hire Me</h3><p>Available for projects.</p></div>
+    <div class="service"><div class="num">01</div><h3>Website Development</h3><p><span class="typewriter" data-typewriter data-text="Modern responsive websites."></span></p></div>
+    <div class="service"><div class="num">02</div><h3>Game Development</h3><p><span class="typewriter" data-typewriter data-text="Unity, C#, C++ systems."></span></p></div>
+    <div class="service"><div class="num">03</div><h3>Coding Tutorials</h3><p><span class="typewriter" data-typewriter data-text="Beginner to advanced coding."></span></p></div>
+    <div class="service"><div class="num">04</div><h3>Cybersecurity</h3><p><span class="typewriter" data-typewriter data-text="Security learning & protection."></span></p></div>
+    <div class="service"><div class="num">05</div><h3>Full Stack Projects</h3><p><span class="typewriter" data-typewriter data-text="Frontend + backend systems."></span></p></div>
+    <div class="service"><div class="num">06</div><h3>Hire Me</h3><p><span class="typewriter" data-typewriter data-text="Available for projects."></span></p></div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="block reveal" id="contact">
   <div class="section-eyebrow">// Contact</div>
-  <h2 class="section-title">Let's build something together.</h2>
+  <h2 class="section-title"><span class="typewriter" data-typewriter data-text="Let's build something together."></span></h2>
   <p class="section-sub">Got an idea, a project, or a question? Drop a message — I usually reply within 24 hours.</p>
 
   <div class="contact-grid">
@@ -624,7 +702,7 @@ body.nav-locked{overflow:hidden;}
 
 <footer>
   <div class="ft-name">Ashraff Usman</div>
-  Full Stack Developer · Built with Love · © 2026
+  Full Stack Developer · Built with Three.js · © 2026
 </footer>
 
 </div>
@@ -878,6 +956,152 @@ navOverlay.addEventListener('click', () => setNav(false));
 primaryNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setNav(false)));
 // close menu if resized back to desktop
 matchMedia('(min-width: 981px)').addEventListener('change', e => { if(e.matches) setNav(false); });
+
+/* ====================================================
+   SKILLS MARQUEE — build tracks and duplicate for seamless loop
+==================================================== */
+const SKILLS_TOP = [
+  {name:'HTML',       c:'#e34f26', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'},
+  {name:'CSS',        c:'#264de4', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'},
+  {name:'JavaScript', c:'#f7df1e', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'},
+  {name:'TypeScript', c:'#3178c6', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg'},
+  {name:'React',      c:'#61dafb', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'},
+  {name:'Tailwind',   c:'#38bdf8', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'},
+  {name:'Bootstrap',  c:'#7952b3', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg'},
+  {name:'Vue',        c:'#42b883', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg'},
+];
+const SKILLS_BOTTOM = [
+  {name:'PHP',        c:'#777bb4', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg'},
+  {name:'Laravel',    c:'#ff2d20', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg'},
+  {name:'Node.js',    c:'#3c873a', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'},
+  {name:'Express',    c:'#9aa6b8', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg'},
+  {name:'Python',     c:'#3776ab', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'},
+  {name:'MySQL',      c:'#00758f', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'},
+  {name:'PostgreSQL', c:'#336791', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg'},
+  {name:'MongoDB',    c:'#4db33d', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'},
+  {name:'Git',        c:'#f05032', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'},
+  {name:'Docker',     c:'#2496ed', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'},
+  {name:'Full Stack', c:'#00ffcc', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg'},
+];
+function skillCard(s){
+  return `<div class="skill" style="--c:${s.c}">
+    <div class="icon"><img src="${s.icon}" alt="${s.name}" loading="lazy"></div>
+    <div class="name">${s.name}</div>
+  </div>`;
+}
+function fillTrack(id, list){
+  const el = document.getElementById(id);
+  if(!el) return;
+  // duplicate the list so the -50% translate produces a seamless loop
+  const html = list.map(skillCard).join('') + list.map(skillCard).join('');
+  el.innerHTML = html;
+}
+fillTrack('skillsTrackTop', SKILLS_TOP);
+fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
+
+/* ====================================================
+   ROTATING HEADLINE — pairs of words appear/disappear in a loop
+==================================================== */
+(function rotator(){
+  const el = document.getElementById('rotator');
+  if(!el) return;
+  const PAIRS = [
+    ['Web Developer', 'Game Developer'],
+    ['Full Stack', 'Laravel'],
+    ['React', 'Node.js'],
+    ['Cybersecurity', 'Clean Code'],
+    ['Frontend', 'Backend'],
+    ['Performance', 'Polished UI'],
+  ];
+  let idx = 0;
+  function render(pair){
+    el.innerHTML = `<span class="pair">
+      <span class="word">${pair[0]}</span>
+      <span class="word">${pair[1]}</span>
+    </span>`;
+    // next frame so the transition fires
+    requestAnimationFrame(()=> requestAnimationFrame(()=>{
+      const p = el.querySelector('.pair');
+      if(p) p.classList.add('in');
+    }));
+  }
+  render(PAIRS[idx]);
+  setInterval(()=>{
+    const p = el.querySelector('.pair');
+    if(p) p.classList.remove('in'); // fade out
+    setTimeout(()=>{
+      idx = (idx + 1) % PAIRS.length;
+      render(PAIRS[idx]);
+    }, 600);
+  }, 2800);
+})();
+
+/* ====================================================
+   TYPEWRITER — slowly type, hold, slowly delete, repeat
+==================================================== */
+(function typewriters(){
+  const els = document.querySelectorAll('[data-typewriter]');
+  if(!els.length) return;
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  els.forEach(el => {
+    const text = el.dataset.text || el.textContent || '';
+    el.textContent = '';
+
+    if(reduceMotion){
+      // accessibility: just show the full text, no looping animation
+      el.textContent = text;
+      el.classList.remove('typewriter');
+      return;
+    }
+
+    const TYPE_MS    = 38;   // per char while typing
+    const DELETE_MS  = 22;   // per char while deleting (faster than typing)
+    const HOLD_FULL  = 2200; // pause when fully typed
+    const HOLD_EMPTY = 600;  // pause when empty before retyping
+
+    let i = 0;
+    let mode = 'type'; // 'type' | 'hold-full' | 'delete' | 'hold-empty'
+    let timer = null;
+    let running = false;
+
+    function step(){
+      if(mode === 'type'){
+        i++;
+        el.textContent = text.slice(0, i);
+        if(i >= text.length){ mode = 'hold-full'; timer = setTimeout(step, HOLD_FULL); }
+        else { timer = setTimeout(step, TYPE_MS); }
+      } else if(mode === 'hold-full'){
+        mode = 'delete';
+        timer = setTimeout(step, DELETE_MS);
+      } else if(mode === 'delete'){
+        i--;
+        el.textContent = text.slice(0, i);
+        if(i <= 0){ mode = 'hold-empty'; timer = setTimeout(step, HOLD_EMPTY); }
+        else { timer = setTimeout(step, DELETE_MS); }
+      } else if(mode === 'hold-empty'){
+        mode = 'type';
+        timer = setTimeout(step, TYPE_MS);
+      }
+    }
+
+    function start(){ if(!running){ running = true; step(); } }
+    function stop(){ running = false; clearTimeout(timer); }
+
+    // only run when in view, save battery
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) start(); else stop(); });
+    }, {threshold:0.15});
+    io.observe(el);
+
+    // pause when tab hidden
+    document.addEventListener('visibilitychange', () => {
+      if(document.hidden) stop();
+      else if(el.getBoundingClientRect().top < innerHeight) start();
+    });
+  });
+})();
 
 /* ====================================================
    SCROLL REVEAL
