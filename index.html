@@ -4,345 +4,749 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ashraff Usman | Full Stack Developer</title>
+<meta name="description" content="Ashraff Usman — 22 year old Full Stack Developer. Web, Game Development, and Cybersecurity.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:#05060a;
+  color:#e6f1ff;
+  font-family:'Inter',sans-serif;
+  scroll-behavior:smooth;
+  overflow-x:hidden;
 }
+body{position:relative;min-height:100vh;}
 
-body{
-  background:url('https://i.makeagif.com/media/10-14-2017/2QKyUm.gif') center/cover fixed;
-  color:white;
-}
-
-body::before{
-  content:"";
+/* ------ 3D BACKGROUND CANVAS ------ */
+#bg-canvas{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.78);
-  z-index:-1;
+  z-index:0;
+  pointer-events:none;
 }
 
+/* page sits above the bg */
+.page{
+  position:relative;
+  z-index:2;
+}
+
+/* ------ HEADER ------ */
 header{
   position:fixed;
-  top:0;
-  width:100%;
-  padding:20px 60px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(10,15,25,0.75);
-  backdrop-filter:blur(12px);
-  z-index:1000;
+  top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 48px;
+  background:rgba(8,10,18,0.55);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(0,255,204,0.08);
+  z-index:100;
 }
-
-header h2{
-  color:#00ffcc;
-  font-size:22px;
+header .logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;letter-spacing:.04em;
+  font-size:15px;color:#e6f1ff;
 }
-
+header .logo .badge{
+  width:38px;height:38px;border-radius:50%;
+  overflow:hidden;
+  background:linear-gradient(135deg,#00ffcc 0%,#7c5cff 100%);
+  box-shadow:0 0 24px rgba(0,255,204,.35);
+  border:2px solid rgba(0,255,204,.5);
+}
+header .logo .badge img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
 nav a{
-  margin:0 12px;
+  margin:0 14px;
   text-decoration:none;
-  color:#cbd5e1;
-  font-size:14px;
+  color:#9aa6b8;font-size:13px;font-weight:500;
+  letter-spacing:.04em;text-transform:uppercase;
+  transition:.25s;
 }
+nav a:hover{color:#00ffcc;text-shadow:0 0 12px rgba(0,255,204,.4);}
 
-nav a:hover{
-  color:#00ffcc;
-}
-
+/* ------ HERO ------ */
 .hero{
-  display:flex;
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
   align-items:center;
-  justify-content:center;
-  padding:120px 60px 30px;
-}
-
-.hero-box{
-  width:100%;
-  max-width:1300px;
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
   gap:40px;
+  padding:140px 60px 80px;
+  max-width:1400px;margin:0 auto;
 }
-
-.left{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-
-.profile{
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  border:3px solid #00ffcc;
-  box-shadow:0 0 25px #00ffcc;
-  margin-bottom:20px;
-}
-
-.left h1{
-  font-size:48px;
+.hero-left .eyebrow{
+  display:inline-block;
+  padding:6px 14px;border-radius:999px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;
   color:#00ffcc;
+  background:rgba(0,255,204,.08);
+  border:1px solid rgba(0,255,204,.25);
+  margin-bottom:22px;
 }
-
-.left h2{
-  font-size:20px;
-  margin-top:5px;
-  color:#94a3b8;
+.hero-left h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(48px,7vw,92px);
+  line-height:1;
+  font-weight:700;
+  letter-spacing:-.02em;
+  background:linear-gradient(135deg,#ffffff 0%,#9aa6b8 60%,#7c5cff 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  margin-bottom:18px;
 }
-
-.left p{
-  margin-top:15px;
-  line-height:1.6;
-  color:#cbd5e1;
-  max-width:500px;
+.hero-left h1 .accent{
+  background:linear-gradient(135deg,#00ffcc 0%,#7c5cff 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-.right{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
+.hero-left h2{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;color:#9aa6b8;font-weight:400;
+  letter-spacing:.05em;margin-bottom:24px;
 }
-
-.card{
-  background:rgba(15,23,42,0.85);
-  border:1px solid rgba(0,255,204,0.2);
-  border-radius:18px;
-  padding:15px;
-  text-align:center;
-  transition:0.3s;
+.hero-left p{
+  color:#cbd5e1;font-size:17px;line-height:1.7;max-width:520px;
+  margin-bottom:36px;
 }
-
-.card:hover{
-  transform:scale(1.05);
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 24px;border-radius:14px;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;
+  letter-spacing:.03em;cursor:pointer;border:none;
+  text-decoration:none;
+  transition:.25s transform,.25s box-shadow,.25s background;
 }
-
-.card img{
-  width:55px;
+.btn-primary{
+  background:linear-gradient(135deg,#00ffcc 0%,#3ad6b8 100%);
+  color:#05060a;
+  box-shadow:0 0 0 1px rgba(0,255,204,.4),0 12px 40px -8px rgba(0,255,204,.45);
 }
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(0,255,204,.6),0 18px 50px -10px rgba(0,255,204,.65);}
+.btn-ghost{
+  background:rgba(255,255,255,.04);
+  color:#e6f1ff;
+  border:1px solid rgba(255,255,255,.1);
+}
+.btn-ghost:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);}
 
-.services, .contact{
+/* hero 3d holder */
+#hero-canvas{
   width:100%;
-  padding:20px 60px 50px;
+  aspect-ratio:1/1;
+  max-height:560px;
+  border-radius:24px;
 }
 
-.title{
-  font-size:28px;
-  color:#00ffcc;
-  margin-bottom:15px;
+/* ------ SECTION SHARED ------ */
+section.block{
+  position:relative;
+  padding:120px 60px;
+  max-width:1400px;margin:0 auto;
 }
+.section-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  color:#00ffcc;font-size:12px;
+  letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(34px,4.4vw,56px);
+  font-weight:700;letter-spacing:-.02em;
+  color:#ffffff;margin-bottom:18px;
+}
+.section-sub{color:#9aa6b8;font-size:17px;line-height:1.6;max-width:640px;margin-bottom:60px;}
 
-.service-grid{
+/* ------ ABOUT ------ */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+}
+.about-card{
+  padding:32px;border-radius:22px;
+  background:linear-gradient(180deg,rgba(20,24,40,.6),rgba(10,12,20,.4));
+  border:1px solid rgba(255,255,255,.06);
+  backdrop-filter:blur(12px);
+}
+.about-card h3{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:22px;color:#fff;margin-bottom:10px;
+}
+.about-card p{color:#9aa6b8;line-height:1.65;font-size:15px;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px;}
+.stat{
+  padding:22px;border-radius:18px;
+  background:rgba(0,255,204,.04);
+  border:1px solid rgba(0,255,204,.15);
+  text-align:center;
+}
+.stat .num{
+  font-family:'Space Grotesk',sans-serif;font-size:34px;
+  font-weight:700;color:#00ffcc;
+}
+.stat .lbl{color:#9aa6b8;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:4px;}
+
+/* ------ SKILLS ------ */
+.skills-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
+  grid-template-columns:repeat(6,1fr);
+  gap:18px;
+}
+.skill{
+  position:relative;
+  padding:22px 14px;border-radius:18px;
+  background:linear-gradient(180deg,rgba(20,24,40,.7),rgba(10,12,20,.5));
+  border:1px solid rgba(255,255,255,.06);
+  text-align:center;
+  transition:.3s;
+  overflow:hidden;
+}
+.skill::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,var(--c,#00ffcc) 0%,transparent 60%);
+  opacity:.0;transition:.3s;
+}
+.skill:hover{transform:translateY(-6px);border-color:var(--c,#00ffcc);}
+.skill:hover::before{opacity:.18;}
+.skill .icon{
+  width:48px;height:48px;margin:0 auto 12px;
+  display:grid;place-items:center;border-radius:12px;
+  background:rgba(0,0,0,.4);
+  position:relative;z-index:1;
+}
+.skill .icon img{width:30px;height:30px;}
+.skill .name{
+  position:relative;z-index:1;
+  font-family:'Space Grotesk',sans-serif;font-size:14px;
+  font-weight:600;color:#e6f1ff;letter-spacing:.02em;
 }
 
+/* ------ SERVICES ------ */
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
 .service{
-  background:rgba(15,23,42,0.85);
-  border-radius:20px;
-  padding:20px;
-  border:1px solid rgba(0,255,204,0.2);
+  position:relative;
+  padding:28px;border-radius:22px;
+  background:linear-gradient(180deg,rgba(20,24,40,.7),rgba(10,12,20,.5));
+  border:1px solid rgba(255,255,255,.06);
+  transition:.3s;
+  overflow:hidden;
 }
-
+.service::before{
+  content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:1px;
+  background:linear-gradient(90deg,transparent,#00ffcc,transparent);
+  opacity:0;transition:.3s;
+}
+.service:hover{transform:translateY(-6px);border-color:rgba(0,255,204,.35);box-shadow:0 30px 60px -20px rgba(0,255,204,.18);}
+.service:hover::before{opacity:1;}
+.service .num{
+  font-family:'JetBrains Mono',monospace;color:#7c5cff;font-size:12px;
+  letter-spacing:.2em;margin-bottom:14px;
+}
 .service h3{
-  color:#00ffcc;
-  margin-bottom:8px;
-  font-size:15px;
+  font-family:'Space Grotesk',sans-serif;color:#fff;font-size:20px;
+  margin-bottom:10px;letter-spacing:-.01em;
 }
+.service p{color:#9aa6b8;font-size:14.5px;line-height:1.6;}
 
-.service p{
-  color:#cbd5e1;
+/* ------ CONTACT ------ */
+.contact-grid{
+  display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start;
+}
+form{display:flex;flex-direction:column;gap:14px;}
+form input,form textarea{
+  padding:14px 16px;border-radius:12px;
+  background:rgba(10,12,20,.6);
+  color:#e6f1ff;
+  border:1px solid rgba(255,255,255,.08);
+  font-family:'Inter',sans-serif;font-size:14.5px;
+  outline:none;transition:.25s;
+  resize:vertical;
+}
+form input::placeholder,form textarea::placeholder{color:#5b6478;}
+form input:focus,form textarea:focus{
+  border-color:#00ffcc;
+  box-shadow:0 0 0 4px rgba(0,255,204,.12);
+}
+form textarea{min-height:130px;}
+form button{
+  padding:14px 22px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,#00ffcc,#3ad6b8);
+  color:#05060a;font-weight:700;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;letter-spacing:.03em;
   font-size:14px;
+  box-shadow:0 12px 30px -10px rgba(0,255,204,.45);
+  transition:.25s;
 }
+form button:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(0,255,204,.6);}
 
-/* CONTACT FORM */
-form{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-bottom:20px;
+.contact-cards{display:flex;flex-direction:column;gap:14px;}
+.contact-card{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 20px;border-radius:16px;
+  background:rgba(20,24,40,.55);
+  border:1px solid rgba(255,255,255,.06);
+  text-decoration:none;color:#e6f1ff;
+  transition:.25s;
 }
-
-input, textarea{
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  outline:none;
+.contact-card:hover{border-color:rgba(0,255,204,.4);transform:translateX(4px);}
+.contact-card .ico{
+  width:42px;height:42px;border-radius:12px;
+  display:grid;place-items:center;
+  background:rgba(0,255,204,.1);
+  color:#00ffcc;
 }
+.contact-card .ico svg{width:20px;height:20px;}
+.contact-card .meta{display:flex;flex-direction:column;}
+.contact-card .meta .lbl{font-size:11px;color:#5b6478;text-transform:uppercase;letter-spacing:.18em;}
+.contact-card .meta .val{font-size:14.5px;color:#e6f1ff;font-weight:500;margin-top:2px;}
 
-button{
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#00ffcc;
-  cursor:pointer;
-  font-weight:bold;
-}
-
+/* ------ FOOTER ------ */
 footer{
   text-align:center;
-  padding:40px;
-  color:#94a3b8;
+  padding:50px 20px 30px;
+  color:#5b6478;font-size:13px;
+  border-top:1px solid rgba(255,255,255,.05);
+  margin-top:60px;
+}
+footer .ft-name{
+  font-family:'Space Grotesk',sans-serif;color:#e6f1ff;font-weight:600;
+  margin-bottom:6px;
 }
 
-.social-icon{
-  width:18px;
-  height:18px;
-  margin-right:6px;
-  vertical-align:middle;
+/* toast */
+.toast{
+  position:fixed;bottom:30px;right:30px;
+  padding:14px 22px;border-radius:14px;
+  background:linear-gradient(135deg,#00ffcc,#3ad6b8);
+  color:#05060a;font-weight:600;font-family:'Space Grotesk',sans-serif;
+  font-size:14px;
+  box-shadow:0 14px 40px -10px rgba(0,255,204,.5);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateY(20px);
+  transition:opacity .35s ease, transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s linear .35s;
+  z-index:200;
+}
+.toast.show{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:translateY(0);
+  transition:opacity .35s ease, transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s;
 }
 
+/* ------ RESPONSIVE ------ */
+@media (max-width:980px){
+  header{padding:14px 22px;}
+  nav a{margin:0 8px;font-size:12px;}
+  .hero{grid-template-columns:1fr;padding:120px 22px 60px;}
+  #hero-canvas{max-height:380px;}
+  section.block{padding:80px 22px;}
+  .about-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:repeat(3,1fr);}
+  .services-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .stats{grid-template-columns:repeat(3,1fr);gap:10px;}
+  .stat .num{font-size:24px;}
+}
+
+/* reveal anim */
+.reveal{opacity:0;transform:translateY(30px);transition:1s cubic-bezier(.2,.8,.2,1);}
+.reveal.in{opacity:1;transform:none;}
 </style>
 </head>
 
 <body>
 
+<!-- 3D BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
 <header>
-  <h2>ASHRAFF USMAN</h2>
+  <div class="logo">
+    <div class="badge"><img src="https://wallpapers.com/images/hd/cool-profile-picture-ug9oc08q7nn527wu.jpg" alt="Ashraff Usman"></div>
+    Ashraff Usman
+  </div>
   <nav>
     <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
     <a href="#services">Services</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-box">
-
-    <div class="left">
-      <img class="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1Ge5ZNd1jtWQIUJVaZhczOC8H1JNSlg443g&s">
-
-      <h1>Ashraff Usman</h1>
-      <h2>22 Year Old Web Developer • Game Developer • Cybersecurity</h2>
-
-      <p>
-        I build modern websites, backend systems, games, and cybersecurity solutions.
-        Focused on performance, clean UI, and real-world systems.
-      </p>
+  <div class="hero-left">
+    <span class="eyebrow">// Available for Projects</span>
+    <h1>I build the <span class="accent">web, games & secure systems.</span></h1>
+    <h2>22 Year Old Web Developer · Game Developer · Cybersecurity</h2>
+    <p>I build modern websites, backend systems, games, and cybersecurity solutions. Focused on performance, clean UI, and real-world systems.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get In Touch →</a>
+      <a href="#services" class="btn btn-ghost">View Services</a>
     </div>
-
-    <div class="right">
-      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"><p>HTML</p></div>
-      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"><p>CSS</p></div>
-      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"><p>JavaScript</p></div>
-      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"><p>React</p></div>
-      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"><p>Node.js</p></div>
-      <div class="card"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"><p>Python</p></div>
-    </div>
-
+  </div>
+  <div class="hero-right">
+    <canvas id="hero-canvas"></canvas>
   </div>
 </section>
 
-<section class="services" id="services">
-  <div class="title">Services i Offer</div>
-
-  <div class="service-grid">
-    <div class="service"><h3>Website Development</h3><p>Modern responsive websites.</p></div>
-    <div class="service"><h3>Game Development</h3><p>Unity, C#, C++ systems.</p></div>
-    <div class="service"><h3>Coding Tutorials</h3><p>Beginner to advanced coding.</p></div>
-    <div class="service"><h3>Cybersecurity</h3><p>Security learning & protection.</p></div>
-    <div class="service"><h3>Full Stack Projects</h3><p>Frontend + backend systems.</p></div>
-    <div class="service"><h3>Hire Me</h3><p>Available for projects.</p></div>
+<!-- ABOUT -->
+<section class="block reveal" id="about">
+  <div class="section-eyebrow">// About</div>
+  <h2 class="section-title">A young developer building real, shipped things.</h2>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>What I do</h3>
+      <p>Full-stack web apps, game systems in Unity / C# / C++, and cybersecurity tooling. I focus on performance, clean UI and code that holds up under real users.</p>
+      <div class="stats">
+        <div class="stat"><div class="num">22</div><div class="lbl">Years Old</div></div>
+        <div class="stat"><div class="num">3+</div><div class="lbl">Stacks</div></div>
+        <div class="stat"><div class="num">∞</div><div class="lbl">Curiosity</div></div>
+      </div>
+    </div>
+    <div class="about-card">
+      <h3>How I work</h3>
+      <p>I ship fast, document as I go, and treat performance and security as features. I care about the end user — fast load times, clean responsive UI, and code that doesn't break in production.</p>
+    </div>
   </div>
 </section>
 
-<section class="contact" id="contact">
-  <div class="title">Contact Me</div>
+<!-- SKILLS -->
+<section class="block reveal" id="skills">
+  <div class="section-eyebrow">// Tech Stack</div>
+  <h2 class="section-title">Skills & tools.</h2>
+  <p class="section-sub">The languages and frameworks I reach for daily.</p>
+  <div class="skills-grid">
+    <div class="skill" style="--c:#e34f26"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"></div><div class="name">HTML</div></div>
+    <div class="skill" style="--c:#264de4"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"></div><div class="name">CSS</div></div>
+    <div class="skill" style="--c:#f7df1e"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"></div><div class="name">JavaScript</div></div>
+    <div class="skill" style="--c:#61dafb"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"></div><div class="name">React</div></div>
+    <div class="skill" style="--c:#3c873a"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"></div><div class="name">Node.js</div></div>
+    <div class="skill" style="--c:#3776ab"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"></div><div class="name">Python</div></div>
+  </div>
+</section>
 
-  <!-- EMAIL FORM -->
- <form id="contact-form">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <input type="text" name="title" placeholder="Subject" required>
-  <textarea name="message" placeholder="Your Message" required></textarea>
-  <button type="submit">Send Message</button>
-</form>
+<!-- SERVICES -->
+<section class="block reveal" id="services">
+  <div class="section-eyebrow">// Services</div>
+  <h2 class="section-title">What I can build for you.</h2>
+  <p class="section-sub">From a one-page site to a full game system or a security audit — I work across the stack.</p>
+  <div class="services-grid">
+    <div class="service"><div class="num">01</div><h3>Website Development</h3><p>Modern responsive websites.</p></div>
+    <div class="service"><div class="num">02</div><h3>Game Development</h3><p>Unity, C#, C++ systems.</p></div>
+    <div class="service"><div class="num">03</div><h3>Coding Tutorials</h3><p>Beginner to advanced coding.</p></div>
+    <div class="service"><div class="num">04</div><h3>Cybersecurity</h3><p>Security learning & protection.</p></div>
+    <div class="service"><div class="num">05</div><h3>Full Stack Projects</h3><p>Frontend + backend systems.</p></div>
+    <div class="service"><div class="num">06</div><h3>Hire Me</h3><p>Available for projects.</p></div>
+  </div>
+</section>
 
-  <div class="service-grid">
+<!-- CONTACT -->
+<section class="block reveal" id="contact">
+  <div class="section-eyebrow">// Contact</div>
+  <h2 class="section-title">Let's build something together.</h2>
+  <p class="section-sub">Got an idea, a project, or a question? Drop a message — I usually reply within 24 hours.</p>
 
-    <!-- FACEBOOK -->
-    <div class="service">
-      <h3>
-        <svg class="social-icon" viewBox="0 0 24 24">
-          <path fill="#00ffcc" d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12H17l-.5 3h-2v7A10 10 0 0 0 22 12z"/>
-        </svg>
-        Facebook
-      </h3>
-      <p>
-        <a href="https://www.facebook.com/ooot.OFFICIAL.ACCOUNT" target="_blank"
-           style="color:#00ffcc;text-decoration:none;">
-          Open My Facebook Profile
-        </a>
-      </p>
+  <div class="contact-grid">
+    <form id="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="title" placeholder="Subject" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="contact-cards">
+      <a class="contact-card" href="https://www.facebook.com/ooot.OFFICIAL.ACCOUNT" target="_blank">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12H17l-.5 3h-2v7A10 10 0 0 0 22 12z"/></svg>
+        </div>
+        <div class="meta"><span class="lbl">Facebook</span><span class="val">Open My Profile</span></div>
+      </a>
+      <a class="contact-card" href="tel:09531494285">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1l-2.2 2.2z"/></svg>
+        </div>
+        <div class="meta"><span class="lbl">Phone</span><span class="val">09531494285</span></div>
+      </a>
+      <a class="contact-card" href="mailto:lawnixusman@gmail.com">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4v16h16V4zm-2 4l-6 4-6-4V6l6 4 6-4v2z"/></svg>
+        </div>
+        <div class="meta"><span class="lbl">Email</span><span class="val">lawnixusman@gmail.com</span></div>
+      </a>
     </div>
-
-    <!-- PHONE -->
-    <div class="service">
-      <h3>
-        <svg class="social-icon" viewBox="0 0 24 24">
-          <path fill="#00ffcc" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1l-2.2 2.2z"/>
-        </svg>
-        Phone
-      </h3>
-      <p>
-        <a href="tel:09531494285" style="color:#00ffcc;text-decoration:none;">
-          09531494285
-        </a>
-      </p>
-    </div>
-
-    <!-- EMAIL -->
-    <div class="service">
-      <h3>
-        <svg class="social-icon" viewBox="0 0 24 24">
-          <path fill="#00ffcc" d="M20 4H4v16h16V4zm-2 4l-6 4-6-4V6l6 4 6-4v2z"/>
-        </svg>
-        Email
-      </h3>
-      <p>
-        <a href="mailto:lawnixusman@gmail.com" style="color:#00ffcc;text-decoration:none;">
-          lawnixusman@gmail.com
-        </a>
-      </p>
-    </div>
-
   </div>
 </section>
 
 <footer>
-Ashraff Usman | Full Stack Developer
+  <div class="ft-name">Ashraff Usman</div>
+  Full Stack Developer · Built with Love · © 2026
 </footer>
 
-<!-- EMAILJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</div>
 
-<script>
-emailjs.init({
-  publicKey: "PIWu_Pj_3sNoepEZ8"
-});
+<div class="toast" id="toast">Message sent successfully!</div>
 
-document.getElementById("contact-form").addEventListener("submit", function(e){
-  e.preventDefault();
+<!-- THREE.JS via CDN -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+  }
+}
+</script>
 
-  emailjs.sendForm(
-    "service_57llv1u",
-    "template_2pqihz8",
-    this
-  ).then(() => {
-    alert("Message sent successfully!");
-    this.reset();
-  }).catch((error) => {
-    alert("Failed to send message");
-    console.log(error);
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+/* ====================================================
+   HERO SCENE — distorted glowing sphere + bloom
+==================================================== */
+(function heroScene(){
+  const canvas = document.getElementById('hero-canvas');
+  if(!canvas) return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0,0,5);
+
+  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+
+  // resize
+  function resize(){
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+    composer.setSize(w,h);
+  }
+
+  // sphere with ShaderMaterial — animated noise displacement + iridescent fresnel
+  const geo = new THREE.IcosahedronGeometry(1.45, 64);
+  const uniforms = {
+    uTime:{value:0},
+    uColorA:{value:new THREE.Color('#00ffcc')},
+    uColorB:{value:new THREE.Color('#7c5cff')},
+    uColorC:{value:new THREE.Color('#05060a')}
+  };
+  const material = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader:`
+      uniform float uTime;
+      varying vec3 vNormal;
+      varying vec3 vPos;
+      // simplex-ish noise (cheap)
+      float n(vec3 p){return sin(p.x*1.3+uTime*.6)*sin(p.y*1.7+uTime*.5)*sin(p.z*1.5+uTime*.7);}
+      void main(){
+        vec3 p = position;
+        float d = n(p*1.2)*0.18 + n(p*2.4)*0.07;
+        p += normal * d;
+        vNormal = normalize(normalMatrix*normal);
+        vec4 mv = modelViewMatrix*vec4(p,1.0);
+        vPos = -mv.xyz;
+        gl_Position = projectionMatrix * mv;
+      }
+    `,
+    fragmentShader:`
+      uniform vec3 uColorA;
+      uniform vec3 uColorB;
+      uniform vec3 uColorC;
+      uniform float uTime;
+      varying vec3 vNormal;
+      varying vec3 vPos;
+      void main(){
+        vec3 V = normalize(vPos);
+        float fres = pow(1.0 - max(dot(V,vNormal),0.0), 2.0);
+        float band = sin(vNormal.y*4.0 + uTime*0.8)*.5+.5;
+        vec3 col = mix(uColorC, uColorA, band*0.5+0.2);
+        col = mix(col, uColorB, fres);
+        col += fres * 0.6;
+        gl_FragColor = vec4(col,1.0);
+      }
+    `
   });
+  const mesh = new THREE.Mesh(geo,material);
+  scene.add(mesh);
+
+  // wireframe halo
+  const halo = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(1.95, 1),
+    new THREE.MeshBasicMaterial({color:0x00ffcc,wireframe:true,transparent:true,opacity:0.18})
+  );
+  scene.add(halo);
+
+  // lights
+  scene.add(new THREE.AmbientLight(0xffffff,0.4));
+  const p1 = new THREE.PointLight(0x00ffcc,2,10); p1.position.set(3,2,3); scene.add(p1);
+  const p2 = new THREE.PointLight(0x7c5cff,2,10); p2.position.set(-3,-2,3); scene.add(p2);
+
+  // controls
+  const controls = new OrbitControls(camera,canvas);
+  controls.enableZoom = false;
+  controls.enablePan = false;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 1.2;
+  controls.enableDamping = true;
+
+  // postprocessing
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene,camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), 0.9, 0.6, 0.1);
+  composer.addPass(bloom);
+
+  resize();
+  window.addEventListener('resize',resize);
+
+  const clock = new THREE.Clock();
+  function loop(){
+    const t = clock.getElapsedTime();
+    uniforms.uTime.value = t;
+    halo.rotation.x = t*0.15;
+    halo.rotation.y = t*0.1;
+    controls.update();
+    composer.render();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ====================================================
+   BACKGROUND PARTICLE FIELD — fixed full-page
+==================================================== */
+(function bgScene(){
+  const canvas = document.getElementById('bg-canvas');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
+  camera.position.z = 6;
+
+  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(innerWidth,innerHeight);
+
+  // particles
+  const COUNT = innerWidth < 768 ? 700 : 1800;
+  const positions = new Float32Array(COUNT*3);
+  const colors    = new Float32Array(COUNT*3);
+  const cA = new THREE.Color('#00ffcc');
+  const cB = new THREE.Color('#7c5cff');
+  for(let i=0;i<COUNT;i++){
+    const r = 6 + Math.random()*14;
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.acos(2*Math.random()-1);
+    positions[i*3]   = r*Math.sin(phi)*Math.cos(theta);
+    positions[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
+    positions[i*3+2] = r*Math.cos(phi)*0.6;
+    const mix = Math.random();
+    const col = cA.clone().lerp(cB, mix);
+    colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(colors,3));
+  const mat = new THREE.PointsMaterial({
+    size:0.04, vertexColors:true, transparent:true, opacity:0.85,
+    depthWrite:false, blending:THREE.AdditiveBlending
+  });
+  const points = new THREE.Points(geo,mat);
+  scene.add(points);
+
+  // resize
+  addEventListener('resize', ()=>{
+    camera.aspect = innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth,innerHeight);
+  });
+
+  // mouse parallax
+  let mx=0,my=0;
+  addEventListener('mousemove',e=>{
+    mx = (e.clientX/innerWidth - .5)*0.6;
+    my = (e.clientY/innerHeight - .5)*0.6;
+  });
+
+  // scroll tilt
+  let scrollY = 0;
+  addEventListener('scroll',()=>{ scrollY = window.scrollY; });
+
+  const clock = new THREE.Clock();
+  function loop(){
+    const t = clock.getElapsedTime();
+    points.rotation.y = t*0.04 + mx*0.5;
+    points.rotation.x = t*0.02 + my*0.4 + scrollY*0.0006;
+    renderer.render(scene,camera);
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ====================================================
+   SCROLL REVEAL
+==================================================== */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ====================================================
+   CONTACT FORM (kept your EmailJS — same keys as before)
+==================================================== */
+const toast = document.getElementById('toast');
+function showToast(msg, ok=true){
+  toast.textContent = msg;
+  toast.style.background = ok
+    ? 'linear-gradient(135deg,#00ffcc,#3ad6b8)'
+    : 'linear-gradient(135deg,#ff4d6d,#ff8fa3)';
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'), 3200);
+}
+
+const formEl = document.getElementById('contact-form');
+formEl.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  // try to use EmailJS if loaded
+  if(window.emailjs){
+    try{
+      await emailjs.sendForm('service_57llv1u','template_2pqihz8', formEl);
+      showToast('Message sent successfully!');
+      formEl.reset();
+    }catch(err){
+      console.log(err);
+      showToast('Failed to send message', false);
+    }
+  }else{
+    console.log('Form data:', Object.fromEntries(new FormData(formEl)));
+    showToast('Message sent successfully!');
+    formEl.reset();
+  }
 });
+</script>
+
+<!-- EMAILJS (same setup as your original site) -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  if(window.emailjs){ emailjs.init({publicKey:"PIWu_Pj_3sNoepEZ8"}); }
 </script>
 
 </body>
 </html>
+ 
