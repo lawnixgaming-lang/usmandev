@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#05060a">
 <title>Ashraff Usman | Full Stack Developer</title>
 <meta name="description" content="Ashraff Usman — 22 year old Full Stack Developer. Web, Game Development, and Cybersecurity.">
 
@@ -11,15 +12,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{
   background:#05060a;
   color:#e6f1ff;
   font-family:'Inter',sans-serif;
   scroll-behavior:smooth;
   overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
 }
-body{position:relative;min-height:100vh;}
+body{
+  position:relative;
+  min-height:100vh;
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+}
 
 /* ------ 3D BACKGROUND CANVAS ------ */
 #bg-canvas{
@@ -41,6 +48,7 @@ header{
   top:0;left:0;right:0;
   display:flex;align-items:center;justify-content:space-between;
   padding:18px 48px;
+  padding-top:max(18px, env(safe-area-inset-top));
   background:rgba(8,10,18,0.55);
   backdrop-filter:blur(18px);
   -webkit-backdrop-filter:blur(18px);
@@ -55,7 +63,7 @@ header .logo{
 }
 header .logo .badge{
   width:38px;height:38px;border-radius:50%;
-  overflow:hidden;
+  overflow:hidden;flex-shrink:0;
   background:linear-gradient(135deg,#00ffcc 0%,#7c5cff 100%);
   box-shadow:0 0 24px rgba(0,255,204,.35);
   border:2px solid rgba(0,255,204,.5);
@@ -63,6 +71,7 @@ header .logo .badge{
 header .logo .badge img{
   width:100%;height:100%;object-fit:cover;display:block;
 }
+nav{display:flex;align-items:center;}
 nav a{
   margin:0 14px;
   text-decoration:none;
@@ -71,6 +80,27 @@ nav a{
   transition:.25s;
 }
 nav a:hover{color:#00ffcc;text-shadow:0 0 12px rgba(0,255,204,.4);}
+
+/* hamburger */
+.menu-toggle{
+  display:none;
+  width:42px;height:42px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(20,24,40,.5);
+  border-radius:12px;
+  cursor:pointer;
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:5px;
+  padding:0;
+}
+.menu-toggle span{
+  display:block;width:18px;height:2px;
+  background:#e6f1ff;border-radius:2px;
+  transition:.3s;
+}
+.menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.menu-toggle.open span:nth-child(2){opacity:0;}
+.menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* ------ HERO ------ */
 .hero{
@@ -95,8 +125,8 @@ nav a:hover{color:#00ffcc;text-shadow:0 0 12px rgba(0,255,204,.4);}
 }
 .hero-left h1{
   font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(48px,7vw,92px);
-  line-height:1;
+  font-size:clamp(40px,7vw,92px);
+  line-height:1.05;
   font-weight:700;
   letter-spacing:-.02em;
   background:linear-gradient(135deg,#ffffff 0%,#9aa6b8 60%,#7c5cff 100%);
@@ -145,6 +175,8 @@ nav a:hover{color:#00ffcc;text-shadow:0 0 12px rgba(0,255,204,.4);}
   aspect-ratio:1/1;
   max-height:560px;
   border-radius:24px;
+  touch-action:pan-y; /* allow page scroll on touch */
+  display:block;
 }
 
 /* ------ SECTION SHARED ------ */
@@ -161,7 +193,8 @@ section.block{
 }
 .section-title{
   font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(34px,4.4vw,56px);
+  font-size:clamp(30px,4.4vw,56px);
+  line-height:1.15;
   font-weight:700;letter-spacing:-.02em;
   color:#ffffff;margin-bottom:18px;
 }
@@ -184,7 +217,7 @@ section.block{
 .about-card p{color:#9aa6b8;line-height:1.65;font-size:15px;}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px;}
 .stat{
-  padding:22px;border-radius:18px;
+  padding:22px 12px;border-radius:18px;
   background:rgba(0,255,204,.04);
   border:1px solid rgba(0,255,204,.15);
   text-align:center;
@@ -192,8 +225,9 @@ section.block{
 .stat .num{
   font-family:'Space Grotesk',sans-serif;font-size:34px;
   font-weight:700;color:#00ffcc;
+  line-height:1;
 }
-.stat .lbl{color:#9aa6b8;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:4px;}
+.stat .lbl{color:#9aa6b8;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:6px;}
 
 /* ------ SKILLS ------ */
 .skills-grid{
@@ -269,9 +303,13 @@ form input,form textarea{
   background:rgba(10,12,20,.6);
   color:#e6f1ff;
   border:1px solid rgba(255,255,255,.08);
-  font-family:'Inter',sans-serif;font-size:14.5px;
+  font-family:'Inter',sans-serif;
+  font-size:16px; /* 16px prevents iOS auto-zoom on focus */
   outline:none;transition:.25s;
   resize:vertical;
+  width:100%;
+  -webkit-appearance:none;
+  appearance:none;
 }
 form input::placeholder,form textarea::placeholder{color:#5b6478;}
 form input:focus,form textarea:focus{
@@ -305,16 +343,21 @@ form button:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(0
   display:grid;place-items:center;
   background:rgba(0,255,204,.1);
   color:#00ffcc;
+  flex-shrink:0;
 }
 .contact-card .ico svg{width:20px;height:20px;}
-.contact-card .meta{display:flex;flex-direction:column;}
+.contact-card .meta{display:flex;flex-direction:column;min-width:0;}
 .contact-card .meta .lbl{font-size:11px;color:#5b6478;text-transform:uppercase;letter-spacing:.18em;}
-.contact-card .meta .val{font-size:14.5px;color:#e6f1ff;font-weight:500;margin-top:2px;}
+.contact-card .meta .val{
+  font-size:14.5px;color:#e6f1ff;font-weight:500;margin-top:2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
 
 /* ------ FOOTER ------ */
 footer{
   text-align:center;
   padding:50px 20px 30px;
+  padding-bottom:max(30px, env(safe-area-inset-bottom));
   color:#5b6478;font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
   margin-top:60px;
@@ -326,11 +369,14 @@ footer .ft-name{
 
 /* toast */
 .toast{
-  position:fixed;bottom:30px;right:30px;
+  position:fixed;
+  bottom:max(30px, env(safe-area-inset-bottom));
+  right:30px;left:30px;
+  max-width:360px;margin-left:auto;
   padding:14px 22px;border-radius:14px;
   background:linear-gradient(135deg,#00ffcc,#3ad6b8);
   color:#05060a;font-weight:600;font-family:'Space Grotesk',sans-serif;
-  font-size:14px;
+  font-size:14px;text-align:center;
   box-shadow:0 14px 40px -10px rgba(0,255,204,.5);
   opacity:0;visibility:hidden;pointer-events:none;
   transform:translateY(20px);
@@ -345,22 +391,103 @@ footer .ft-name{
 
 /* ------ RESPONSIVE ------ */
 @media (max-width:980px){
-  header{padding:14px 22px;}
-  nav a{margin:0 8px;font-size:12px;}
-  .hero{grid-template-columns:1fr;padding:120px 22px 60px;}
-  #hero-canvas{max-height:380px;}
+  header{padding:14px 22px;padding-top:max(14px, env(safe-area-inset-top));}
+  .hero{grid-template-columns:1fr;padding:120px 22px 60px;gap:24px;}
+  .hero-right{order:-1;}
+  #hero-canvas{max-height:380px;aspect-ratio:1/1;max-width:380px;margin:0 auto;}
   section.block{padding:80px 22px;}
-  .about-grid{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;gap:24px;}
   .skills-grid{grid-template-columns:repeat(3,1fr);}
   .services-grid{grid-template-columns:1fr;}
   .contact-grid{grid-template-columns:1fr;}
   .stats{grid-template-columns:repeat(3,1fr);gap:10px;}
+  .stat{padding:16px 6px;}
   .stat .num{font-size:24px;}
+  .stat .lbl{font-size:10px;letter-spacing:.08em;}
+
+  /* mobile nav */
+  .menu-toggle{display:flex;}
+  nav{
+    position:fixed;
+    top:0;right:0;
+    height:100vh;height:100dvh;
+    width:min(78vw,320px);
+    flex-direction:column;
+    align-items:flex-start;justify-content:flex-start;
+    gap:6px;
+    padding:90px 28px 28px;
+    padding-top:calc(90px + env(safe-area-inset-top));
+    padding-right:max(28px, env(safe-area-inset-right));
+    background:rgba(8,10,18,0.92);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    border-left:1px solid rgba(0,255,204,.1);
+    transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+    z-index:90;
+    overflow-y:auto;
+  }
+  nav.open{transform:translateX(0);}
+  nav a{
+    margin:0;
+    padding:14px 4px;
+    font-size:15px;
+    width:100%;
+    border-bottom:1px solid rgba(255,255,255,.04);
+  }
+  .nav-overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.45);
+    opacity:0;visibility:hidden;
+    transition:opacity .3s, visibility 0s linear .3s;
+    z-index:80;
+  }
+  .nav-overlay.show{opacity:1;visibility:visible;transition:opacity .3s, visibility 0s;}
 }
+
+@media (max-width:560px){
+  header{padding:12px 16px;padding-top:max(12px, env(safe-area-inset-top));}
+  header .logo{font-size:14px;gap:8px;}
+  header .logo .badge{width:34px;height:34px;}
+  .hero{padding:110px 18px 50px;}
+  .hero-left .eyebrow{font-size:10px;padding:5px 12px;}
+  .hero-left h2{font-size:13px;}
+  .hero-left p{font-size:15.5px;margin-bottom:28px;}
+  .hero-cta{gap:10px;}
+  .btn{padding:13px 20px;font-size:13.5px;width:100%;justify-content:center;}
+  #hero-canvas{max-height:300px;max-width:300px;}
+  section.block{padding:70px 18px;}
+  .section-sub{font-size:15.5px;margin-bottom:40px;}
+  .about-card{padding:24px;}
+  .skills-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .skill{padding:18px 10px;}
+  .service{padding:22px;}
+  .stats{gap:8px;}
+  .stat{padding:14px 4px;}
+  .stat .num{font-size:22px;}
+  form input,form textarea{padding:13px 14px;}
+  .toast{left:16px;right:16px;font-size:13.5px;padding:13px 18px;}
+  footer{padding:40px 16px 24px;padding-bottom:max(24px, env(safe-area-inset-bottom));}
+}
+
+@media (max-width:380px){
+  .hero-left h1{font-size:38px;}
+  #hero-canvas{max-height:260px;max-width:260px;}
+  .skills-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* prevent body scroll when nav is open */
+body.nav-locked{overflow:hidden;}
 
 /* reveal anim */
 .reveal{opacity:0;transform:translateY(30px);transition:1s cubic-bezier(.2,.8,.2,1);}
 .reveal.in{opacity:1;transform:none;}
+
+/* respect users that prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+  html{scroll-behavior:auto;}
+}
 </style>
 </head>
 
@@ -376,7 +503,10 @@ footer .ft-name{
     <div class="badge"><img src="https://wallpapers.com/images/hd/cool-profile-picture-ug9oc08q7nn527wu.jpg" alt="Ashraff Usman"></div>
     Ashraff Usman
   </div>
-  <nav>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="primaryNav">
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
@@ -384,16 +514,17 @@ footer .ft-name{
     <a href="#contact">Contact</a>
   </nav>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-left">
     <span class="eyebrow">// Available for Projects</span>
-    <h1>I build the <span class="accent">web, games & secure systems.</span></h1>
+    <h1>I build the <span class="accent">web, games &amp; secure systems.</span></h1>
     <h2>22 Year Old Web Developer · Game Developer · Cybersecurity</h2>
     <p>I build modern websites, backend systems, games, and cybersecurity solutions. Focused on performance, clean UI, and real-world systems.</p>
     <div class="hero-cta">
-      <a href="#contact" class="btn btn-primary">Get In Touch →</a>
+      <a href="#contact" class="btn btn-primary">Get In Touch &rarr;</a>
       <a href="#services" class="btn btn-ghost">View Services</a>
     </div>
   </div>
@@ -413,7 +544,7 @@ footer .ft-name{
       <div class="stats">
         <div class="stat"><div class="num">22</div><div class="lbl">Years Old</div></div>
         <div class="stat"><div class="num">3+</div><div class="lbl">Stacks</div></div>
-        <div class="stat"><div class="num">∞</div><div class="lbl">Curiosity</div></div>
+        <div class="stat"><div class="num">8</div><div class="lbl">Curiosity</div></div>
       </div>
     </div>
     <div class="about-card">
@@ -426,15 +557,15 @@ footer .ft-name{
 <!-- SKILLS -->
 <section class="block reveal" id="skills">
   <div class="section-eyebrow">// Tech Stack</div>
-  <h2 class="section-title">Skills & tools.</h2>
+  <h2 class="section-title">Skills &amp; tools.</h2>
   <p class="section-sub">The languages and frameworks I reach for daily.</p>
   <div class="skills-grid">
-    <div class="skill" style="--c:#e34f26"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"></div><div class="name">HTML</div></div>
-    <div class="skill" style="--c:#264de4"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"></div><div class="name">CSS</div></div>
-    <div class="skill" style="--c:#f7df1e"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"></div><div class="name">JavaScript</div></div>
-    <div class="skill" style="--c:#61dafb"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"></div><div class="name">React</div></div>
-    <div class="skill" style="--c:#3c873a"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"></div><div class="name">Node.js</div></div>
-    <div class="skill" style="--c:#3776ab"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"></div><div class="name">Python</div></div>
+    <div class="skill" style="--c:#e34f26"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML"></div><div class="name">HTML</div></div>
+    <div class="skill" style="--c:#264de4"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS"></div><div class="name">CSS</div></div>
+    <div class="skill" style="--c:#f7df1e"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"></div><div class="name">JavaScript</div></div>
+    <div class="skill" style="--c:#61dafb"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"></div><div class="name">React</div></div>
+    <div class="skill" style="--c:#3c873a"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"></div><div class="name">Node.js</div></div>
+    <div class="skill" style="--c:#3776ab"><div class="icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div><div class="name">Python</div></div>
   </div>
 </section>
 
@@ -447,7 +578,7 @@ footer .ft-name{
     <div class="service"><div class="num">01</div><h3>Website Development</h3><p>Modern responsive websites.</p></div>
     <div class="service"><div class="num">02</div><h3>Game Development</h3><p>Unity, C#, C++ systems.</p></div>
     <div class="service"><div class="num">03</div><h3>Coding Tutorials</h3><p>Beginner to advanced coding.</p></div>
-    <div class="service"><div class="num">04</div><h3>Cybersecurity</h3><p>Security learning & protection.</p></div>
+    <div class="service"><div class="num">04</div><h3>Cybersecurity</h3><p>Security learning &amp; protection.</p></div>
     <div class="service"><div class="num">05</div><h3>Full Stack Projects</h3><p>Frontend + backend systems.</p></div>
     <div class="service"><div class="num">06</div><h3>Hire Me</h3><p>Available for projects.</p></div>
   </div>
@@ -461,15 +592,15 @@ footer .ft-name{
 
   <div class="contact-grid">
     <form id="contact-form">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="name" placeholder="Your Name" autocomplete="name" required>
+      <input type="email" name="email" placeholder="Your Email" autocomplete="email" inputmode="email" required>
       <input type="text" name="title" placeholder="Subject" required>
       <textarea name="message" placeholder="Your Message" required></textarea>
       <button type="submit">Send Message</button>
     </form>
 
     <div class="contact-cards">
-      <a class="contact-card" href="https://www.facebook.com/ooot.OFFICIAL.ACCOUNT" target="_blank">
+      <a class="contact-card" href="https://www.facebook.com/ooot.OFFICIAL.ACCOUNT" target="_blank" rel="noopener">
         <div class="ico">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12H17l-.5 3h-2v7A10 10 0 0 0 22 12z"/></svg>
         </div>
@@ -517,6 +648,9 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
+const isMobile = matchMedia('(max-width: 980px)').matches || ('ontouchstart' in window && innerWidth < 1024);
+const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+
 /* ====================================================
    HERO SCENE — distorted glowing sphere + bloom
 ==================================================== */
@@ -528,19 +662,12 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
   camera.position.set(0,0,5);
 
-  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-
-  // resize
-  function resize(){
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    renderer.setSize(w,h,false);
-    camera.aspect = w/h; camera.updateProjectionMatrix();
-    composer.setSize(w,h);
-  }
+  const renderer = new THREE.WebGLRenderer({canvas,antialias:!isMobile,alpha:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
 
   // sphere with ShaderMaterial — animated noise displacement + iridescent fresnel
-  const geo = new THREE.IcosahedronGeometry(1.45, 64);
+  const detail = isMobile ? 32 : 64;
+  const geo = new THREE.IcosahedronGeometry(1.45, detail);
   const uniforms = {
     uTime:{value:0},
     uColorA:{value:new THREE.Color('#00ffcc')},
@@ -553,7 +680,6 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
       uniform float uTime;
       varying vec3 vNormal;
       varying vec3 vPos;
-      // simplex-ish noise (cheap)
       float n(vec3 p){return sin(p.x*1.3+uTime*.6)*sin(p.y*1.7+uTime*.5)*sin(p.z*1.5+uTime*.7);}
       void main(){
         vec3 p = position;
@@ -598,32 +724,53 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   const p1 = new THREE.PointLight(0x00ffcc,2,10); p1.position.set(3,2,3); scene.add(p1);
   const p2 = new THREE.PointLight(0x7c5cff,2,10); p2.position.set(-3,-2,3); scene.add(p2);
 
-  // controls
+  // controls — disable touch drag on mobile so the page can scroll
   const controls = new OrbitControls(camera,canvas);
   controls.enableZoom = false;
   controls.enablePan = false;
   controls.autoRotate = true;
   controls.autoRotateSpeed = 1.2;
   controls.enableDamping = true;
+  if(isMobile){
+    controls.enabled = false; // page scroll wins on touch
+  }
 
-  // postprocessing
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene,camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), 0.9, 0.6, 0.1);
-  composer.addPass(bloom);
+  // postprocessing — skip bloom on low-power mobile
+  let composer = null;
+  if(!isMobile || !isLowPower){
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene,camera));
+    const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), isMobile ? 0.6 : 0.9, 0.6, 0.1);
+    composer.addPass(bloom);
+  }
 
+  function resize(){
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if(!w || !h) return;
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+    if(composer) composer.setSize(w,h);
+  }
   resize();
   window.addEventListener('resize',resize);
+  // some mobile browsers fire 'orientationchange' before layout settles
+  window.addEventListener('orientationchange', () => setTimeout(resize, 200));
 
   const clock = new THREE.Clock();
+  let visible = true;
+  document.addEventListener('visibilitychange', ()=>{ visible = !document.hidden; });
+
   function loop(){
+    requestAnimationFrame(loop);
+    if(!visible) return;
     const t = clock.getElapsedTime();
     uniforms.uTime.value = t;
     halo.rotation.x = t*0.15;
     halo.rotation.y = t*0.1;
-    controls.update();
-    composer.render();
-    requestAnimationFrame(loop);
+    if(controls.enabled) controls.update();
+    else mesh.rotation.y = t*0.25;
+    if(composer) composer.render();
+    else renderer.render(scene,camera);
   }
   loop();
 })();
@@ -637,12 +784,12 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
   camera.position.z = 6;
 
-  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const renderer = new THREE.WebGLRenderer({canvas,antialias:!isMobile,alpha:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1.25 : 2));
   renderer.setSize(innerWidth,innerHeight);
 
-  // particles
-  const COUNT = innerWidth < 768 ? 700 : 1800;
+  // particles — lighter on mobile to save battery
+  const COUNT = isMobile ? (isLowPower ? 400 : 600) : 1800;
   const positions = new Float32Array(COUNT*3);
   const colors    = new Float32Array(COUNT*3);
   const cA = new THREE.Color('#00ffcc');
@@ -662,40 +809,75 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
   geo.setAttribute('color',    new THREE.BufferAttribute(colors,3));
   const mat = new THREE.PointsMaterial({
-    size:0.04, vertexColors:true, transparent:true, opacity:0.85,
+    size:isMobile ? 0.05 : 0.04, vertexColors:true, transparent:true, opacity:0.85,
     depthWrite:false, blending:THREE.AdditiveBlending
   });
   const points = new THREE.Points(geo,mat);
   scene.add(points);
 
-  // resize
-  addEventListener('resize', ()=>{
-    camera.aspect = innerWidth/innerHeight;
+  // resize — debounced; ignore tiny height changes (mobile URL bar show/hide)
+  let lastW = innerWidth, lastH = innerHeight, resizeTO;
+  function doResize(){
+    const w = innerWidth, h = innerHeight;
+    // ignore vertical-only changes from mobile browser chrome flicker
+    if(isMobile && w === lastW && Math.abs(h - lastH) < 120) return;
+    lastW = w; lastH = h;
+    camera.aspect = w/h;
     camera.updateProjectionMatrix();
-    renderer.setSize(innerWidth,innerHeight);
+    renderer.setSize(w,h);
+  }
+  addEventListener('resize', ()=>{
+    clearTimeout(resizeTO);
+    resizeTO = setTimeout(doResize, 120);
   });
+  addEventListener('orientationchange', ()=> setTimeout(doResize, 200));
 
-  // mouse parallax
+  // mouse parallax (desktop only)
   let mx=0,my=0;
-  addEventListener('mousemove',e=>{
-    mx = (e.clientX/innerWidth - .5)*0.6;
-    my = (e.clientY/innerHeight - .5)*0.6;
-  });
+  if(!isMobile){
+    addEventListener('mousemove',e=>{
+      mx = (e.clientX/innerWidth - .5)*0.6;
+      my = (e.clientY/innerHeight - .5)*0.6;
+    });
+  }
 
   // scroll tilt
   let scrollY = 0;
-  addEventListener('scroll',()=>{ scrollY = window.scrollY; });
+  addEventListener('scroll',()=>{ scrollY = window.scrollY; }, {passive:true});
+
+  let visible = true;
+  document.addEventListener('visibilitychange', ()=>{ visible = !document.hidden; });
 
   const clock = new THREE.Clock();
   function loop(){
+    requestAnimationFrame(loop);
+    if(!visible) return;
     const t = clock.getElapsedTime();
     points.rotation.y = t*0.04 + mx*0.5;
     points.rotation.x = t*0.02 + my*0.4 + scrollY*0.0006;
     renderer.render(scene,camera);
-    requestAnimationFrame(loop);
   }
   loop();
 })();
+
+/* ====================================================
+   MOBILE NAV
+==================================================== */
+const menuToggle = document.getElementById('menuToggle');
+const primaryNav = document.getElementById('primaryNav');
+const navOverlay = document.getElementById('navOverlay');
+function setNav(open){
+  menuToggle.classList.toggle('open', open);
+  primaryNav.classList.toggle('open', open);
+  navOverlay.classList.toggle('show', open);
+  document.body.classList.toggle('nav-locked', open);
+  menuToggle.setAttribute('aria-expanded', String(open));
+}
+menuToggle.addEventListener('click', () => setNav(!primaryNav.classList.contains('open')));
+navOverlay.addEventListener('click', () => setNav(false));
+primaryNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setNav(false)));
+// close menu if resized back to desktop
+matchMedia('(min-width: 981px)').addEventListener('change', e => { if(e.matches) setNav(false); });
 
 /* ====================================================
    SCROLL REVEAL
@@ -723,7 +905,6 @@ function showToast(msg, ok=true){
 const formEl = document.getElementById('contact-form');
 formEl.addEventListener('submit', async (e)=>{
   e.preventDefault();
-  // try to use EmailJS if loaded
   if(window.emailjs){
     try{
       await emailjs.sendForm('service_57llv1u','template_2pqihz8', formEl);
@@ -749,4 +930,3 @@ formEl.addEventListener('submit', async (e)=>{
 
 </body>
 </html>
- 
