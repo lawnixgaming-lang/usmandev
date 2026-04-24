@@ -325,8 +325,15 @@ section.block{
   animation:caret-blink 1s steps(2,start) infinite;
 }
 @keyframes caret-blink{50%{opacity:0;}}
-/* keep block height stable while typing — applied via JS attr */
-[data-typewriter]{min-height:1.2em;}
+/* keep box stable while typing so layout doesn't jump as chars appear/disappear */
+[data-typewriter]{
+  display:inline-block;
+  min-width:1ch;
+  min-height:1em;
+  vertical-align:baseline;
+}
+/* numbers in the stats — match the teal accent colour for the caret */
+.typewriter-num::after{height:.85em;background:#00ffcc;}
 
 /* ------ SERVICES ------ */
 .services-grid{
@@ -1089,16 +1096,35 @@ fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
     function start(){ if(!running){ running = true; step(); } }
     function stop(){ running = false; clearTimeout(timer); }
 
-    // only run when in view, save battery
+    // observe a real block-level parent — empty inline spans have 0 size on
+    // mobile and the IntersectionObserver would never fire on the span itself
+    let watch = el;
+    while(watch && watch !== document.body){
+      const cs = getComputedStyle(watch);
+      if(cs.display !== 'inline' && cs.display !== 'contents') break;
+      watch = watch.parentElement;
+    }
+    if(!watch) watch = el;
+
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if(e.isIntersecting) start(); else stop(); });
-    }, {threshold:0.15});
-    io.observe(el);
+    }, {threshold:0.05, rootMargin:'80px 0px'});
+    io.observe(watch);
+
+    // safety fallback — if IO somehow never fires (older mobile browsers,
+    // page already scrolled past, etc.) start anyway after a short delay
+    setTimeout(() => {
+      const r = watch.getBoundingClientRect();
+      if(!running && r.bottom > 0 && r.top < innerHeight) start();
+    }, 1500);
 
     // pause when tab hidden
     document.addEventListener('visibilitychange', () => {
       if(document.hidden) stop();
-      else if(el.getBoundingClientRect().top < innerHeight) start();
+      else {
+        const r = watch.getBoundingClientRect();
+        if(r.bottom > 0 && r.top < innerHeight) start();
+      }
     });
   });
 })();
