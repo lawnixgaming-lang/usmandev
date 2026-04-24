@@ -187,14 +187,65 @@ nav a.active::after{width:100%;opacity:1;}
 }
 .btn-ghost:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);}
 
-/* hero 3d holder */
-#hero-canvas{
+/* hero photo holder — replaces the old 3D sphere */
+.hero-photo{
+  position:relative;
   width:100%;
   aspect-ratio:1/1;
-  max-height:560px;
-  border-radius:24px;
-  touch-action:pan-y; /* allow page scroll on touch */
+  max-width:520px;
+  max-height:520px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:heroFloat 6s ease-in-out infinite;
+}
+.hero-photo::before{
+  /* rotating conic gradient ring */
+  content:"";
+  position:absolute;
+  inset:-14px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,
+    #00ffcc 0deg, transparent 80deg,
+    #7c5cff 160deg, transparent 240deg,
+    #00ffcc 320deg, #00ffcc 360deg);
+  filter:blur(2px);
+  animation:heroRing 9s linear infinite;
+  z-index:0;
+}
+.hero-photo::after{
+  /* dark inset that turns the conic into a thin ring */
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  background:radial-gradient(circle at center, transparent 62%, rgba(5,7,12,.95) 65%);
+  z-index:1;
+}
+#hero-image{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(0,255,204,.35);
+  box-shadow:
+    0 0 60px rgba(0,255,204,.35),
+    0 0 120px rgba(124,92,255,.25),
+    inset 0 0 40px rgba(0,0,0,.35);
   display:block;
+}
+@keyframes heroRing{
+  to{transform:rotate(360deg);}
+}
+@keyframes heroFloat{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-14px);}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-photo,.hero-photo::before{animation:none;}
 }
 
 /* ------ SECTION SHARED ------ */
@@ -483,7 +534,7 @@ footer .ft-name{
   header{padding:14px 22px;padding-top:max(14px, env(safe-area-inset-top));}
   .hero{grid-template-columns:1fr;padding:120px 22px 60px;gap:24px;}
   .hero-right{order:-1;}
-  #hero-canvas{max-height:380px;aspect-ratio:1/1;max-width:380px;margin:0 auto;}
+  .hero-photo{max-height:380px;max-width:380px;margin:0 auto;}
   section.block{padding:80px 22px;}
   .about-grid{grid-template-columns:1fr;gap:24px;}
   .skill{width:130px;padding:18px 12px;}
@@ -547,7 +598,7 @@ footer .ft-name{
   .hero-left p{font-size:15.5px;margin-bottom:28px;}
   .hero-cta{gap:10px;}
   .btn{padding:13px 20px;font-size:13.5px;width:100%;justify-content:center;}
-  #hero-canvas{max-height:300px;max-width:300px;}
+  .hero-photo{max-height:300px;max-width:300px;}
   section.block{padding:70px 18px;}
   .section-sub{font-size:15.5px;margin-bottom:40px;}
   .about-card{padding:24px;}
@@ -564,7 +615,7 @@ footer .ft-name{
 
 @media (max-width:380px){
   .hero-left h1{font-size:38px;}
-  #hero-canvas{max-height:260px;max-width:260px;}
+  .hero-photo{max-height:260px;max-width:260px;}
   .skills-grid{grid-template-columns:repeat(2,1fr);}
 }
 
@@ -662,7 +713,9 @@ body.loaded .opener.zoom{transform:scale(1);}
     </div>
   </div>
   <div class="hero-right opener zoom" style="--d:650ms">
-    <canvas id="hero-canvas"></canvas>
+    <div class="hero-photo">
+      <img id="hero-image" src="https://i.imgur.com/QTujgz4.jpeg" alt="Ashraff Usman" loading="eager" decoding="async">
+    </div>
   </div>
 </section>
 
@@ -691,7 +744,7 @@ body.loaded .opener.zoom{transform:scale(1);}
     </div>
     <div class="about-card">
       <h3>How i work</h3>
-      <p><span class="typewriter" data-typewriter data-text="I ship fast, document as I go, and treat performance and security as features. I care about the end user — fast load times, clean responsive UI, and code that doesn't break in production."></span></p>
+      <p><span class="typewriter" data-typewriter data-text="i ship fast, document as i go, and treat performance and security as features. i care about the end user — fast load times, clean responsive UI, and code that doesn't break in production."></span></p>
     </div>
   </div>
 </section>
@@ -716,7 +769,7 @@ body.loaded .opener.zoom{transform:scale(1);}
 <!-- SERVICES -->
 <section class="block reveal" id="services">
   <div class="section-eyebrow">// Services</div>
-  <h2 class="section-title"><span class="typewriter" data-typewriter data-text="What I can build for you."></span></h2>
+  <h2 class="section-title"><span class="typewriter" data-typewriter data-text="What i can build for you."></span></h2>
   <p class="section-sub">From a one-page site to a full game system or a security audit — I work across the stack.</p>
   <div class="services-grid stagger">
     <div class="service"><div class="num">01</div><h3>Website Development</h3><p><span class="typewriter" data-typewriter data-text="Modern responsive websites."></span></p></div>
