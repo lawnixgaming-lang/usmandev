@@ -703,6 +703,46 @@ footer .ft-name{
 }
 .chat-region-banner .region-text strong{color:#e6f1ff;font-weight:600;}
 
+/* owner / admin mode */
+.chat-panel.owner-mode .chat-region-banner{
+  background:linear-gradient(90deg,rgba(124,92,255,.18),rgba(124,92,255,.04));
+  border-bottom-color:rgba(124,92,255,.25);
+  color:#d9d0ff;
+}
+.chat-panel.owner-mode .chat-region-banner .region-text strong{color:#fff;}
+.chat-owner-pill{
+  display:none;
+  align-items:center;gap:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:#1a1130;
+  background:linear-gradient(135deg,#cfb9ff,#7c5cff);
+  padding:2px 7px;border-radius:6px;
+  margin-left:6px;
+  vertical-align:middle;
+}
+.chat-panel.owner-mode .chat-owner-pill{display:inline-flex;}
+.chat-panel.owner-mode .chat-launcher,
+.chat-launcher.owner-mode{
+  background:linear-gradient(135deg,#7c5cff,#cfb9ff);
+}
+.chat-form input[readonly]{
+  background:rgba(124,92,255,.08);
+  border-color:rgba(124,92,255,.25);
+  color:#cfb9ff;
+  cursor:default;
+}
+.chat-panel.owner-mode .chat-form button{
+  background:linear-gradient(135deg,#7c5cff,#a78bff);
+  color:#fff;
+}
+.chat-panel.owner-mode .chat-form-name-row .your-flag{
+  background:rgba(124,92,255,.10);
+  border-color:rgba(124,92,255,.28);
+  color:#d9d0ff;
+}
+
 .chat-panel-body{
   flex:1;
   overflow-y:auto;
@@ -1254,8 +1294,8 @@ body.loaded .opener.zoom{transform:scale(1);}
       <span class="online-dot" aria-hidden="true"></span>
     </div>
     <div class="chat-host-info">
-      <h3>Ashraff Usman</h3>
-      <div class="status">Online · usually replies within a few hours</div>
+      <h3>Ashraff Usman<span class="chat-owner-pill" id="chatOwnerPill">Owner mode</span></h3>
+      <div class="status" id="chatHostStatus">Online · usually replies within a few hours</div>
     </div>
     <button type="button" class="chat-close" id="chatClose" aria-label="Close chat">&times;</button>
   </div>
@@ -1696,6 +1736,34 @@ const firebaseConfig = {
 const useFirebaseChat = typeof firebaseConfig.apiKey === 'string' && firebaseConfig.apiKey !== 'YOUR_API_KEY';
 const OWNER_NAMES = ['ashraff', 'ashraff usman', 'usman', 'admin', 'owner'];
 const MAX_MSG_LEN = 500;
+const OWNER_DISPLAY_NAME = 'Ashraff Usman';
+
+/* secret URL token to unlock owner-reply mode.
+   Visit: index.html?admin=ashraff   (also accepted: #admin=ashraff)
+   Persisted in localStorage so you only need the URL once per device. */
+const OWNER_TOKEN = 'ashraff';
+function detectOwnerMode(){
+  try{
+    const params = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+    const token = params.get('admin') || hashParams.get('admin');
+    if(token && token.toLowerCase() === OWNER_TOKEN){
+      localStorage.setItem('chatOwnerMode', '1');
+      // strip the token from the visible URL so it isn't shoulder-surfed
+      const clean = window.location.pathname + (window.location.hash ? window.location.hash.replace(/admin=[^&]*&?/i,'').replace(/[#&]$/,'') : '');
+      window.history.replaceState({}, '', clean);
+      return true;
+    }
+    if(params.get('admin') === 'logout' || hashParams.get('admin') === 'logout'){
+      localStorage.removeItem('chatOwnerMode');
+      const clean = window.location.pathname;
+      window.history.replaceState({}, '', clean);
+      return false;
+    }
+    return localStorage.getItem('chatOwnerMode') === '1';
+  }catch(_){ return false; }
+}
+const OWNER_MODE = detectOwnerMode();
 
 const chatLauncher = document.getElementById('chatLauncher');
 const chatPanel    = document.getElementById('chatPanel');
@@ -1744,6 +1812,23 @@ try{
   if(savedName) chatName.value = savedName;
 }catch(_){}
 
+/* ----- if owner-mode URL token was used, lock name to "Ashraff Usman"
+        and visually flip the panel into "owner" styling ----- */
+const chatOwnerPill   = document.getElementById('chatOwnerPill');
+const chatHostStatus  = document.getElementById('chatHostStatus');
+function applyOwnerMode(){
+  if(!OWNER_MODE) return;
+  chatPanel.classList.add('owner-mode');
+  chatLauncher.classList.add('owner-mode');
+  chatLauncher.setAttribute('aria-label', 'Open chat (owner mode)');
+  if(chatHostStatus) chatHostStatus.textContent = 'You are signed in as the owner';
+  chatName.value = OWNER_DISPLAY_NAME;
+  chatName.setAttribute('readonly', '');
+  chatName.title = 'Replying as the owner — visit ?admin=logout to switch back';
+  chatInput.placeholder = 'Reply to your visitors…';
+}
+applyOwnerMode();
+
 /* ----- detect visitor region from IP (free, no key) ----- */
 async function detectRegion(){
   // Try ipwho.is first (free, https, no key)
@@ -1778,6 +1863,19 @@ async function detectRegion(){
 }
 
 function applyRegionToUI(region){
+  if(OWNER_MODE){
+    // owner replies don't need a "sending from" line
+    chatRegionFlag.textContent = '🛡️';
+    chatRegionText.innerHTML = `Replying as <strong>${esc(OWNER_DISPLAY_NAME)}</strong> — your messages appear in purple`;
+    if(region){
+      chatYourFlag.querySelector('.flag').textContent = region.flag;
+      chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
+    }else{
+      chatYourFlag.querySelector('.flag').textContent = '🛡️';
+      chatYourFlag.querySelector('.code').textContent = 'OWNER';
+    }
+    return;
+  }
   if(!region){
     chatRegionFlag.textContent = '🌐';
     chatRegionText.innerHTML = `Region not detected — your messages will still send.`;
