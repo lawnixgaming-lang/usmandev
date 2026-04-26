@@ -1011,10 +1011,7 @@ footer .ft-name{
 }
 
 /* signed-in user row */
-.chat-user-row{
-  display:flex;align-items:center;gap:10px;
-  padding:6px 4px 4px;
-}
+.chat-user-row{display:flex;align-items:center;gap:10px;padding:6px 4px 4px;}
 .chat-user-info{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
 .chat-user-info img{
   width:34px;height:34px;border-radius:50%;
@@ -1809,7 +1806,13 @@ formEl.addEventListener('submit', async (e)=>{
     }
   }else{
     console.log('Form data:', Object.fromEntries(new FormData(formEl)));
-    showToast('Message sent succ<script type="module">
+    showToast('Message sent successfully!');
+    formEl.reset();
+  }
+});
+</script>
+
+<script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
   import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
   import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
@@ -1826,8 +1829,6 @@ formEl.addEventListener('submit', async (e)=>{
 
   const useFirebaseChat = typeof firebaseConfig.apiKey === 'string' && firebaseConfig.apiKey !== 'YOUR_API_KEY';
 
-  /* The owner is identified by Google account email or UID.
-     Set OWNER_EMAILS to the email(s) of the account(s) that should be marked as owner. */
   const OWNER_EMAILS = ['ashraffusmandev@gmail.com'];
   const OWNER_UIDS = [];
   const OWNER_DISPLAY_NAME = 'Ashraff Usman';
@@ -1854,7 +1855,6 @@ formEl.addEventListener('submit', async (e)=>{
   const chatUserSub     = document.getElementById('chatUserSub');
   const chatSignOutBtn  = document.getElementById('chatSignOut');
   const chatHostStatus  = document.getElementById('chatHostStatus');
-  const chatOwnerPill   = document.getElementById('chatOwnerPill');
 
   let unsubscribe = null;
   let firebaseApp = null;
@@ -1866,7 +1866,6 @@ formEl.addEventListener('submit', async (e)=>{
   let isOpen = false;
   let visitorRegion = null;
 
-  /* ----- safe HTML escape ----- */
   function esc(str){
     return String(str ?? '')
       .replace(/&/g, '&amp;')
@@ -1876,15 +1875,13 @@ formEl.addEventListener('submit', async (e)=>{
       .replace(/'/g, '&#39;');
   }
 
-  /* ----- ISO country code -> flag emoji ----- */
   function flagFromCode(code){
-    if(!code || typeof code !== 'string' || code.length !== 2) return '🏳';
+    if(!code || typeof code !== 'string' || code.length !== 2) return '\u{1F3F3}';
     const cc = code.toUpperCase();
     const A = 0x1F1E6;
     return String.fromCodePoint(A + cc.charCodeAt(0) - 65, A + cc.charCodeAt(1) - 65);
   }
 
-  /* ----- detect if a user is the owner ----- */
   function isOwnerUser(user){
     if(!user) return false;
     if(OWNER_UIDS.includes(user.uid)) return true;
@@ -1899,7 +1896,6 @@ formEl.addEventListener('submit', async (e)=>{
     return false;
   }
 
-  /* ----- visitor region detection ----- */
   async function detectRegion(){
     try{
       const r = await fetch('https://ipwho.is/?fields=success,country_code,country,city,region,flag', {cache:'force-cache'});
@@ -1919,37 +1915,37 @@ formEl.addEventListener('submit', async (e)=>{
   }
 
   function applyRegionToUI(region){
+    if(!chatRegionFlag || !chatRegionText || !chatYourFlag) return;
     const ownerNow = isOwnerUser(currentUser);
     if(ownerNow){
-      chatRegionFlag.textContent = '👑';
-      chatRegionText.innerHTML = `Replying as <strong>${esc(currentUser?.displayName || OWNER_DISPLAY_NAME)}</strong> • your messages appear in purple`;
+      chatRegionFlag.textContent = '\u{1F451}';
+      chatRegionText.innerHTML = 'Replying as <strong>' + esc(currentUser?.displayName || OWNER_DISPLAY_NAME) + '</strong> \u2022 your messages appear in purple';
       if(region){
         chatYourFlag.querySelector('.flag').textContent = region.flag;
         chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
       }else{
-        chatYourFlag.querySelector('.flag').textContent = '👑';
+        chatYourFlag.querySelector('.flag').textContent = '\u{1F451}';
         chatYourFlag.querySelector('.code').textContent = 'OWNER';
       }
       return;
     }
     if(!region){
-      chatRegionFlag.textContent = '🌍';
-      chatRegionText.innerHTML = `Region not detected • your messages will still send.`;
-      chatYourFlag.querySelector('.flag').textContent = '🌍';
+      chatRegionFlag.textContent = '\u{1F30D}';
+      chatRegionText.innerHTML = 'Region not detected \u2022 your messages will still send.';
+      chatYourFlag.querySelector('.flag').textContent = '\u{1F30D}';
       chatYourFlag.querySelector('.code').textContent = '--';
       return;
     }
     chatRegionFlag.textContent = region.flag;
     const where = [region.city, region.name].filter(Boolean).join(', ');
-    chatRegionText.innerHTML = `Sending from <strong>${esc(where || region.name)}</strong>`;
+    chatRegionText.innerHTML = 'Sending from <strong>' + esc(where || region.name) + '</strong>';
     chatYourFlag.querySelector('.flag').textContent = region.flag;
     chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
-    chatYourFlag.title = `Your region: ${region.name}`;
+    chatYourFlag.title = 'Your region: ' + region.name;
   }
 
   detectRegion().then(region => { visitorRegion = region; applyRegionToUI(region); });
 
-  /* ----- panel open/close ----- */
   function toggleChat(open){
     isOpen = open;
     chatPanel.classList.toggle('open', open);
@@ -1968,23 +1964,22 @@ formEl.addEventListener('submit', async (e)=>{
   }
 
   function showChatStatus(message){
-    chatBody.innerHTML = `<div class="chat-panel-status">${esc(message)}</div>`;
+    chatBody.innerHTML = '<div class="chat-panel-status">' + esc(message) + '</div>';
   }
 
   function showChatEmpty(){
-    chatBody.innerHTML = `
-      <div class="chat-empty">
-        <div class="chat-empty-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-          </svg>
-        </div>
-        <h4>Start the conversation</h4>
-        <p>Ask about a project, pricing, or just say hi.<br>I'll get back to you as soon as I can.</p>
-      </div>`;
+    chatBody.innerHTML =
+      '<div class="chat-empty">' +
+        '<div class="chat-empty-icon">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>' +
+          '</svg>' +
+        '</div>' +
+        '<h4>Start the conversation</h4>' +
+        '<p>Ask about a project, pricing, or just say hi.<br>I will get back to you as soon as I can.</p>' +
+      '</div>';
   }
 
-  /* ----- date / time helpers ----- */
   function fmtTime(d){ return new Intl.DateTimeFormat(undefined, {hour:'numeric', minute:'2-digit'}).format(d); }
   function fmtDateLabel(d){
     const today = new Date(); today.setHours(0,0,0,0);
@@ -2003,10 +1998,9 @@ formEl.addEventListener('submit', async (e)=>{
     let h = 0;
     for(const ch of String(name || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
     const hue = h % 360;
-    return `linear-gradient(135deg, hsl(${hue} 80% 65%), hsl(${(hue+40)%360} 80% 55%))`;
+    return 'linear-gradient(135deg, hsl(' + hue + ' 80% 65%), hsl(' + ((hue+40)%360) + ' 80% 55%))';
   }
 
-  /* ----- render all messages ----- */
   function renderChatMessages(messages){
     allMessages = messages;
     if(!messages.length){ showChatEmpty(); return; }
@@ -2020,8 +2014,8 @@ formEl.addEventListener('submit', async (e)=>{
       const dateKey = time ? time.toDateString() : 'pending';
 
       if(dateKey !== lastDateKey){
-        const label = time ? fmtDateLabel(time) : 'Sending…';
-        html += `<div class="chat-date-divider">${esc(label)}</div>`;
+        const label = time ? fmtDateLabel(time) : 'Sending\u2026';
+        html += '<div class="chat-date-divider">' + esc(label) + '</div>';
         lastDateKey = dateKey;
         lastSenderKey = '';
       }
@@ -2040,28 +2034,29 @@ formEl.addEventListener('submit', async (e)=>{
       const pendingClass = msg.pending ? ' pending' : '';
       const groupedClass = grouped ? ' grouped' : '';
 
-      const photo = msg.photoURL || (owner ? 'https://i.imgur.com/QTujgz4.jpeg' : null);
+      const photo = msg.photoURL || null;
       const avatarInner = photo
-        ? `<img src="${esc(photo)}" alt="${esc(author)}" referrerpolicy="no-referrer">`
+        ? '<img src="' + esc(photo) + '" alt="' + esc(author) + '" referrerpolicy="no-referrer">'
         : esc(initialsOf(author));
-      const avatarStyle = photo ? '' : `style="background:${avatarColor(author)}"`;
+      const avatarStyle = photo ? '' : ' style="background:' + avatarColor(author) + '"';
 
-      const metaRow = `
-        <div class="meta-row">
-          <span class="name">${esc(author)}</span>
-          ${flag ? `<span class="flag" title="${esc(country || code)}">${flag}</span>` : ''}
-          ${code ? `<span class="country-tag">${esc(code)}</span>` : ''}
-          ${timeStr ? `<span class="time">${esc(timeStr)}</span>` : ''}
-        </div>`;
+      const flagSpan = flag ? '<span class="flag" title="' + esc(country || code) + '">' + flag + '</span>' : '';
+      const codeSpan = code ? '<span class="country-tag">' + esc(code) + '</span>' : '';
+      const timeSpan = timeStr ? '<span class="time">' + esc(timeStr) + '</span>' : '';
+      const metaRow =
+        '<div class="meta-row">' +
+          '<span class="name">' + esc(author) + '</span>' +
+          flagSpan + codeSpan + timeSpan +
+        '</div>';
 
-      html += `
-        <div class="chat-row ${sideClass}${groupedClass}${pendingClass}">
-          <div class="chat-avatar" ${avatarStyle}>${avatarInner}</div>
-          <div class="chat-bubble">
-            ${metaRow}
-            <div class="text">${esc(msg.text)}</div>
-          </div>
-        </div>`;
+      html +=
+        '<div class="chat-row ' + sideClass + groupedClass + pendingClass + '">' +
+          '<div class="chat-avatar"' + avatarStyle + '>' + avatarInner + '</div>' +
+          '<div class="chat-bubble">' +
+            metaRow +
+            '<div class="text">' + esc(msg.text) + '</div>' +
+          '</div>' +
+        '</div>';
     });
 
     chatBody.innerHTML = html;
@@ -2074,7 +2069,6 @@ formEl.addEventListener('submit', async (e)=>{
     scrollChat();
   }
 
-  /* ----- send ----- */
   async function sendChatMessage(text){
     if(!useFirebaseChat){ showChatStatus('Chat is not configured.'); return; }
     if(!currentUser){ showAuthError('Please sign in with Google to send a message.'); return; }
@@ -2100,8 +2094,8 @@ formEl.addEventListener('submit', async (e)=>{
       city: visitorRegion?.city || null
     };
 
-    const optimistic = { ...payload, createdAt:new Date(), pending:true, id:'tmp-'+Date.now() };
-    renderChatMessages([...allMessages, optimistic]);
+    const optimistic = Object.assign({}, payload, { createdAt:new Date(), pending:true, id:'tmp-'+Date.now() });
+    renderChatMessages(allMessages.concat([optimistic]));
 
     try{
       await addDoc(collection(db, 'chat_messages'), payload);
@@ -2114,10 +2108,9 @@ formEl.addEventListener('submit', async (e)=>{
     }
   }
 
-  /* ----- counter + auto-resize ----- */
   function updateCounter(){
     const len = chatInput.value.length;
-    chatCounter.textContent = `${len} / ${MAX_MSG_LEN}`;
+    chatCounter.textContent = len + ' / ' + MAX_MSG_LEN;
     chatCounter.classList.toggle('warn', len > MAX_MSG_LEN * 0.8);
     chatCounter.classList.toggle('danger', len >= MAX_MSG_LEN);
   }
@@ -2140,14 +2133,13 @@ formEl.addEventListener('submit', async (e)=>{
     const text = chatInput.value.trim();
     if(!text) return;
     chatSend.disabled = true;
-    chatSendLbl.textContent = 'Sending…';
+    chatSendLbl.textContent = 'Sending\u2026';
     try{ await sendChatMessage(text); } finally {
       chatSend.disabled = false;
       chatSendLbl.textContent = 'Send';
     }
   });
 
-  /* ----- AUTH UI ----- */
   function showAuthError(msg){
     if(!chatAuthError) return;
     chatAuthError.textContent = msg;
@@ -2172,15 +2164,15 @@ formEl.addEventListener('submit', async (e)=>{
       chatLauncher.classList.toggle('owner-mode', ownerNow);
       if(chatHostStatus) chatHostStatus.textContent = ownerNow
         ? 'You are signed in as the owner'
-        : 'Online • usually replies within a few hours';
-      chatInput.placeholder = ownerNow ? 'Reply to your visitors…' : 'Type your message…';
+        : 'Online \u2022 usually replies within a few hours';
+      chatInput.placeholder = ownerNow ? 'Reply to your visitors\u2026' : 'Type your message\u2026';
       applyRegionToUI(visitorRegion);
     }else{
       chatForm.hidden = true;
       chatAuthGate.hidden = false;
       chatPanel.classList.remove('owner-mode');
       chatLauncher.classList.remove('owner-mode');
-      if(chatHostStatus) chatHostStatus.textContent = 'Online • usually replies within a few hours';
+      if(chatHostStatus) chatHostStatus.textContent = 'Online \u2022 usually replies within a few hours';
       applyRegionToUI(visitorRegion);
     }
   }
@@ -2222,7 +2214,6 @@ formEl.addEventListener('submit', async (e)=>{
   chatGoogleBtn?.addEventListener('click', handleSignIn);
   chatSignOutBtn?.addEventListener('click', handleSignOut);
 
-  /* ----- subscribe to messages + auth ----- */
   if(useFirebaseChat){
     firebaseApp = initializeApp(firebaseConfig);
     db = getFirestore(firebaseApp);
@@ -2248,7 +2239,7 @@ formEl.addEventListener('submit', async (e)=>{
       showChatStatus('Unable to connect to chat. Check Firebase config and rules.');
     });
   } else {
-    showChatStatus('Chat requires Firebase configuration. Replace placeholders in the script with your Firebase project settings.');
+    showChatStatus('Chat requires Firebase configuration.');
   }
   </script>
 
