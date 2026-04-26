@@ -1029,9 +1029,19 @@ footer .ft-name{
   .chat-bubble .meta-row .chat-role-badge{margin-left:2px;}
   .chat-user-meta .chat-role-badge{margin-top:3px;align-self:flex-start;}
 
-  /* role-styled bubbles */
-  .chat-row.support .chat-bubble{background:linear-gradient(135deg,rgba(0,220,130,.2),rgba(0,160,100,.12));border-color:rgba(0,220,130,.4);color:#dfffec;}
-  .chat-row.moderator .chat-bubble{background:linear-gradient(135deg,rgba(255,210,60,.2),rgba(220,170,40,.12));border-color:rgba(255,210,60,.4);color:#fff4d6;}
+  /* role-styled bubbles - colour only the text bubble, like visitor/owner */
+  .chat-row.support .text{
+    background:linear-gradient(180deg,rgba(0,220,130,.18),rgba(0,220,130,.10));
+    border-color:rgba(0,220,130,.25);
+    border-bottom-left-radius:6px;
+    color:#dfffec;
+  }
+  .chat-row.moderator .text{
+    background:linear-gradient(180deg,rgba(255,210,60,.18),rgba(255,210,60,.10));
+    border-color:rgba(255,210,60,.28);
+    border-bottom-left-radius:6px;
+    color:#fff4d6;
+  }
 
   /* role info popover */
   #chatRoleInfo{
