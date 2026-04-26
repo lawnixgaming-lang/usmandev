@@ -975,74 +975,120 @@ footer .ft-name{
 .chat-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
 .chat-form button svg{width:14px;height:14px;}
 
-/* google sign-in gate */
-.chat-auth-gate{
-  border-top:1px solid rgba(255,255,255,.06);
-  padding:18px 16px 18px;
-  padding-bottom:max(18px, env(safe-area-inset-bottom));
-  display:flex;flex-direction:column;align-items:stretch;gap:12px;
-  background:rgba(5,7,12,.6);
-  flex-shrink:0;
-}
-.chat-auth-blurb{display:flex;flex-direction:column;gap:4px;text-align:center;}
-.chat-auth-blurb strong{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:15px;color:#e6f1ff;font-weight:600;
-}
-.chat-auth-blurb span{font-size:12.5px;color:#9aa6b8;line-height:1.5;}
-.chat-google-btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  padding:12px 18px;border-radius:12px;
-  background:#ffffff;color:#1f1f1f;
-  border:1px solid rgba(255,255,255,.16);
-  font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
-  cursor:pointer;transition:.2s;
-  box-shadow:0 8px 24px -10px rgba(0,0,0,.5);
-}
-.chat-google-btn:hover{transform:translateY(-1px);box-shadow:0 14px 30px -10px rgba(0,255,204,.35);}
-.chat-google-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-.chat-google-btn svg{width:18px;height:18px;flex-shrink:0;}
-.chat-auth-error{
-  font-size:12px;color:#ff8197;text-align:center;
-  background:rgba(255,77,109,.08);
-  border:1px solid rgba(255,77,109,.25);
-  border-radius:10px;padding:8px 10px;
-  font-family:'JetBrains Mono',monospace;line-height:1.4;
-}
+  /* google sign-in gate */
+  .chat-auth-gate{
+    border-top:1px solid rgba(255,255,255,.06);
+    padding:18px 16px 18px;
+    padding-bottom:max(18px, env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;align-items:stretch;gap:12px;
+    background:rgba(5,7,12,.6);
+    flex-shrink:0;
+  }
+  .chat-auth-blurb{display:flex;flex-direction:column;gap:4px;text-align:center;}
+  .chat-auth-blurb strong{font-family:'Space Grotesk',sans-serif;font-size:15px;color:#e6f1ff;font-weight:600;}
+  .chat-auth-blurb span{font-size:12.5px;color:#9aa6b8;line-height:1.5;}
+  .chat-google-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    padding:12px 18px;border-radius:12px;
+    background:#ffffff;color:#1f1f1f;
+    border:1px solid rgba(255,255,255,.16);
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
+    cursor:pointer;transition:.2s;
+    box-shadow:0 8px 24px -10px rgba(0,0,0,.5);
+  }
+  .chat-google-btn:hover{transform:translateY(-1px);box-shadow:0 14px 30px -10px rgba(0,255,204,.35);}
+  .chat-google-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+  .chat-google-btn svg{width:18px;height:18px;flex-shrink:0;}
+  .chat-auth-error{
+    font-size:12px;color:#ff8197;text-align:center;
+    background:rgba(255,77,109,.08);border:1px solid rgba(255,77,109,.25);
+    border-radius:10px;padding:8px 10px;
+    font-family:'JetBrains Mono',monospace;line-height:1.4;
+  }
+  .chat-auth-gate[hidden],.chat-form[hidden]{display:none !important;}
 
-/* signed-in user row */
-.chat-user-row{display:flex;align-items:center;gap:10px;padding:6px 4px 4px;}
-.chat-user-info{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
-.chat-user-info img{
-  width:34px;height:34px;border-radius:50%;
-  object-fit:cover;flex-shrink:0;
-  border:1.5px solid rgba(0,255,204,.4);
-  box-shadow:0 0 12px rgba(0,255,204,.25);
-  background:rgba(20,24,40,.7);
-}
-.chat-user-meta{display:flex;flex-direction:column;min-width:0;}
-.chat-user-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:13px;font-weight:600;color:#e6f1ff;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.chat-user-sub{
-  font-family:'JetBrains Mono',monospace;
-  font-size:10.5px;color:#5b6478;letter-spacing:.04em;
-}
-.chat-user-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.chat-signout{
-  background:rgba(255,77,109,.08);
-  border:1px solid rgba(255,77,109,.25);
-  color:#ff8197;
-  padding:6px 10px;border-radius:10px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  letter-spacing:.06em;text-transform:uppercase;
-  cursor:pointer;transition:.2s;
-}
-.chat-signout:hover{background:rgba(255,77,109,.18);}
-.chat-auth-gate[hidden],.chat-form[hidden]{display:none !important;}
+  /* signed-in user row */
+  .chat-user-row{display:flex;align-items:center;gap:10px;padding:6px 4px 4px;}
+  .chat-user-info{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+  .chat-user-info img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1.5px solid rgba(0,255,204,.4);box-shadow:0 0 12px rgba(0,255,204,.25);background:rgba(20,24,40,.7);}
+  .chat-user-meta{display:flex;flex-direction:column;min-width:0;}
+  .chat-user-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#e6f1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chat-user-sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#5b6478;letter-spacing:.04em;}
+  .chat-user-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+  .chat-signout{background:rgba(255,77,109,.08);border:1px solid rgba(255,77,109,.25);color:#ff8197;padding:6px 10px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:.2s;}
+  .chat-signout:hover{background:rgba(255,77,109,.18);}
 
+  /* role badges */
+  .chat-role-badge{display:inline-flex;align-items:center;padding:2px 6px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;line-height:1;cursor:pointer;user-select:none;transition:.15s;}
+  .chat-role-badge:hover{transform:translateY(-1px);filter:brightness(1.15);}
+  .chat-role-badge.owner{background:rgba(176,107,255,.18);color:#d4adff;border:1px solid rgba(176,107,255,.45);}
+  .chat-role-badge.support{background:rgba(0,220,130,.14);color:#7fffb8;border:1px solid rgba(0,220,130,.4);}
+  .chat-role-badge.moderator{background:rgba(255,210,60,.14);color:#ffe28a;border:1px solid rgba(255,210,60,.4);}
+  .chat-role-badge.visitor{background:rgba(255,255,255,.06);color:#b3bccc;border:1px solid rgba(255,255,255,.18);}
+  .chat-role-badge.banned{background:rgba(255,77,109,.14);color:#ff8197;border:1px solid rgba(255,77,109,.4);}
+  .chat-bubble .meta-row .chat-role-badge{margin-left:2px;}
+  .chat-user-meta .chat-role-badge{margin-top:3px;align-self:flex-start;}
+
+  /* role-styled bubbles */
+  .chat-row.support .chat-bubble{background:linear-gradient(135deg,rgba(0,220,130,.2),rgba(0,160,100,.12));border-color:rgba(0,220,130,.4);color:#dfffec;}
+  .chat-row.moderator .chat-bubble{background:linear-gradient(135deg,rgba(255,210,60,.2),rgba(220,170,40,.12));border-color:rgba(255,210,60,.4);color:#fff4d6;}
+
+  /* role info popover */
+  #chatRoleInfo{
+    position:fixed;z-index:10000;
+    background:rgba(15,18,30,.98);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:12px;
+    padding:12px 14px;
+    max-width:260px;min-width:200px;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;line-height:1.5;
+    color:#cbd2dc;
+    box-shadow:0 14px 36px -10px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.3);
+    backdrop-filter:blur(8px);
+    pointer-events:none;
+  }
+  #chatRoleInfo[hidden]{display:none;}
+  #chatRoleInfo .ri-head{
+    display:flex;align-items:center;gap:8px;margin-bottom:6px;
+  }
+  #chatRoleInfo .ri-head .chat-role-badge{cursor:default;}
+  #chatRoleInfo strong{
+    font-family:'Space Grotesk',sans-serif;font-size:13px;color:#fff;font-weight:700;
+  }
+
+  /* admin button */
+  .chat-admin-btn{background:rgba(176,107,255,.1);border:1px solid rgba(176,107,255,.3);color:#d4adff;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;flex-shrink:0;padding:0;}
+  .chat-admin-btn:hover{background:rgba(176,107,255,.22);transform:translateY(-1px);}
+  .chat-admin-btn svg{width:15px;height:15px;}
+  .chat-admin-btn[hidden]{display:none !important;}
+
+  /* admin overlay */
+  .chat-admin{position:absolute;inset:0;background:rgba(5,7,12,.97);backdrop-filter:blur(10px);display:flex;flex-direction:column;z-index:5;border-radius:inherit;}
+  .chat-admin[hidden]{display:none !important;}
+  .chat-admin-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(176,107,255,.06);}
+  .chat-admin-head h4{margin:0;font-family:'Space Grotesk',sans-serif;font-size:14px;color:#e6f1ff;flex:1;font-weight:600;}
+  .chat-admin-close{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#9aa6b8;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:16px;line-height:1;display:inline-flex;align-items:center;justify-content:center;transition:.2s;}
+  .chat-admin-close:hover{background:rgba(255,255,255,.12);color:#fff;transform:rotate(90deg);}
+  .chat-admin-list{flex:1;overflow-y:auto;padding:10px 12px;}
+  .chat-admin-list::-webkit-scrollbar{width:6px;}
+  .chat-admin-list::-webkit-scrollbar-thumb{background:rgba(176,107,255,.3);border-radius:6px;}
+  .chat-admin-empty{text-align:center;color:#5b6478;font-size:12px;padding:30px 10px;font-family:'JetBrains Mono',monospace;}
+  .chat-admin-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.06);background:rgba(15,18,30,.6);margin-bottom:8px;transition:.2s;}
+  .chat-admin-row:hover{border-color:rgba(176,107,255,.25);background:rgba(20,22,38,.7);}
+  .chat-admin-row img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1.5px solid rgba(0,255,204,.3);background:rgba(20,24,40,.7);}
+  .chat-admin-row.owner img{border-color:rgba(176,107,255,.6);}
+  .chat-admin-row.support img{border-color:rgba(0,220,130,.6);}
+  .chat-admin-row.moderator img{border-color:rgba(255,210,60,.6);}
+  .chat-admin-row.banned img{border-color:rgba(255,77,109,.55);filter:grayscale(.6);}
+  .chat-admin-meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+  .chat-admin-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#e6f1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px;}
+  .chat-admin-email{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#7c8699;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chat-admin-extra{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#5b6478;letter-spacing:.04em;display:flex;flex-wrap:wrap;gap:8px;}
+  .chat-admin-role{background:rgba(10,12,20,.8);border:1px solid rgba(255,255,255,.12);color:#e6f1ff;padding:6px 8px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;flex-shrink:0;outline:none;}
+  .chat-admin-role:focus{border-color:rgba(176,107,255,.5);}
+  .chat-admin-role[disabled]{opacity:.5;cursor:not-allowed;}
+  
 @media (max-width:680px){
   .chat-panel{right:12px;left:12px;width:auto;bottom:12px;height:78vh;max-height:78vh;}
   .chat-launcher{right:14px;bottom:14px;width:54px;height:54px;}
@@ -1376,50 +1422,65 @@ body.loaded .opener.zoom{transform:scale(1);}
     <div class="chat-panel-status">Loading chat�</div>
   </div>
   <div class="chat-auth-gate" id="chatAuthGate" hidden>
-    <div class="chat-auth-blurb">
-      <strong>Sign in to start chatting</strong>
-      <span>Use your Google account so Ashraff knows who you are.</span>
+      <div class="chat-auth-blurb">
+        <strong>Sign in to start chatting</strong>
+        <span>Use your Google account so Ashraff knows who you are.</span>
+      </div>
+      <button type="button" class="chat-google-btn" id="chatGoogleSignIn">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/>
+          <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+          <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.6 39.6 16.2 44 24 44z"/>
+          <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.6l6.2 5.2C41.6 35.4 44 30.1 44 24c0-1.2-.1-2.4-.4-3.5z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+      <div class="chat-auth-error" id="chatAuthError" hidden></div>
     </div>
-    <button type="button" class="chat-google-btn" id="chatGoogleSignIn">
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/>
-        <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
-        <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.6 39.6 16.2 44 24 44z"/>
-        <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.6l6.2 5.2C41.6 35.4 44 30.1 44 24c0-1.2-.1-2.4-.4-3.5z"/>
-      </svg>
-      <span>Continue with Google</span>
-    </button>
-    <div class="chat-auth-error" id="chatAuthError" hidden></div>
-  </div>
-  <form class="chat-form" id="chatForm" autocomplete="off" hidden>
-    <div class="chat-user-row" id="chatUserRow">
-      <div class="chat-user-info">
-        <img id="chatUserAvatar" alt="" referrerpolicy="no-referrer">
-        <div class="chat-user-meta">
-          <span class="chat-user-name" id="chatUserName">Visitor</span>
-          <span class="chat-user-sub" id="chatUserSub">Signed in with Google</span>
+    <form class="chat-form" id="chatForm" autocomplete="off" hidden>
+      <div class="chat-user-row" id="chatUserRow">
+        <div class="chat-user-info">
+          <img id="chatUserAvatar" alt="" referrerpolicy="no-referrer">
+          <div class="chat-user-meta">
+            <span class="chat-user-name" id="chatUserName">Visitor</span>
+            <span class="chat-user-sub" id="chatUserSub">Signed in with Google</span>
+          </div>
+        </div>
+        <div class="chat-user-actions">
+          <span class="your-flag" id="chatYourFlag" title="Your detected region">
+            <span class="flag">🌍</span><span class="code">--</span>
+          </span>
+          <button type="button" class="chat-admin-btn" id="chatAdminBtn" title="Manage users & roles" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="7" r="4"/>
+              <path d="M5.5 21a6.5 6.5 0 0 1 13 0"/>
+            </svg>
+          </button>
+          <button type="button" class="chat-signout" id="chatSignOut" title="Sign out">Sign out</button>
         </div>
       </div>
-      <div class="chat-user-actions">
-        <span class="your-flag" id="chatYourFlag" title="Your detected region">
-          <span class="flag">🌍</span><span class="code">--</span>
-        </span>
-        <button type="button" class="chat-signout" id="chatSignOut" title="Sign out">Sign out</button>
+      <textarea id="chatInput" name="chatInput" placeholder="Type your message…" maxlength="500" required></textarea>
+      <div class="chat-send-row">
+        <span class="chat-counter" id="chatCounter">0 / 500</span>
+        <button type="submit" id="chatSend">
+          <span id="chatSendLabel">Send</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+    <div class="chat-admin" id="chatAdmin" hidden>
+      <div class="chat-admin-head">
+        <h4>Manage users &amp; roles</h4>
+        <button type="button" class="chat-admin-close" id="chatAdminClose" aria-label="Close">×</button>
+      </div>
+      <div class="chat-admin-list" id="chatAdminList">
+        <div class="chat-admin-empty">Loading users…</div>
       </div>
     </div>
-    <textarea id="chatInput" name="chatInput" placeholder="Type your message…" maxlength="500" required></textarea>
-    <div class="chat-send-row">
-      <span class="chat-counter" id="chatCounter">0 / 500</span>
-      <button type="submit" id="chatSend">
-        <span id="chatSendLabel">Send</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/>
-        </svg>
-      </button>
-    </div>
-  </form>
-</div>
-
+  </div>
+  
 <!-- THREE.JS via CDN -->
 <script type="importmap">
 {
@@ -1815,7 +1876,7 @@ formEl.addEventListener('submit', async (e)=>{
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
-  import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+  import { getFirestore, collection, doc, addDoc, setDoc, updateDoc, getDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
   import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
 
   const firebaseConfig = {
@@ -1830,71 +1891,75 @@ formEl.addEventListener('submit', async (e)=>{
 
   const useFirebaseChat = typeof firebaseConfig.apiKey === 'string' && firebaseConfig.apiKey !== 'YOUR_API_KEY';
 
-  const OWNER_EMAILS = ['lawnixusman@gmail.com'];
-  const OWNER_UIDS = [];
+  /* The very first time these emails sign in, they are auto-promoted to 'owner'.
+     After that, owners can promote/demote anyone from the in-chat admin panel. */
+  const BOOTSTRAP_OWNER_EMAILS = ['lawnixusman@gmail.com'];
   const OWNER_DISPLAY_NAME = 'Ashraff Usman';
   const MAX_MSG_LEN = 500;
 
-  const chatLauncher    = document.getElementById('chatLauncher');
-  const chatPanel       = document.getElementById('chatPanel');
-  const chatClose       = document.getElementById('chatClose');
-  const chatBody        = document.getElementById('chatBody');
-  const chatForm        = document.getElementById('chatForm');
-  const chatInput       = document.getElementById('chatInput');
-  const chatSend        = document.getElementById('chatSend');
-  const chatSendLbl     = document.getElementById('chatSendLabel');
-  const chatCounter     = document.getElementById('chatCounter');
-  const chatBadge       = document.getElementById('chatBadge');
-  const chatRegionFlag  = document.getElementById('chatRegionFlag');
-  const chatRegionText  = document.getElementById('chatRegionText');
-  const chatYourFlag    = document.getElementById('chatYourFlag');
-  const chatAuthGate    = document.getElementById('chatAuthGate');
-  const chatGoogleBtn   = document.getElementById('chatGoogleSignIn');
-  const chatAuthError   = document.getElementById('chatAuthError');
-  const chatUserAvatar  = document.getElementById('chatUserAvatar');
-  const chatUserName    = document.getElementById('chatUserName');
-  const chatUserSub     = document.getElementById('chatUserSub');
-  const chatSignOutBtn  = document.getElementById('chatSignOut');
-  const chatHostStatus  = document.getElementById('chatHostStatus');
+  const ROLES = ['owner', 'support', 'moderator', 'visitor', 'banned'];
+  const ROLE_LABELS = { owner:'Owner', support:'Support', moderator:'Moderator', visitor:'Visitor', banned:'Banned' };
+  const ROLE_DESC = {
+    owner: 'Runs this site. Their messages appear in purple and they can manage everyone\'s roles.',
+    support: 'Official helper. Answers questions and assists visitors on behalf of the team.',
+    moderator: 'Keeps the chat civil. Can delete messages and help enforce community rules.',
+    visitor: 'Anyone signed in with Google. The default role for new accounts.',
+    banned: 'This account has been restricted and can no longer send messages.'
+  };
 
-  let unsubscribe = null;
-  let firebaseApp = null;
-  let db = null;
-  let auth = null;
-  let currentUser = null;
+  const $ = (id) => document.getElementById(id);
+  const chatLauncher = $('chatLauncher');
+  const chatPanel    = $('chatPanel');
+  const chatClose    = $('chatClose');
+  const chatBody     = $('chatBody');
+  const chatForm     = $('chatForm');
+  const chatInput    = $('chatInput');
+  const chatSend     = $('chatSend');
+  const chatSendLbl  = $('chatSendLabel');
+  const chatCounter  = $('chatCounter');
+  const chatBadge    = $('chatBadge');
+  const chatRegionFlag = $('chatRegionFlag');
+  const chatRegionText = $('chatRegionText');
+  const chatYourFlag = $('chatYourFlag');
+  const chatAuthGate = $('chatAuthGate');
+  const chatGoogleBtn = $('chatGoogleSignIn');
+  const chatAuthError = $('chatAuthError');
+  const chatUserAvatar = $('chatUserAvatar');
+  const chatUserName = $('chatUserName');
+  const chatUserSub = $('chatUserSub');
+  const chatSignOutBtn = $('chatSignOut');
+  const chatHostStatus = $('chatHostStatus');
+  const chatAdminBtn = $('chatAdminBtn');
+  const chatAdmin = $('chatAdmin');
+  const chatAdminClose = $('chatAdminClose');
+  const chatAdminList = $('chatAdminList');
+
+  let firebaseApp = null, db = null, auth = null;
+  let currentUser = null, currentRole = 'visitor';
+  let userProfiles = {};
   let allMessages = [];
-  let lastSeenCount = 0;
-  let isOpen = false;
-  let visitorRegion = null;
+  let lastSeenCount = 0, isOpen = false, visitorRegion = null;
+  let unsubMessages = null, unsubMyProfile = null, unsubAllUsers = null;
 
   function esc(str){
-    return String(str ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+    return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
-
   function flagFromCode(code){
     if(!code || typeof code !== 'string' || code.length !== 2) return '\u{1F3F3}';
-    const cc = code.toUpperCase();
-    const A = 0x1F1E6;
+    const cc = code.toUpperCase(); const A = 0x1F1E6;
     return String.fromCodePoint(A + cc.charCodeAt(0) - 65, A + cc.charCodeAt(1) - 65);
   }
+  function isStaff(role){ return role === 'owner' || role === 'support' || role === 'moderator'; }
 
-  function isOwnerUser(user){
-    if(!user) return false;
-    if(OWNER_UIDS.includes(user.uid)) return true;
-    const email = (user.email || '').toLowerCase();
-    return OWNER_EMAILS.map(e => e.toLowerCase()).includes(email);
+  function roleOfMessage(msg){
+    if(msg && typeof msg.role === 'string' && ROLES.includes(msg.role)) return msg.role;
+    if(msg && msg.uid && userProfiles[msg.uid]?.role) return userProfiles[msg.uid].role;
+    if(msg && msg.isOwner === true) return 'owner';
+    return 'visitor';
   }
-  function isOwnerMessage(msg){
-    if(!msg) return false;
-    if(msg.uid && OWNER_UIDS.includes(msg.uid)) return true;
-    if(msg.email && OWNER_EMAILS.map(e => e.toLowerCase()).includes(String(msg.email).toLowerCase())) return true;
-    if(msg.isOwner === true) return true;
-    return false;
+  function roleBadge(role){
+    if(!role || role === 'visitor') return '';
+    return '<span class="chat-role-badge ' + role + '">' + esc(ROLE_LABELS[role] || role) + '</span>';
   }
 
   async function detectRegion(){
@@ -1917,32 +1982,31 @@ formEl.addEventListener('submit', async (e)=>{
 
   function applyRegionToUI(region){
     if(!chatRegionFlag || !chatRegionText || !chatYourFlag) return;
-    const ownerNow = isOwnerUser(currentUser);
-    if(ownerNow){
+    if(currentRole === 'owner'){
       chatRegionFlag.textContent = '\u{1F451}';
       chatRegionText.innerHTML = 'Replying as <strong>' + esc(currentUser?.displayName || OWNER_DISPLAY_NAME) + '</strong> \u2022 your messages appear in purple';
-      if(region){
-        chatYourFlag.querySelector('.flag').textContent = region.flag;
-        chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
-      }else{
-        chatYourFlag.querySelector('.flag').textContent = '\u{1F451}';
-        chatYourFlag.querySelector('.code').textContent = 'OWNER';
-      }
-      return;
-    }
-    if(!region){
+    } else if(currentRole === 'support'){
+      chatRegionFlag.textContent = '\u{1F6DF}';
+      chatRegionText.innerHTML = 'Replying as <strong>Support</strong>';
+    } else if(currentRole === 'moderator'){
+      chatRegionFlag.textContent = '\u{1F6E1}';
+      chatRegionText.innerHTML = 'Replying as <strong>Moderator</strong>';
+    } else if(region){
+      chatRegionFlag.textContent = region.flag;
+      const where = [region.city, region.name].filter(Boolean).join(', ');
+      chatRegionText.innerHTML = 'Sending from <strong>' + esc(where || region.name) + '</strong>';
+    } else {
       chatRegionFlag.textContent = '\u{1F30D}';
       chatRegionText.innerHTML = 'Region not detected \u2022 your messages will still send.';
+    }
+    if(region){
+      chatYourFlag.querySelector('.flag').textContent = region.flag;
+      chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
+      chatYourFlag.title = 'Your region: ' + region.name;
+    } else {
       chatYourFlag.querySelector('.flag').textContent = '\u{1F30D}';
       chatYourFlag.querySelector('.code').textContent = '--';
-      return;
     }
-    chatRegionFlag.textContent = region.flag;
-    const where = [region.city, region.name].filter(Boolean).join(', ');
-    chatRegionText.innerHTML = 'Sending from <strong>' + esc(where || region.name) + '</strong>';
-    chatYourFlag.querySelector('.flag').textContent = region.flag;
-    chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
-    chatYourFlag.title = 'Your region: ' + region.name;
   }
 
   detectRegion().then(region => { visitorRegion = region; applyRegionToUI(region); });
@@ -1955,32 +2019,20 @@ formEl.addEventListener('submit', async (e)=>{
     if(open){
       lastSeenCount = allMessages.length;
       chatBadge.classList.remove('show');
-      if(currentUser) setTimeout(() => chatInput.focus(), 250);
-      scrollChat(true);
+      if(currentUser && currentRole !== 'banned') setTimeout(() => chatInput.focus(), 250);
+      scrollChat();
     }
   }
-
-  function scrollChat(){
-    requestAnimationFrame(() => { chatBody.scrollTop = chatBody.scrollHeight; });
-  }
-
-  function showChatStatus(message){
-    chatBody.innerHTML = '<div class="chat-panel-status">' + esc(message) + '</div>';
-  }
-
+  function scrollChat(){ requestAnimationFrame(() => { chatBody.scrollTop = chatBody.scrollHeight; }); }
+  function showChatStatus(msg){ chatBody.innerHTML = '<div class="chat-panel-status">' + esc(msg) + '</div>'; }
   function showChatEmpty(){
     chatBody.innerHTML =
       '<div class="chat-empty">' +
-        '<div class="chat-empty-icon">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-            '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>' +
-          '</svg>' +
-        '</div>' +
+        '<div class="chat-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>' +
         '<h4>Start the conversation</h4>' +
         '<p>Ask about a project, pricing, or just say hi.<br>I will get back to you as soon as I can.</p>' +
       '</div>';
   }
-
   function fmtTime(d){ return new Intl.DateTimeFormat(undefined, {hour:'numeric', minute:'2-digit'}).format(d); }
   function fmtDateLabel(d){
     const today = new Date(); today.setHours(0,0,0,0);
@@ -1991,80 +2043,47 @@ formEl.addEventListener('submit', async (e)=>{
     if(diffDays < 7) return new Intl.DateTimeFormat(undefined, {weekday:'long'}).format(d);
     return new Intl.DateTimeFormat(undefined, {month:'short', day:'numeric', year:'numeric'}).format(d);
   }
-  function initialsOf(name){
-    const parts = String(name || 'V').trim().split(/\s+/);
-    return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'V';
-  }
-  function avatarColor(name){
-    let h = 0;
-    for(const ch of String(name || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-    const hue = h % 360;
-    return 'linear-gradient(135deg, hsl(' + hue + ' 80% 65%), hsl(' + ((hue+40)%360) + ' 80% 55%))';
-  }
+  function initialsOf(name){ const parts = String(name || 'V').trim().split(/\s+/); return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'V'; }
+  function avatarColor(name){ let h = 0; for(const ch of String(name || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0; const hue = h % 360; return 'linear-gradient(135deg, hsl(' + hue + ' 80% 65%), hsl(' + ((hue+40)%360) + ' 80% 55%))'; }
 
   function renderChatMessages(messages){
     allMessages = messages;
     if(!messages.length){ showChatEmpty(); return; }
-
-    let html = '';
-    let lastDateKey = '';
-    let lastSenderKey = '';
-
+    let html = '', lastDateKey = '', lastSenderKey = '';
     messages.forEach((msg) => {
       const time = msg.createdAt?.toDate ? msg.createdAt.toDate() : (msg.createdAt instanceof Date ? msg.createdAt : null);
       const dateKey = time ? time.toDateString() : 'pending';
-
       if(dateKey !== lastDateKey){
         const label = time ? fmtDateLabel(time) : 'Sending\u2026';
         html += '<div class="chat-date-divider">' + esc(label) + '</div>';
-        lastDateKey = dateKey;
-        lastSenderKey = '';
+        lastDateKey = dateKey; lastSenderKey = '';
       }
-
       const author = msg.name || 'Visitor';
-      const owner  = isOwnerMessage(msg);
-      const sideClass = owner ? 'owner' : 'visitor';
+      const role = roleOfMessage(msg);
+      const sideClass = (role === 'owner' || role === 'support' || role === 'moderator') ? role : 'visitor';
       const senderKey = sideClass + ':' + (msg.uid || author);
       const grouped = senderKey === lastSenderKey;
       lastSenderKey = senderKey;
-
       const code = (msg.countryCode || '').toUpperCase();
       const flag = msg.countryFlag || (code ? flagFromCode(code) : '');
       const country = msg.countryName || '';
       const timeStr = time ? fmtTime(time) : '';
       const pendingClass = msg.pending ? ' pending' : '';
       const groupedClass = grouped ? ' grouped' : '';
-
-      const photo = msg.photoURL || null;
-      const avatarInner = photo
-        ? '<img src="' + esc(photo) + '" alt="' + esc(author) + '" referrerpolicy="no-referrer">'
-        : esc(initialsOf(author));
+      const cachedPhoto = msg.uid ? userProfiles[msg.uid]?.photoURL : null;
+      const photo = cachedPhoto || msg.photoURL || null;
+      const avatarInner = photo ? '<img src="' + esc(photo) + '" alt="' + esc(author) + '" referrerpolicy="no-referrer">' : esc(initialsOf(author));
       const avatarStyle = photo ? '' : ' style="background:' + avatarColor(author) + '"';
-
       const flagSpan = flag ? '<span class="flag" title="' + esc(country || code) + '">' + flag + '</span>' : '';
       const codeSpan = code ? '<span class="country-tag">' + esc(code) + '</span>' : '';
       const timeSpan = timeStr ? '<span class="time">' + esc(timeStr) + '</span>' : '';
-      const metaRow =
-        '<div class="meta-row">' +
-          '<span class="name">' + esc(author) + '</span>' +
-          flagSpan + codeSpan + timeSpan +
-        '</div>';
-
-      html +=
-        '<div class="chat-row ' + sideClass + groupedClass + pendingClass + '">' +
-          '<div class="chat-avatar"' + avatarStyle + '>' + avatarInner + '</div>' +
-          '<div class="chat-bubble">' +
-            metaRow +
-            '<div class="text">' + esc(msg.text) + '</div>' +
-          '</div>' +
-        '</div>';
+      const badge = roleBadge(role);
+      const metaRow = '<div class="meta-row"><span class="name">' + esc(author) + '</span>' + badge + flagSpan + codeSpan + timeSpan + '</div>';
+      html += '<div class="chat-row ' + sideClass + groupedClass + pendingClass + '"><div class="chat-avatar"' + avatarStyle + '>' + avatarInner + '</div><div class="chat-bubble">' + metaRow + '<div class="text">' + esc(msg.text) + '</div></div></div>';
     });
-
     chatBody.innerHTML = html;
-
     if(!isOpen && messages.length > lastSeenCount){
-      const newCount = messages.length - lastSeenCount;
-      chatBadge.textContent = String(newCount);
+      chatBadge.textContent = String(messages.length - lastSeenCount);
       chatBadge.classList.add('show');
     }
     scrollChat();
@@ -2073,36 +2092,35 @@ formEl.addEventListener('submit', async (e)=>{
   async function sendChatMessage(text){
     if(!useFirebaseChat){ showChatStatus('Chat is not configured.'); return; }
     if(!currentUser){ showAuthError('Please sign in with Google to send a message.'); return; }
-
+    if(currentRole === 'banned'){ showAuthError('Your account has been restricted from sending messages.'); return; }
     if(!visitorRegion){
       try{ visitorRegion = await Promise.race([detectRegion(), new Promise(r => setTimeout(() => r(null), 1500))]); applyRegionToUI(visitorRegion); }catch(_){}
     }
-
-    const ownerNow = isOwnerUser(currentUser);
-    const displayName = ownerNow ? OWNER_DISPLAY_NAME : (currentUser.displayName || currentUser.email || 'Visitor');
-
+    const displayName = (currentRole === 'owner') ? (currentUser.displayName || OWNER_DISPLAY_NAME) : (currentUser.displayName || currentUser.email || 'Visitor');
     const payload = {
-      name: displayName,
-      text,
+      name: displayName, text,
       uid: currentUser.uid,
       email: currentUser.email || null,
       photoURL: currentUser.photoURL || null,
-      isOwner: ownerNow,
+      role: currentRole,
+      isOwner: currentRole === 'owner',
       createdAt: serverTimestamp(),
       countryCode: visitorRegion?.code || null,
       countryName: visitorRegion?.name || null,
       countryFlag: visitorRegion?.flag || null,
       city: visitorRegion?.city || null
     };
-
     const optimistic = Object.assign({}, payload, { createdAt:new Date(), pending:true, id:'tmp-'+Date.now() });
     renderChatMessages(allMessages.concat([optimistic]));
-
     try{
       await addDoc(collection(db, 'chat_messages'), payload);
-      chatInput.value = '';
-      updateCounter();
-      autoSizeInput();
+      chatInput.value = ''; updateCounter(); autoSizeInput();
+      try{
+        await updateDoc(doc(db, 'users', currentUser.uid), {
+          lastMessageAt: serverTimestamp(),
+          messageCount: ((userProfiles[currentUser.uid]?.messageCount || 0) + 1)
+        });
+      }catch(profErr){ console.warn('profile update skipped', profErr); }
     }catch(err){
       console.error('Chat send error', err);
       showChatStatus('Unable to send message. Please check your connection and try again.');
@@ -2115,130 +2133,275 @@ formEl.addEventListener('submit', async (e)=>{
     chatCounter.classList.toggle('warn', len > MAX_MSG_LEN * 0.8);
     chatCounter.classList.toggle('danger', len >= MAX_MSG_LEN);
   }
-  function autoSizeInput(){
-    chatInput.style.height = 'auto';
-    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
-  }
+  function autoSizeInput(){ chatInput.style.height = 'auto'; chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px'; }
   chatInput.addEventListener('input', () => { updateCounter(); autoSizeInput(); });
-
-  chatInput.addEventListener('keydown', e => {
-    if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); chatForm.requestSubmit(); }
-  });
-
+  chatInput.addEventListener('keydown', e => { if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); chatForm.requestSubmit(); } });
   chatLauncher.addEventListener('click', () => toggleChat(!chatPanel.classList.contains('open')));
   chatClose.addEventListener('click', () => toggleChat(false));
-  document.addEventListener('keydown', e => { if(e.key === 'Escape' && isOpen) toggleChat(false); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && isOpen){ if(!chatAdmin.hidden){ chatAdmin.hidden = true; } else { toggleChat(false); } } });
 
   chatForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const text = chatInput.value.trim();
-    if(!text) return;
-    chatSend.disabled = true;
-    chatSendLbl.textContent = 'Sending\u2026';
-    try{ await sendChatMessage(text); } finally {
-      chatSend.disabled = false;
-      chatSendLbl.textContent = 'Send';
-    }
+    const text = chatInput.value.trim(); if(!text) return;
+    chatSend.disabled = true; chatSendLbl.textContent = 'Sending\u2026';
+    try{ await sendChatMessage(text); } finally { chatSend.disabled = false; chatSendLbl.textContent = 'Send'; }
   });
 
-  function showAuthError(msg){
-    if(!chatAuthError) return;
-    chatAuthError.textContent = msg;
-    chatAuthError.hidden = false;
-  }
-  function clearAuthError(){
-    if(!chatAuthError) return;
-    chatAuthError.hidden = true;
-    chatAuthError.textContent = '';
-  }
+  function showAuthError(msg){ if(chatAuthError){ chatAuthError.textContent = msg; chatAuthError.hidden = false; } }
+  function clearAuthError(){ if(chatAuthError){ chatAuthError.hidden = true; chatAuthError.textContent = ''; } }
 
-  function applyAuthUI(user){
+  function applyAuthUI(user, profile){
     currentUser = user;
-    if(user){
-      chatAuthGate.hidden = true;
-      chatForm.hidden = false;
-      chatUserAvatar.src = user.photoURL || 'https://www.gravatar.com/avatar/?d=mp&s=80';
-      chatUserName.textContent = user.displayName || user.email || 'Signed in';
-      chatUserSub.textContent  = user.email || 'Signed in with Google';
-      const ownerNow = isOwnerUser(user);
-      chatPanel.classList.toggle('owner-mode', ownerNow);
-      chatLauncher.classList.toggle('owner-mode', ownerNow);
-      if(chatHostStatus) chatHostStatus.textContent = ownerNow
-        ? 'You are signed in as the owner'
-        : 'Online \u2022 usually replies within a few hours';
-      chatInput.placeholder = ownerNow ? 'Reply to your visitors\u2026' : 'Type your message\u2026';
-      applyRegionToUI(visitorRegion);
-    }else{
+    currentRole = profile?.role || 'visitor';
+    if(!user){
       chatForm.hidden = true;
       chatAuthGate.hidden = false;
       chatPanel.classList.remove('owner-mode');
       chatLauncher.classList.remove('owner-mode');
+      chatAdminBtn.hidden = true;
+      chatAdmin.hidden = true;
       if(chatHostStatus) chatHostStatus.textContent = 'Online \u2022 usually replies within a few hours';
       applyRegionToUI(visitorRegion);
+      return;
     }
+    chatAuthGate.hidden = true;
+    chatForm.hidden = false;
+    chatUserAvatar.src = user.photoURL || 'https://www.gravatar.com/avatar/?d=mp&s=80';
+    const badge = currentRole !== 'visitor' ? ' ' + roleBadge(currentRole) : '';
+    chatUserName.innerHTML = esc(user.displayName || user.email || 'Signed in') + badge;
+    chatUserSub.textContent = user.email || 'Signed in with Google';
+    chatPanel.classList.toggle('owner-mode', currentRole === 'owner');
+    chatLauncher.classList.toggle('owner-mode', currentRole === 'owner');
+    chatAdminBtn.hidden = currentRole !== 'owner';
+    if(currentRole !== 'owner') chatAdmin.hidden = true;
+    if(chatHostStatus){
+      if(currentRole === 'owner') chatHostStatus.textContent = 'You are signed in as the owner';
+      else if(currentRole === 'support') chatHostStatus.textContent = 'You are signed in as support';
+      else if(currentRole === 'moderator') chatHostStatus.textContent = 'You are signed in as a moderator';
+      else if(currentRole === 'banned') chatHostStatus.textContent = 'Your account has been restricted';
+      else chatHostStatus.textContent = 'Online \u2022 usually replies within a few hours';
+    }
+    if(currentRole === 'banned'){
+      chatInput.placeholder = 'You have been restricted from sending messages.';
+      chatInput.disabled = true; chatSend.disabled = true;
+    } else {
+      chatInput.disabled = false; chatSend.disabled = false;
+      chatInput.placeholder = isStaff(currentRole) ? 'Reply to your visitors\u2026' : 'Type your message\u2026';
+    }
+    applyRegionToUI(visitorRegion);
+    if(allMessages.length) renderChatMessages(allMessages);
   }
 
   const provider = useFirebaseChat ? new GoogleAuthProvider() : null;
-  if(provider){
-    provider.setCustomParameters({ prompt: 'select_account' });
-  }
+  if(provider) provider.setCustomParameters({ prompt: 'select_account' });
 
   async function handleSignIn(){
     if(!auth || !provider) return;
-    clearAuthError();
-    chatGoogleBtn.disabled = true;
-    try{
-      await signInWithPopup(auth, provider);
-    }catch(err){
+    clearAuthError(); chatGoogleBtn.disabled = true;
+    try{ await signInWithPopup(auth, provider); }
+    catch(err){
       console.error('Google sign-in error', err);
       if(err && (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request')){
-        try{
-          await signInWithRedirect(auth, provider);
-          return;
-        }catch(redirErr){
-          console.error('Redirect sign-in error', redirErr);
-          showAuthError(redirErr?.message || 'Sign-in failed. Please try again.');
-        }
-      }else{
-        showAuthError(err?.message || 'Sign-in failed. Please try again.');
-      }
-    }finally{
-      chatGoogleBtn.disabled = false;
-    }
+        try{ await signInWithRedirect(auth, provider); return; }
+        catch(redirErr){ showAuthError(redirErr?.message || 'Sign-in failed. Please try again.'); }
+      } else { showAuthError(err?.message || 'Sign-in failed. Please try again.'); }
+    } finally { chatGoogleBtn.disabled = false; }
   }
-
-  async function handleSignOut(){
-    if(!auth) return;
-    try{ await signOut(auth); }catch(err){ console.error('Sign-out error', err); }
-  }
-
+  async function handleSignOut(){ if(!auth) return; try{ await signOut(auth); }catch(err){ console.error(err); } }
   chatGoogleBtn?.addEventListener('click', handleSignIn);
   chatSignOutBtn?.addEventListener('click', handleSignOut);
+
+  async function ensureUserDoc(user){
+    if(!db || !user) return null;
+    const userRef = doc(db, 'users', user.uid);
+    try{
+      const snap = await getDoc(userRef);
+      const isBootstrapOwner = BOOTSTRAP_OWNER_EMAILS.map(e => e.toLowerCase()).includes((user.email || '').toLowerCase());
+      if(!snap.exists()){
+        const profile = {
+          uid: user.uid,
+          email: user.email || null,
+          displayName: user.displayName || (user.email ? user.email.split('@')[0] : 'Visitor'),
+          photoURL: user.photoURL || null,
+          role: isBootstrapOwner ? 'owner' : 'visitor',
+          countryCode: visitorRegion?.code || null,
+          countryName: visitorRegion?.name || null,
+          city: visitorRegion?.city || null,
+          messageCount: 0,
+          createdAt: serverTimestamp(),
+          lastSeen: serverTimestamp()
+        };
+        await setDoc(userRef, profile);
+        return profile;
+      } else {
+        const updates = {
+          lastSeen: serverTimestamp(),
+          displayName: user.displayName || snap.data().displayName,
+          photoURL: user.photoURL || snap.data().photoURL || null
+        };
+        if(visitorRegion){
+          updates.countryCode = visitorRegion.code || null;
+          updates.countryName = visitorRegion.name || null;
+          updates.city = visitorRegion.city || null;
+        }
+        if(isBootstrapOwner && snap.data().role !== 'owner') updates.role = 'owner';
+        await updateDoc(userRef, updates);
+        return Object.assign({}, snap.data(), updates);
+      }
+    }catch(err){ console.warn('ensureUserDoc failed', err); return null; }
+  }
+
+  function subscribeToMyProfile(uid){
+    if(unsubMyProfile){ try{ unsubMyProfile(); }catch(_){} }
+    unsubMyProfile = onSnapshot(doc(db, 'users', uid), (snap) => {
+      if(snap.exists()){
+        const profile = snap.data();
+        userProfiles[uid] = profile;
+        applyAuthUI(currentUser, profile);
+        if(profile.role === 'owner' && !unsubAllUsers) subscribeToAllUsers();
+      }
+    }, err => console.warn('my profile snapshot failed', err));
+  }
+
+  function subscribeToAllUsers(){
+    if(unsubAllUsers) return;
+    const usersQuery = query(collection(db, 'users'), orderBy('lastSeen', 'desc'), limit(200));
+    unsubAllUsers = onSnapshot(usersQuery, (snap) => {
+      const map = {};
+      snap.docs.forEach(d => { map[d.id] = d.data(); });
+      userProfiles = map;
+      if(currentUser && userProfiles[currentUser.uid]){
+        applyAuthUI(currentUser, userProfiles[currentUser.uid]);
+      }
+      if(!chatAdmin.hidden) renderAdminList();
+      if(allMessages.length) renderChatMessages(allMessages);
+    }, err => console.warn('users snapshot failed', err));
+  }
+
+  function renderAdminList(){
+    const profiles = Object.values(userProfiles);
+    if(!profiles.length){ chatAdminList.innerHTML = '<div class="chat-admin-empty">No users yet.</div>'; return; }
+    profiles.sort((a, b) => {
+      const at = a.lastSeen?.toMillis ? a.lastSeen.toMillis() : 0;
+      const bt = b.lastSeen?.toMillis ? b.lastSeen.toMillis() : 0;
+      return bt - at;
+    });
+    let html = '';
+    profiles.forEach(p => {
+      const role = p.role || 'visitor';
+      const photo = p.photoURL ? '<img src="' + esc(p.photoURL) + '" alt="" referrerpolicy="no-referrer">' : '<img src="https://www.gravatar.com/avatar/?d=mp&s=80" alt="">';
+      const flag = p.countryCode ? flagFromCode(p.countryCode) : '';
+      const where = [p.city, p.countryName].filter(Boolean).join(', ');
+      const seenAt = p.lastSeen?.toDate ? new Intl.DateTimeFormat(undefined, {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}).format(p.lastSeen.toDate()) : '';
+      const msgCount = typeof p.messageCount === 'number' ? p.messageCount : 0;
+      const isSelf = p.uid === currentUser?.uid;
+      let options = '';
+      ROLES.forEach(r => { options += '<option value="' + r + '"' + (r === role ? ' selected' : '') + '>' + ROLE_LABELS[r] + '</option>'; });
+      html += '<div class="chat-admin-row ' + role + '">' + photo +
+        '<div class="chat-admin-meta">' +
+          '<div class="chat-admin-name">' + esc(p.displayName || 'Unknown') + ' ' + roleBadge(role) + (isSelf ? ' <span style="color:#5b6478;font-weight:400;font-size:10.5px">(you)</span>' : '') + '</div>' +
+          '<div class="chat-admin-email">' + esc(p.email || '\u2014') + '</div>' +
+          '<div class="chat-admin-extra">' +
+            (where ? '<span>' + (flag ? flag + ' ' : '') + esc(where) + '</span>' : '') +
+            (seenAt ? '<span>seen ' + esc(seenAt) + '</span>' : '') +
+            '<span>' + msgCount + ' msg' + (msgCount === 1 ? '' : 's') + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<select class="chat-admin-role" data-uid="' + esc(p.uid) + '"' + (isSelf ? ' disabled title="You cannot change your own role"' : '') + '>' + options + '</select>' +
+      '</div>';
+    });
+    chatAdminList.innerHTML = html;
+    chatAdminList.querySelectorAll('select.chat-admin-role').forEach(sel => {
+      sel.addEventListener('change', async (e) => {
+        const uid = e.target.dataset.uid;
+        const newRole = e.target.value;
+        const oldRole = userProfiles[uid]?.role || 'visitor';
+        if(uid === currentUser?.uid) return;
+        if(!confirm('Change ' + (userProfiles[uid]?.displayName || 'this user') + ' to ' + ROLE_LABELS[newRole] + '?')){
+          e.target.value = oldRole; return;
+        }
+        e.target.disabled = true;
+        try{ await updateDoc(doc(db, 'users', uid), { role: newRole }); }
+        catch(err){ console.error(err); alert('Failed to change role: ' + (err?.message || err)); e.target.value = oldRole; }
+        finally { e.target.disabled = false; }
+      });
+    });
+  }
+
+  chatAdminBtn?.addEventListener('click', () => { chatAdmin.hidden = false; renderAdminList(); });
+  chatAdminClose?.addEventListener('click', () => { chatAdmin.hidden = true; });
+
+  /* --- role badge info popover --- */
+  const roleInfoEl = document.createElement('div');
+  roleInfoEl.id = 'chatRoleInfo';
+  roleInfoEl.hidden = true;
+  document.body.appendChild(roleInfoEl);
+
+  function showRoleInfo(badge, role){
+    const label = ROLE_LABELS[role] || role;
+    const desc  = ROLE_DESC[role]  || '';
+    roleInfoEl.innerHTML =
+      '<div class="ri-head"><span class="chat-role-badge ' + role + '">' + esc(label) + '</span><strong>' + esc(label) + '</strong></div>' +
+      '<div>' + esc(desc) + '</div>';
+    roleInfoEl.hidden = false;
+    const r = badge.getBoundingClientRect();
+    /* measure after rendering */
+    requestAnimationFrame(() => {
+      const w = roleInfoEl.offsetWidth, h = roleInfoEl.offsetHeight;
+      let left = r.left;
+      let top  = r.bottom + 8;
+      if(left + w > window.innerWidth - 10) left = window.innerWidth - w - 10;
+      if(left < 10) left = 10;
+      if(top + h > window.innerHeight - 10) top = r.top - h - 8;
+      roleInfoEl.style.left = left + 'px';
+      roleInfoEl.style.top  = top  + 'px';
+    });
+  }
+  function hideRoleInfo(){ roleInfoEl.hidden = true; }
+
+  document.addEventListener('click', (e) => {
+    const badge = e.target.closest('.chat-role-badge');
+    if(badge){
+      /* don't trigger if the badge is inside the popover itself */
+      if(badge.closest('#chatRoleInfo')) return;
+      e.stopPropagation();
+      const role = ROLES.find(r => badge.classList.contains(r));
+      if(role){
+        if(!roleInfoEl.hidden) hideRoleInfo();
+        else showRoleInfo(badge, role);
+      }
+      return;
+    }
+    hideRoleInfo();
+  });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') hideRoleInfo(); });
+  window.addEventListener('scroll', hideRoleInfo, true);
+  window.addEventListener('resize', hideRoleInfo);
+  
 
   if(useFirebaseChat){
     firebaseApp = initializeApp(firebaseConfig);
     db = getFirestore(firebaseApp);
     auth = getAuth(firebaseApp);
-
-    setPersistence(auth, browserLocalPersistence).catch(err => console.warn('Auth persistence error', err));
-
-    getRedirectResult(auth).catch(err => {
-      if(err) console.warn('Redirect result error', err);
-    });
-
-    onAuthStateChanged(auth, user => { applyAuthUI(user); });
-
+    setPersistence(auth, browserLocalPersistence).catch(err => console.warn(err));
+    getRedirectResult(auth).catch(err => { if(err) console.warn(err); });
     applyAuthUI(null);
 
-    const messagesRef = collection(db, 'chat_messages');
-    const messagesQuery = query(messagesRef, orderBy('createdAt'), limit(80));
-    unsubscribe = onSnapshot(messagesQuery, snapshot => {
-      const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      renderChatMessages(messages);
-    }, err => {
-      console.error('Chat snapshot failed', err);
-      showChatStatus('Unable to connect to chat. Check Firebase config and rules.');
+    onAuthStateChanged(auth, async (user) => {
+      if(unsubMyProfile){ try{ unsubMyProfile(); }catch(_){} unsubMyProfile = null; }
+      if(unsubAllUsers){ try{ unsubAllUsers(); }catch(_){} unsubAllUsers = null; }
+      userProfiles = {};
+      if(!user){ applyAuthUI(null); return; }
+      const profile = await ensureUserDoc(user);
+      applyAuthUI(user, profile);
+      subscribeToMyProfile(user.uid);
     });
+
+    const messagesQuery = query(collection(db, 'chat_messages'), orderBy('createdAt'), limit(80));
+    unsubMessages = onSnapshot(messagesQuery, snapshot => {
+      const messages = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderChatMessages(messages);
+    }, err => { console.error(err); showChatStatus('Unable to connect to chat. Check Firebase config and rules.'); });
   } else {
     showChatStatus('Chat requires Firebase configuration.');
   }
