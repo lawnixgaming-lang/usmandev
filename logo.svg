@@ -1,0 +1,32 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%">
+      <stop offset="0%" stop-color="#00c6ff"></stop>
+      <stop offset="100%" stop-color="#7b2cff"></stop>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"></feGaussianBlur>
+      <feMerge>
+        <feMergeNode in="blur"></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="55" fill="#0a0a0f"></circle>
+
+  <!-- Code symbol -->
+  <text x="28" y="75" font-size="36" fill="url(#grad)" filter="url(#glow)" font-family="monospace">
+    &lt;
+  </text>
+  <text x="68" y="75" font-size="36" fill="url(#grad)" filter="url(#glow)" font-family="monospace">
+    &gt;
+  </text>
+
+  <!-- Lock body -->
+  <rect x="45" y="55" width="30" height="25" rx="6" fill="none" stroke="url(#grad)" stroke-width="2"></rect>
+
+  <!-- Lock shackle -->
+  <path d="M50 55 v-10 a10 10 0 0 1 20 0 v10" fill="none" stroke="url(#grad)" stroke-width="2"></path>
+</svg>
