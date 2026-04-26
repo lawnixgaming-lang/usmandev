@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#05060a">
 <title>Ashraff Usman | Full Stack Developer</title>
 <link rel="icon" type="image/svg+xml" href="/logo.svg">
-<meta name="description" content="Ashraff Usman — 22 year old Full Stack Developer. Web, Game Development, and Cybersecurity.">
+<meta name="description" content="Ashraff Usman � 22 year old Full Stack Developer. Web, Game Development, and Cybersecurity.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -188,7 +188,7 @@ nav a.active::after{width:100%;opacity:1;}
 }
 .btn-ghost:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);}
 
-/* hero photo holder — replaces the old 3D sphere */
+/* hero photo holder � replaces the old 3D sphere */
 .hero-photo{
   position:relative;
   width:100%;
@@ -299,7 +299,7 @@ section.block{
 }
 .stat .lbl{color:#9aa6b8;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:6px;}
 
-/* ------ SKILLS — infinite scrolling marquee ------ */
+/* ------ SKILLS � infinite scrolling marquee ------ */
 .skills-marquee{
   position:relative;
   width:100%;
@@ -403,7 +403,7 @@ section.block{
   min-height:1em;
   vertical-align:baseline;
 }
-/* numbers in the stats — match the teal accent colour for the caret */
+/* numbers in the stats � match the teal accent colour for the caret */
 .typewriter-num::after{height:.85em;background:#00ffcc;}
 
 /* ------ SERVICES ------ */
@@ -975,6 +975,76 @@ footer .ft-name{
 .chat-form button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
 .chat-form button svg{width:14px;height:14px;}
 
+/* google sign-in gate */
+.chat-auth-gate{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:18px 16px 18px;
+  padding-bottom:max(18px, env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;align-items:stretch;gap:12px;
+  background:rgba(5,7,12,.6);
+  flex-shrink:0;
+}
+.chat-auth-blurb{display:flex;flex-direction:column;gap:4px;text-align:center;}
+.chat-auth-blurb strong{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:15px;color:#e6f1ff;font-weight:600;
+}
+.chat-auth-blurb span{font-size:12.5px;color:#9aa6b8;line-height:1.5;}
+.chat-google-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:12px 18px;border-radius:12px;
+  background:#ffffff;color:#1f1f1f;
+  border:1px solid rgba(255,255,255,.16);
+  font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
+  cursor:pointer;transition:.2s;
+  box-shadow:0 8px 24px -10px rgba(0,0,0,.5);
+}
+.chat-google-btn:hover{transform:translateY(-1px);box-shadow:0 14px 30px -10px rgba(0,255,204,.35);}
+.chat-google-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.chat-google-btn svg{width:18px;height:18px;flex-shrink:0;}
+.chat-auth-error{
+  font-size:12px;color:#ff8197;text-align:center;
+  background:rgba(255,77,109,.08);
+  border:1px solid rgba(255,77,109,.25);
+  border-radius:10px;padding:8px 10px;
+  font-family:'JetBrains Mono',monospace;line-height:1.4;
+}
+
+/* signed-in user row */
+.chat-user-row{
+  display:flex;align-items:center;gap:10px;
+  padding:6px 4px 4px;
+}
+.chat-user-info{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.chat-user-info img{
+  width:34px;height:34px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
+  border:1.5px solid rgba(0,255,204,.4);
+  box-shadow:0 0 12px rgba(0,255,204,.25);
+  background:rgba(20,24,40,.7);
+}
+.chat-user-meta{display:flex;flex-direction:column;min-width:0;}
+.chat-user-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:13px;font-weight:600;color:#e6f1ff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.chat-user-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:#5b6478;letter-spacing:.04em;
+}
+.chat-user-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.chat-signout{
+  background:rgba(255,77,109,.08);
+  border:1px solid rgba(255,77,109,.25);
+  color:#ff8197;
+  padding:6px 10px;border-radius:10px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;transition:.2s;
+}
+.chat-signout:hover{background:rgba(255,77,109,.18);}
+
 @media (max-width:680px){
   .chat-panel{right:12px;left:12px;width:auto;bottom:12px;height:78vh;max-height:78vh;}
   .chat-launcher{right:14px;bottom:14px;width:54px;height:54px;}
@@ -1084,7 +1154,7 @@ header.scrolled{
   box-shadow:0 10px 30px -18px rgba(0,0,0,.8);
 }
 
-/* ------ PAGE LOAD OPENER (hero) — slow & cinematic ------ */
+/* ------ PAGE LOAD OPENER (hero) � slow & cinematic ------ */
 .opener{
   opacity:0;
   transform:translateY(36px);
@@ -1110,7 +1180,7 @@ body.loaded .opener.zoom{transform:scale(1);}
 .reveal.from-right{transform:translateX(40px);}
 .reveal.from-right.in{transform:none;}
 
-/* staggered children — JS sets --i index, CSS converts to delay */
+/* staggered children � JS sets --i index, CSS converts to delay */
 .stagger > *{
   opacity:0;
   transform:translateY(24px);
@@ -1198,7 +1268,7 @@ body.loaded .opener.zoom{transform:scale(1);}
     </div>
     <div class="about-card">
       <h3>How i work</h3>
-      <p><span class="typewriter" data-typewriter data-text="i ship fast, document as i go, and treat performance and security as features. i care about the end user — fast load times, clean responsive UI, and code that doesn't break in production."></span></p>
+      <p><span class="typewriter" data-typewriter data-text="i ship fast, document as i go, and treat performance and security as features. i care about the end user � fast load times, clean responsive UI, and code that doesn't break in production."></span></p>
     </div>
   </div>
 </section>
@@ -1209,11 +1279,11 @@ body.loaded .opener.zoom{transform:scale(1);}
   <h2 class="section-title"><span class="typewriter" data-typewriter data-text="Skills & tools."></span></h2>
   <p class="section-sub">The languages and frameworks i reach for daily.</p>
   <div class="stagger">
-    <!-- Row 1 — frontend & languages -->
+    <!-- Row 1 � frontend & languages -->
     <div class="skills-marquee" aria-label="Frontend skills">
       <div class="skills-track" id="skillsTrackTop"></div>
     </div>
-    <!-- Row 2 — backend, full stack & databases (scrolls the other way) -->
+    <!-- Row 2 � backend, full stack & databases (scrolls the other way) -->
     <div class="skills-marquee reverse" aria-label="Backend skills">
       <div class="skills-track" id="skillsTrackBottom"></div>
     </div>
@@ -1224,7 +1294,7 @@ body.loaded .opener.zoom{transform:scale(1);}
 <section class="block reveal" id="services">
   <div class="section-eyebrow">// Services</div>
   <h2 class="section-title"><span class="typewriter" data-typewriter data-text="What i can build for you."></span></h2>
-  <p class="section-sub">From a one-page site to a full game system or a security audit — I work across the stack.</p>
+  <p class="section-sub">From a one-page site to a full game system or a security audit � I work across the stack.</p>
   <div class="services-grid stagger">
     <div class="service"><div class="num">01</div><h3>Website Development</h3><p><span class="typewriter" data-typewriter data-text="Modern responsive websites."></span></p></div>
     <div class="service"><div class="num">02</div><h3>Game Development</h3><p><span class="typewriter" data-typewriter data-text="Unity, C#, C++ systems."></span></p></div>
@@ -1239,7 +1309,7 @@ body.loaded .opener.zoom{transform:scale(1);}
 <section class="block reveal" id="contact">
   <div class="section-eyebrow">// Contact</div>
   <h2 class="section-title"><span class="typewriter" data-typewriter data-text="Let's build something together."></span></h2>
-  <p class="section-sub">Got an idea, a project, or a question? Drop a message — I usually reply within 24 hours.</p>
+  <p class="section-sub">Got an idea, a project, or a question? Drop a message � I usually reply within 24 hours.</p>
 
   <div class="contact-grid stagger">
     <form id="contact-form">
@@ -1275,7 +1345,7 @@ body.loaded .opener.zoom{transform:scale(1);}
 
 <footer>
   <div class="ft-name">Ashraff Usman</div>
-  Full Stack Developer — Built with Love
+  Full Stack Developer � Built with Love
 </footer>
 
 </div>
@@ -1296,23 +1366,48 @@ body.loaded .opener.zoom{transform:scale(1);}
     </div>
     <div class="chat-host-info">
       <h3>Ashraff Usman<span class="chat-owner-pill" id="chatOwnerPill">Owner mode</span></h3>
-      <div class="status" id="chatHostStatus">Online · usually replies within a few hours</div>
+      <div class="status" id="chatHostStatus">Online � usually replies within a few hours</div>
     </div>
     <button type="button" class="chat-close" id="chatClose" aria-label="Close chat">&times;</button>
   </div>
   <div class="chat-region-banner" id="chatRegionBanner">
-    <span class="flag" id="chatRegionFlag">🌐</span>
-    <span class="region-text" id="chatRegionText">Detecting your location…</span>
+    <span class="flag" id="chatRegionFlag">??</span>
+    <span class="region-text" id="chatRegionText">Detecting your location�</span>
   </div>
   <div class="chat-panel-body" id="chatBody" aria-live="polite">
-    <div class="chat-panel-status">Loading chat…</div>
+    <div class="chat-panel-status">Loading chat�</div>
   </div>
-  <form class="chat-form" id="chatForm" autocomplete="off">
-    <div class="chat-form-name-row">
-      <input type="text" id="chatName" name="chatName" placeholder="Your name" autocomplete="name" maxlength="40" required>
-      <span class="your-flag" id="chatYourFlag" title="Your detected region">
-        <span class="flag">🌐</span><span class="code">??</span>
-      </span>
+  <div class="chat-auth-gate" id="chatAuthGate" hidden>
+    <div class="chat-auth-blurb">
+      <strong>Sign in to start chatting</strong>
+      <span>Use your Google account so Ashraff knows who you are.</span>
+    </div>
+    <button type="button" class="chat-google-btn" id="chatGoogleSignIn">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/>
+        <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+        <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.6 39.6 16.2 44 24 44z"/>
+        <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.6l6.2 5.2C41.6 35.4 44 30.1 44 24c0-1.2-.1-2.4-.4-3.5z"/>
+      </svg>
+      <span>Continue with Google</span>
+    </button>
+    <div class="chat-auth-error" id="chatAuthError" hidden></div>
+  </div>
+  <form class="chat-form" id="chatForm" autocomplete="off" hidden>
+    <div class="chat-user-row" id="chatUserRow">
+      <div class="chat-user-info">
+        <img id="chatUserAvatar" alt="" referrerpolicy="no-referrer">
+        <div class="chat-user-meta">
+          <span class="chat-user-name" id="chatUserName">Visitor</span>
+          <span class="chat-user-sub" id="chatUserSub">Signed in with Google</span>
+        </div>
+      </div>
+      <div class="chat-user-actions">
+        <span class="your-flag" id="chatYourFlag" title="Your detected region">
+          <span class="flag">🌍</span><span class="code">--</span>
+        </span>
+        <button type="button" class="chat-signout" id="chatSignOut" title="Sign out">Sign out</button>
+      </div>
     </div>
     <textarea id="chatInput" name="chatInput" placeholder="Type your message…" maxlength="500" required></textarea>
     <div class="chat-send-row">
@@ -1348,7 +1443,7 @@ const isMobile = matchMedia('(max-width: 980px)').matches || ('ontouchstart' in 
 const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
 
 /* ====================================================
-   BACKGROUND PARTICLE FIELD — fixed full-page
+   BACKGROUND PARTICLE FIELD � fixed full-page
 ==================================================== */
 (function bgScene(){
   const canvas = document.getElementById('bg-canvas');
@@ -1360,7 +1455,7 @@ const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrenc
   renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1.25 : 2));
   renderer.setSize(innerWidth,innerHeight);
 
-  // particles — lighter on mobile to save battery
+  // particles � lighter on mobile to save battery
   const COUNT = isMobile ? (isLowPower ? 400 : 600) : 1800;
   const positions = new Float32Array(COUNT*3);
   const colors    = new Float32Array(COUNT*3);
@@ -1387,7 +1482,7 @@ const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrenc
   const points = new THREE.Points(geo,mat);
   scene.add(points);
 
-  // resize — debounced; ignore tiny height changes (mobile URL bar show/hide)
+  // resize � debounced; ignore tiny height changes (mobile URL bar show/hide)
   let lastW = innerWidth, lastH = innerHeight, resizeTO;
   function doResize(){
     const w = innerWidth, h = innerHeight;
@@ -1452,7 +1547,7 @@ primaryNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => 
 matchMedia('(min-width: 981px)').addEventListener('change', e => { if(e.matches) setNav(false); });
 
 /* ====================================================
-   SKILLS MARQUEE — build tracks and duplicate for seamless loop
+   SKILLS MARQUEE � build tracks and duplicate for seamless loop
 ==================================================== */
 const SKILLS_TOP = [
   {name:'HTML',       c:'#e34f26', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'},
@@ -1494,7 +1589,7 @@ fillTrack('skillsTrackTop', SKILLS_TOP);
 fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
 
 /* ====================================================
-   ROTATING HEADLINE — pairs of words appear/disappear in a loop
+   ROTATING HEADLINE � pairs of words appear/disappear in a loop
 ==================================================== */
 (function rotator(){
   const el = document.getElementById('rotator');
@@ -1531,7 +1626,7 @@ fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
 })();
 
 /* ====================================================
-   TYPEWRITER — slowly type, hold, slowly delete, repeat
+   TYPEWRITER � slowly type, hold, slowly delete, repeat
 ==================================================== */
 (function typewriters(){
   const els = document.querySelectorAll('[data-typewriter]');
@@ -1583,7 +1678,7 @@ fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
     function start(){ if(!running){ running = true; step(); } }
     function stop(){ running = false; clearTimeout(timer); }
 
-    // observe a real block-level parent — empty inline spans have 0 size on
+    // observe a real block-level parent � empty inline spans have 0 size on
     // mobile and the IntersectionObserver would never fire on the span itself
     let watch = el;
     while(watch && watch !== document.body){
@@ -1598,7 +1693,7 @@ fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
     }, {threshold:0.05, rootMargin:'80px 0px'});
     io.observe(watch);
 
-    // safety fallback — if IO somehow never fires (older mobile browsers,
+    // safety fallback � if IO somehow never fires (older mobile browsers,
     // page already scrolled past, etc.) start anyway after a short delay
     setTimeout(() => {
       const r = watch.getBoundingClientRect();
@@ -1617,7 +1712,7 @@ fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
 })();
 
 /* ====================================================
-   PAGE LOAD OPENER — fade hero in once everything is parsed
+   PAGE LOAD OPENER � fade hero in once everything is parsed
 ==================================================== */
 function fireLoaded(){ document.body.classList.add('loaded'); }
 if(document.readyState === 'complete' || document.readyState === 'interactive'){
@@ -1625,7 +1720,7 @@ if(document.readyState === 'complete' || document.readyState === 'interactive'){
 } else {
   window.addEventListener('DOMContentLoaded', () => requestAnimationFrame(fireLoaded));
 }
-// safety — never leave hero invisible (opener takes ~3.3s total)
+// safety � never leave hero invisible (opener takes ~3.3s total)
 setTimeout(fireLoaded, 3500);
 
 /* ====================================================
@@ -1668,7 +1763,7 @@ window.addEventListener('scroll', onScroll, {passive:true});
 onScroll();
 
 /* ====================================================
-   SCROLL REVEAL — sections fade in, staggered children cascade
+   SCROLL REVEAL � sections fade in, staggered children cascade
 ==================================================== */
 // number stagger children so CSS calc(--i * 90ms) gives them sequential delay
 document.querySelectorAll('.stagger').forEach(group => {
@@ -1688,7 +1783,7 @@ const revealIO = new IntersectionObserver((entries)=>{
 document.querySelectorAll('.reveal, .stagger').forEach(el => revealIO.observe(el));
 
 /* ====================================================
-   CONTACT FORM (kept your EmailJS — same keys as before)
+   CONTACT FORM (kept your EmailJS � same keys as before)
 ==================================================== */
 const toast = document.getElementById('toast');
 function showToast(msg, ok=true){
@@ -1714,426 +1809,448 @@ formEl.addEventListener('submit', async (e)=>{
     }
   }else{
     console.log('Form data:', Object.fromEntries(new FormData(formEl)));
-    showToast('Message sent successfully!');
-    formEl.reset();
-  }
-});
-</script>
+    showToast('Message sent succ<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
+  import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
 
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
-import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBzneDwd2jE-wgQOEcx1uHwNVyc3rFu6fE",
-  authDomain: "usmandevv-830b5.firebaseapp.com",
-  projectId: "usmandevv-830b5",
-  storageBucket: "usmandevv-830b5.firebasestorage.app",
-  messagingSenderId: "829274244850",
-  appId: "1:829274244850:web:8bd639ad3b3e00326b",
-  measurementId: "G-FMXTWMT9TT"
-};
-
-const useFirebaseChat = typeof firebaseConfig.apiKey === 'string' && firebaseConfig.apiKey !== 'YOUR_API_KEY';
-const OWNER_NAMES = ['ashraff', 'ashraff usman', 'usman', 'admin', 'owner'];
-const MAX_MSG_LEN = 500;
-const OWNER_DISPLAY_NAME = 'Ashraff Usman';
-
-/* secret URL token to unlock owner-reply mode.
-   Visit: index.html?admin=ashraff   (also accepted: #admin=ashraff)
-   Persisted in localStorage so you only need the URL once per device. */
-const OWNER_TOKEN = 'ashraff';
-function detectOwnerMode(){
-  try{
-    const params = new URLSearchParams(window.location.search);
-    const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
-    const token = params.get('admin') || hashParams.get('admin');
-    if(token && token.toLowerCase() === OWNER_TOKEN){
-      localStorage.setItem('chatOwnerMode', '1');
-      // strip the token from the visible URL so it isn't shoulder-surfed
-      const clean = window.location.pathname + (window.location.hash ? window.location.hash.replace(/admin=[^&]*&?/i,'').replace(/[#&]$/,'') : '');
-      window.history.replaceState({}, '', clean);
-      return true;
-    }
-    if(params.get('admin') === 'logout' || hashParams.get('admin') === 'logout'){
-      localStorage.removeItem('chatOwnerMode');
-      const clean = window.location.pathname;
-      window.history.replaceState({}, '', clean);
-      return false;
-    }
-    return localStorage.getItem('chatOwnerMode') === '1';
-  }catch(_){ return false; }
-}
-const OWNER_MODE = detectOwnerMode();
-
-const chatLauncher = document.getElementById('chatLauncher');
-const chatPanel    = document.getElementById('chatPanel');
-const chatClose    = document.getElementById('chatClose');
-const chatBody     = document.getElementById('chatBody');
-const chatForm     = document.getElementById('chatForm');
-const chatName     = document.getElementById('chatName');
-const chatInput    = document.getElementById('chatInput');
-const chatSend     = document.getElementById('chatSend');
-const chatSendLbl  = document.getElementById('chatSendLabel');
-const chatCounter  = document.getElementById('chatCounter');
-const chatBadge    = document.getElementById('chatBadge');
-const chatRegionFlag = document.getElementById('chatRegionFlag');
-const chatRegionText = document.getElementById('chatRegionText');
-const chatYourFlag = document.getElementById('chatYourFlag');
-
-let unsubscribe = null;
-let firebaseApp = null;
-let db = null;
-let allMessages = [];
-let lastSeenCount = 0;
-let isOpen = false;
-let visitorRegion = null; // { code, name, flag, city, region }
-
-/* ----- safe HTML escape ----- */
-function esc(str){
-  return String(str ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-/* ----- ISO country code -> flag emoji (regional indicator pairs) ----- */
-function flagFromCode(code){
-  if(!code || typeof code !== 'string' || code.length !== 2) return '🌐';
-  const cc = code.toUpperCase();
-  const A = 0x1F1E6;
-  return String.fromCodePoint(A + cc.charCodeAt(0) - 65, A + cc.charCodeAt(1) - 65);
-}
-
-/* ----- restore saved name ----- */
-try{
-  const savedName = localStorage.getItem('chatName');
-  if(savedName) chatName.value = savedName;
-}catch(_){}
-
-/* ----- if owner-mode URL token was used, lock name to "Ashraff Usman"
-        and visually flip the panel into "owner" styling ----- */
-const chatOwnerPill   = document.getElementById('chatOwnerPill');
-const chatHostStatus  = document.getElementById('chatHostStatus');
-function applyOwnerMode(){
-  if(!OWNER_MODE) return;
-  chatPanel.classList.add('owner-mode');
-  chatLauncher.classList.add('owner-mode');
-  chatLauncher.setAttribute('aria-label', 'Open chat (owner mode)');
-  if(chatHostStatus) chatHostStatus.textContent = 'You are signed in as the owner';
-  chatName.value = OWNER_DISPLAY_NAME;
-  chatName.setAttribute('readonly', '');
-  chatName.title = 'Replying as the owner — visit ?admin=logout to switch back';
-  chatInput.placeholder = 'Reply to your visitors…';
-}
-applyOwnerMode();
-
-/* ----- detect visitor region from IP (free, no key) ----- */
-async function detectRegion(){
-  // Try ipwho.is first (free, https, no key)
-  try{
-    const r = await fetch('https://ipwho.is/?fields=success,country_code,country,city,region,flag', {cache:'force-cache'});
-    const d = await r.json();
-    if(d && d.success && d.country_code){
-      return {
-        code: d.country_code,
-        name: d.country || d.country_code,
-        city: d.city || '',
-        region: d.region || '',
-        flag: flagFromCode(d.country_code)
-      };
-    }
-  }catch(_){}
-  // Fallback: ipapi.co
-  try{
-    const r = await fetch('https://ipapi.co/json/', {cache:'force-cache'});
-    const d = await r.json();
-    if(d && d.country_code){
-      return {
-        code: d.country_code,
-        name: d.country_name || d.country_code,
-        city: d.city || '',
-        region: d.region || '',
-        flag: flagFromCode(d.country_code)
-      };
-    }
-  }catch(_){}
-  return null;
-}
-
-function applyRegionToUI(region){
-  if(OWNER_MODE){
-    // owner replies don't need a "sending from" line
-    chatRegionFlag.textContent = '🛡️';
-    chatRegionText.innerHTML = `Replying as <strong>${esc(OWNER_DISPLAY_NAME)}</strong> — your messages appear in purple`;
-    if(region){
-      chatYourFlag.querySelector('.flag').textContent = region.flag;
-      chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
-    }else{
-      chatYourFlag.querySelector('.flag').textContent = '🛡️';
-      chatYourFlag.querySelector('.code').textContent = 'OWNER';
-    }
-    return;
-  }
-  if(!region){
-    chatRegionFlag.textContent = '🌐';
-    chatRegionText.innerHTML = `Region not detected — your messages will still send.`;
-    chatYourFlag.querySelector('.flag').textContent = '🌐';
-    chatYourFlag.querySelector('.code').textContent = '??';
-    return;
-  }
-  chatRegionFlag.textContent = region.flag;
-  const where = [region.city, region.name].filter(Boolean).join(', ');
-  chatRegionText.innerHTML = `Sending from <strong>${esc(where || region.name)}</strong>`;
-  chatYourFlag.querySelector('.flag').textContent = region.flag;
-  chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
-  chatYourFlag.title = `Your region: ${region.name}`;
-}
-
-/* kick off detection immediately so the flag is ready by the time someone types */
-detectRegion().then(region => {
-  visitorRegion = region;
-  applyRegionToUI(region);
-});
-
-/* ----- panel open/close ----- */
-function toggleChat(open){
-  isOpen = open;
-  chatPanel.classList.toggle('open', open);
-  chatPanel.setAttribute('aria-hidden', String(!open));
-  chatLauncher.setAttribute('aria-expanded', String(open));
-  if(open){
-    lastSeenCount = allMessages.length;
-    chatBadge.classList.remove('show');
-    setTimeout(() => chatInput.focus(), 250);
-    scrollChat(true);
-  }
-}
-
-function scrollChat(force=false){
-  requestAnimationFrame(() => {
-    chatBody.scrollTop = chatBody.scrollHeight;
-  });
-}
-
-function showChatStatus(message){
-  chatBody.innerHTML = `<div class="chat-panel-status">${esc(message)}</div>`;
-}
-
-function showChatEmpty(){
-  chatBody.innerHTML = `
-    <div class="chat-empty">
-      <div class="chat-empty-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-        </svg>
-      </div>
-      <h4>Start the conversation</h4>
-      <p>Ask about a project, pricing, or just say hi —<br>I'll get back to you as soon as I can.</p>
-    </div>`;
-}
-
-/* ----- date / time helpers ----- */
-function fmtTime(d){
-  return new Intl.DateTimeFormat(undefined, {hour:'numeric', minute:'2-digit'}).format(d);
-}
-function fmtDateLabel(d){
-  const today = new Date(); today.setHours(0,0,0,0);
-  const target = new Date(d); target.setHours(0,0,0,0);
-  const diffDays = Math.round((today - target) / 86400000);
-  if(diffDays === 0) return 'Today';
-  if(diffDays === 1) return 'Yesterday';
-  if(diffDays < 7) return new Intl.DateTimeFormat(undefined, {weekday:'long'}).format(d);
-  return new Intl.DateTimeFormat(undefined, {month:'short', day:'numeric', year:'numeric'}).format(d);
-}
-function initialsOf(name){
-  const parts = String(name || 'V').trim().split(/\s+/);
-  return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'V';
-}
-function avatarColor(name){
-  let h = 0;
-  for(const ch of String(name || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  const hue = h % 360;
-  return `linear-gradient(135deg, hsl(${hue} 80% 65%), hsl(${(hue+40)%360} 80% 55%))`;
-}
-function isOwner(name){
-  return OWNER_NAMES.includes(String(name || '').trim().toLowerCase());
-}
-
-/* ----- render all messages ----- */
-function renderChatMessages(messages){
-  allMessages = messages;
-  if(!messages.length){
-    showChatEmpty();
-    return;
-  }
-
-  let html = '';
-  let lastDateKey = '';
-  let lastSenderKey = '';
-
-  messages.forEach((msg, idx) => {
-    const time = msg.createdAt?.toDate ? msg.createdAt.toDate() : (msg.createdAt instanceof Date ? msg.createdAt : null);
-    const dateKey = time ? time.toDateString() : 'pending';
-
-    if(dateKey !== lastDateKey){
-      const label = time ? fmtDateLabel(time) : 'Sending…';
-      html += `<div class="chat-date-divider">${esc(label)}</div>`;
-      lastDateKey = dateKey;
-      lastSenderKey = '';
-    }
-
-    const author = msg.name || 'Visitor';
-    const owner  = isOwner(author);
-    const sideClass = owner ? 'owner' : 'visitor';
-    const senderKey = sideClass + ':' + author;
-    const grouped = senderKey === lastSenderKey;
-    lastSenderKey = senderKey;
-
-    const code = (msg.countryCode || '').toUpperCase();
-    const flag = msg.countryFlag || (code ? flagFromCode(code) : '');
-    const country = msg.countryName || '';
-    const timeStr = time ? fmtTime(time) : '';
-    const pendingClass = msg.pending ? ' pending' : '';
-    const groupedClass = grouped ? ' grouped' : '';
-
-    const avatarInner = owner
-      ? `<img src="https://i.imgur.com/QTujgz4.jpeg" alt="Ashraff">`
-      : esc(initialsOf(author));
-    const avatarStyle = owner ? '' : `style="background:${avatarColor(author)}"`;
-
-    const metaRow = `
-      <div class="meta-row">
-        <span class="name">${esc(author)}${owner ? '' : ''}</span>
-        ${flag ? `<span class="flag" title="${esc(country || code)}">${flag}</span>` : ''}
-        ${code ? `<span class="country-tag">${esc(code)}</span>` : ''}
-        ${timeStr ? `<span class="time">${esc(timeStr)}</span>` : ''}
-      </div>`;
-
-    html += `
-      <div class="chat-row ${sideClass}${groupedClass}${pendingClass}">
-        <div class="chat-avatar" ${avatarStyle}>${avatarInner}</div>
-        <div class="chat-bubble">
-          ${metaRow}
-          <div class="text">${esc(msg.text)}</div>
-        </div>
-      </div>`;
-  });
-
-  chatBody.innerHTML = html;
-
-  // unread badge bump if a new visitor message arrived while panel is closed
-  if(!isOpen && messages.length > lastSeenCount){
-    const newCount = messages.length - lastSeenCount;
-    chatBadge.textContent = String(newCount);
-    chatBadge.classList.add('show');
-  }
-
-  scrollChat();
-}
-
-/* ----- send ----- */
-async function sendChatMessage(name, text){
-  if(!useFirebaseChat){
-    showChatStatus('Chat is not configured. Add your Firebase config to enable live messaging.');
-    return;
-  }
-
-  // ensure region is detected (don't block forever)
-  if(!visitorRegion){
-    try{ visitorRegion = await Promise.race([detectRegion(), new Promise(r => setTimeout(() => r(null), 1500))]); applyRegionToUI(visitorRegion); }catch(_){}
-  }
-
-  const payload = {
-    name: name || 'Visitor',
-    text,
-    createdAt: serverTimestamp(),
-    countryCode: visitorRegion?.code || null,
-    countryName: visitorRegion?.name || null,
-    countryFlag: visitorRegion?.flag || null,
-    city: visitorRegion?.city || null
+  const firebaseConfig = {
+    apiKey: "AIzaSyBzneDwd2jE-wgQOEcx1uHwNVyc3rFu6fE",
+    authDomain: "usmandevv-830b5.firebaseapp.com",
+    projectId: "usmandevv-830b5",
+    storageBucket: "usmandevv-830b5.firebasestorage.app",
+    messagingSenderId: "829274244850",
+    appId: "1:829274244850:web:8bd639ad3b3e00326b",
+    measurementId: "G-FMXTWMT9TT"
   };
 
-  // optimistic message so the UI feels instant
-  const optimistic = { ...payload, createdAt: new Date(), pending:true, id:'tmp-'+Date.now() };
-  renderChatMessages([...allMessages, optimistic]);
+  const useFirebaseChat = typeof firebaseConfig.apiKey === 'string' && firebaseConfig.apiKey !== 'YOUR_API_KEY';
 
-  try{
-    await addDoc(collection(db, 'chat_messages'), payload);
-    chatInput.value = '';
-    updateCounter();
-    autoSizeInput();
-  }catch(err){
-    console.error('Chat send error', err);
-    showChatStatus('Unable to send message. Please check your connection and try again.');
+  /* The owner is identified by Google account email or UID.
+     Set OWNER_EMAILS to the email(s) of the account(s) that should be marked as owner. */
+  const OWNER_EMAILS = ['ashraffusmandev@gmail.com'];
+  const OWNER_UIDS = [];
+  const OWNER_DISPLAY_NAME = 'Ashraff Usman';
+  const MAX_MSG_LEN = 500;
+
+  const chatLauncher    = document.getElementById('chatLauncher');
+  const chatPanel       = document.getElementById('chatPanel');
+  const chatClose       = document.getElementById('chatClose');
+  const chatBody        = document.getElementById('chatBody');
+  const chatForm        = document.getElementById('chatForm');
+  const chatInput       = document.getElementById('chatInput');
+  const chatSend        = document.getElementById('chatSend');
+  const chatSendLbl     = document.getElementById('chatSendLabel');
+  const chatCounter     = document.getElementById('chatCounter');
+  const chatBadge       = document.getElementById('chatBadge');
+  const chatRegionFlag  = document.getElementById('chatRegionFlag');
+  const chatRegionText  = document.getElementById('chatRegionText');
+  const chatYourFlag    = document.getElementById('chatYourFlag');
+  const chatAuthGate    = document.getElementById('chatAuthGate');
+  const chatGoogleBtn   = document.getElementById('chatGoogleSignIn');
+  const chatAuthError   = document.getElementById('chatAuthError');
+  const chatUserAvatar  = document.getElementById('chatUserAvatar');
+  const chatUserName    = document.getElementById('chatUserName');
+  const chatUserSub     = document.getElementById('chatUserSub');
+  const chatSignOutBtn  = document.getElementById('chatSignOut');
+  const chatHostStatus  = document.getElementById('chatHostStatus');
+  const chatOwnerPill   = document.getElementById('chatOwnerPill');
+
+  let unsubscribe = null;
+  let firebaseApp = null;
+  let db = null;
+  let auth = null;
+  let currentUser = null;
+  let allMessages = [];
+  let lastSeenCount = 0;
+  let isOpen = false;
+  let visitorRegion = null;
+
+  /* ----- safe HTML escape ----- */
+  function esc(str){
+    return String(str ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
-}
 
-/* ----- character counter + auto-resize textarea ----- */
-function updateCounter(){
-  const len = chatInput.value.length;
-  chatCounter.textContent = `${len} / ${MAX_MSG_LEN}`;
-  chatCounter.classList.toggle('warn', len > MAX_MSG_LEN * 0.8);
-  chatCounter.classList.toggle('danger', len >= MAX_MSG_LEN);
-}
-function autoSizeInput(){
-  chatInput.style.height = 'auto';
-  chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
-}
-chatInput.addEventListener('input', () => { updateCounter(); autoSizeInput(); });
-
-/* ----- press enter to send (shift+enter = newline) ----- */
-chatInput.addEventListener('keydown', e => {
-  if(e.key === 'Enter' && !e.shiftKey){
-    e.preventDefault();
-    chatForm.requestSubmit();
+  /* ----- ISO country code -> flag emoji ----- */
+  function flagFromCode(code){
+    if(!code || typeof code !== 'string' || code.length !== 2) return '🏳';
+    const cc = code.toUpperCase();
+    const A = 0x1F1E6;
+    return String.fromCodePoint(A + cc.charCodeAt(0) - 65, A + cc.charCodeAt(1) - 65);
   }
-});
 
-/* ----- launcher / close ----- */
-chatLauncher.addEventListener('click', () => toggleChat(!chatPanel.classList.contains('open')));
-chatClose.addEventListener('click', () => toggleChat(false));
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape' && isOpen) toggleChat(false);
-});
-
-/* ----- submit ----- */
-chatForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const name = chatName.value.trim();
-  const text = chatInput.value.trim();
-  if(!text) return;
-  if(name) try{ localStorage.setItem('chatName', name); }catch(_){}
-
-  chatSend.disabled = true;
-  chatSendLbl.textContent = 'Sending…';
-  try{
-    await sendChatMessage(name, text);
-  } finally {
-    chatSend.disabled = false;
-    chatSendLbl.textContent = 'Send';
+  /* ----- detect if a user is the owner ----- */
+  function isOwnerUser(user){
+    if(!user) return false;
+    if(OWNER_UIDS.includes(user.uid)) return true;
+    const email = (user.email || '').toLowerCase();
+    return OWNER_EMAILS.map(e => e.toLowerCase()).includes(email);
   }
-});
+  function isOwnerMessage(msg){
+    if(!msg) return false;
+    if(msg.uid && OWNER_UIDS.includes(msg.uid)) return true;
+    if(msg.email && OWNER_EMAILS.map(e => e.toLowerCase()).includes(String(msg.email).toLowerCase())) return true;
+    if(msg.isOwner === true) return true;
+    return false;
+  }
 
-/* ----- subscribe to messages ----- */
-if(useFirebaseChat){
-  firebaseApp = initializeApp(firebaseConfig);
-  db = getFirestore(firebaseApp);
-  const messagesRef = collection(db, 'chat_messages');
-  const messagesQuery = query(messagesRef, orderBy('createdAt'), limit(80));
-  unsubscribe = onSnapshot(messagesQuery, snapshot => {
-    const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    renderChatMessages(messages);
-  }, err => {
-    console.error('Chat snapshot failed', err);
-    showChatStatus('Unable to connect to chat. Check Firebase config and rules.');
+  /* ----- visitor region detection ----- */
+  async function detectRegion(){
+    try{
+      const r = await fetch('https://ipwho.is/?fields=success,country_code,country,city,region,flag', {cache:'force-cache'});
+      const d = await r.json();
+      if(d && d.success && d.country_code){
+        return { code:d.country_code, name:d.country || d.country_code, city:d.city||'', region:d.region||'', flag:flagFromCode(d.country_code) };
+      }
+    }catch(_){}
+    try{
+      const r = await fetch('https://ipapi.co/json/', {cache:'force-cache'});
+      const d = await r.json();
+      if(d && d.country_code){
+        return { code:d.country_code, name:d.country_name||d.country_code, city:d.city||'', region:d.region||'', flag:flagFromCode(d.country_code) };
+      }
+    }catch(_){}
+    return null;
+  }
+
+  function applyRegionToUI(region){
+    const ownerNow = isOwnerUser(currentUser);
+    if(ownerNow){
+      chatRegionFlag.textContent = '👑';
+      chatRegionText.innerHTML = `Replying as <strong>${esc(currentUser?.displayName || OWNER_DISPLAY_NAME)}</strong> • your messages appear in purple`;
+      if(region){
+        chatYourFlag.querySelector('.flag').textContent = region.flag;
+        chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
+      }else{
+        chatYourFlag.querySelector('.flag').textContent = '👑';
+        chatYourFlag.querySelector('.code').textContent = 'OWNER';
+      }
+      return;
+    }
+    if(!region){
+      chatRegionFlag.textContent = '🌍';
+      chatRegionText.innerHTML = `Region not detected • your messages will still send.`;
+      chatYourFlag.querySelector('.flag').textContent = '🌍';
+      chatYourFlag.querySelector('.code').textContent = '--';
+      return;
+    }
+    chatRegionFlag.textContent = region.flag;
+    const where = [region.city, region.name].filter(Boolean).join(', ');
+    chatRegionText.innerHTML = `Sending from <strong>${esc(where || region.name)}</strong>`;
+    chatYourFlag.querySelector('.flag').textContent = region.flag;
+    chatYourFlag.querySelector('.code').textContent = region.code.toUpperCase();
+    chatYourFlag.title = `Your region: ${region.name}`;
+  }
+
+  detectRegion().then(region => { visitorRegion = region; applyRegionToUI(region); });
+
+  /* ----- panel open/close ----- */
+  function toggleChat(open){
+    isOpen = open;
+    chatPanel.classList.toggle('open', open);
+    chatPanel.setAttribute('aria-hidden', String(!open));
+    chatLauncher.setAttribute('aria-expanded', String(open));
+    if(open){
+      lastSeenCount = allMessages.length;
+      chatBadge.classList.remove('show');
+      if(currentUser) setTimeout(() => chatInput.focus(), 250);
+      scrollChat(true);
+    }
+  }
+
+  function scrollChat(){
+    requestAnimationFrame(() => { chatBody.scrollTop = chatBody.scrollHeight; });
+  }
+
+  function showChatStatus(message){
+    chatBody.innerHTML = `<div class="chat-panel-status">${esc(message)}</div>`;
+  }
+
+  function showChatEmpty(){
+    chatBody.innerHTML = `
+      <div class="chat-empty">
+        <div class="chat-empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+        </div>
+        <h4>Start the conversation</h4>
+        <p>Ask about a project, pricing, or just say hi.<br>I'll get back to you as soon as I can.</p>
+      </div>`;
+  }
+
+  /* ----- date / time helpers ----- */
+  function fmtTime(d){ return new Intl.DateTimeFormat(undefined, {hour:'numeric', minute:'2-digit'}).format(d); }
+  function fmtDateLabel(d){
+    const today = new Date(); today.setHours(0,0,0,0);
+    const target = new Date(d); target.setHours(0,0,0,0);
+    const diffDays = Math.round((today - target) / 86400000);
+    if(diffDays === 0) return 'Today';
+    if(diffDays === 1) return 'Yesterday';
+    if(diffDays < 7) return new Intl.DateTimeFormat(undefined, {weekday:'long'}).format(d);
+    return new Intl.DateTimeFormat(undefined, {month:'short', day:'numeric', year:'numeric'}).format(d);
+  }
+  function initialsOf(name){
+    const parts = String(name || 'V').trim().split(/\s+/);
+    return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || 'V';
+  }
+  function avatarColor(name){
+    let h = 0;
+    for(const ch of String(name || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    const hue = h % 360;
+    return `linear-gradient(135deg, hsl(${hue} 80% 65%), hsl(${(hue+40)%360} 80% 55%))`;
+  }
+
+  /* ----- render all messages ----- */
+  function renderChatMessages(messages){
+    allMessages = messages;
+    if(!messages.length){ showChatEmpty(); return; }
+
+    let html = '';
+    let lastDateKey = '';
+    let lastSenderKey = '';
+
+    messages.forEach((msg) => {
+      const time = msg.createdAt?.toDate ? msg.createdAt.toDate() : (msg.createdAt instanceof Date ? msg.createdAt : null);
+      const dateKey = time ? time.toDateString() : 'pending';
+
+      if(dateKey !== lastDateKey){
+        const label = time ? fmtDateLabel(time) : 'Sending…';
+        html += `<div class="chat-date-divider">${esc(label)}</div>`;
+        lastDateKey = dateKey;
+        lastSenderKey = '';
+      }
+
+      const author = msg.name || 'Visitor';
+      const owner  = isOwnerMessage(msg);
+      const sideClass = owner ? 'owner' : 'visitor';
+      const senderKey = sideClass + ':' + (msg.uid || author);
+      const grouped = senderKey === lastSenderKey;
+      lastSenderKey = senderKey;
+
+      const code = (msg.countryCode || '').toUpperCase();
+      const flag = msg.countryFlag || (code ? flagFromCode(code) : '');
+      const country = msg.countryName || '';
+      const timeStr = time ? fmtTime(time) : '';
+      const pendingClass = msg.pending ? ' pending' : '';
+      const groupedClass = grouped ? ' grouped' : '';
+
+      const photo = msg.photoURL || (owner ? 'https://i.imgur.com/QTujgz4.jpeg' : null);
+      const avatarInner = photo
+        ? `<img src="${esc(photo)}" alt="${esc(author)}" referrerpolicy="no-referrer">`
+        : esc(initialsOf(author));
+      const avatarStyle = photo ? '' : `style="background:${avatarColor(author)}"`;
+
+      const metaRow = `
+        <div class="meta-row">
+          <span class="name">${esc(author)}</span>
+          ${flag ? `<span class="flag" title="${esc(country || code)}">${flag}</span>` : ''}
+          ${code ? `<span class="country-tag">${esc(code)}</span>` : ''}
+          ${timeStr ? `<span class="time">${esc(timeStr)}</span>` : ''}
+        </div>`;
+
+      html += `
+        <div class="chat-row ${sideClass}${groupedClass}${pendingClass}">
+          <div class="chat-avatar" ${avatarStyle}>${avatarInner}</div>
+          <div class="chat-bubble">
+            ${metaRow}
+            <div class="text">${esc(msg.text)}</div>
+          </div>
+        </div>`;
+    });
+
+    chatBody.innerHTML = html;
+
+    if(!isOpen && messages.length > lastSeenCount){
+      const newCount = messages.length - lastSeenCount;
+      chatBadge.textContent = String(newCount);
+      chatBadge.classList.add('show');
+    }
+    scrollChat();
+  }
+
+  /* ----- send ----- */
+  async function sendChatMessage(text){
+    if(!useFirebaseChat){ showChatStatus('Chat is not configured.'); return; }
+    if(!currentUser){ showAuthError('Please sign in with Google to send a message.'); return; }
+
+    if(!visitorRegion){
+      try{ visitorRegion = await Promise.race([detectRegion(), new Promise(r => setTimeout(() => r(null), 1500))]); applyRegionToUI(visitorRegion); }catch(_){}
+    }
+
+    const ownerNow = isOwnerUser(currentUser);
+    const displayName = ownerNow ? OWNER_DISPLAY_NAME : (currentUser.displayName || currentUser.email || 'Visitor');
+
+    const payload = {
+      name: displayName,
+      text,
+      uid: currentUser.uid,
+      email: currentUser.email || null,
+      photoURL: currentUser.photoURL || null,
+      isOwner: ownerNow,
+      createdAt: serverTimestamp(),
+      countryCode: visitorRegion?.code || null,
+      countryName: visitorRegion?.name || null,
+      countryFlag: visitorRegion?.flag || null,
+      city: visitorRegion?.city || null
+    };
+
+    const optimistic = { ...payload, createdAt:new Date(), pending:true, id:'tmp-'+Date.now() };
+    renderChatMessages([...allMessages, optimistic]);
+
+    try{
+      await addDoc(collection(db, 'chat_messages'), payload);
+      chatInput.value = '';
+      updateCounter();
+      autoSizeInput();
+    }catch(err){
+      console.error('Chat send error', err);
+      showChatStatus('Unable to send message. Please check your connection and try again.');
+    }
+  }
+
+  /* ----- counter + auto-resize ----- */
+  function updateCounter(){
+    const len = chatInput.value.length;
+    chatCounter.textContent = `${len} / ${MAX_MSG_LEN}`;
+    chatCounter.classList.toggle('warn', len > MAX_MSG_LEN * 0.8);
+    chatCounter.classList.toggle('danger', len >= MAX_MSG_LEN);
+  }
+  function autoSizeInput(){
+    chatInput.style.height = 'auto';
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
+  }
+  chatInput.addEventListener('input', () => { updateCounter(); autoSizeInput(); });
+
+  chatInput.addEventListener('keydown', e => {
+    if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); chatForm.requestSubmit(); }
   });
-} else {
-  showChatStatus('Chat requires Firebase configuration. Replace placeholders in the script with your Firebase project settings.');
-}
-</script>
+
+  chatLauncher.addEventListener('click', () => toggleChat(!chatPanel.classList.contains('open')));
+  chatClose.addEventListener('click', () => toggleChat(false));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && isOpen) toggleChat(false); });
+
+  chatForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const text = chatInput.value.trim();
+    if(!text) return;
+    chatSend.disabled = true;
+    chatSendLbl.textContent = 'Sending…';
+    try{ await sendChatMessage(text); } finally {
+      chatSend.disabled = false;
+      chatSendLbl.textContent = 'Send';
+    }
+  });
+
+  /* ----- AUTH UI ----- */
+  function showAuthError(msg){
+    if(!chatAuthError) return;
+    chatAuthError.textContent = msg;
+    chatAuthError.hidden = false;
+  }
+  function clearAuthError(){
+    if(!chatAuthError) return;
+    chatAuthError.hidden = true;
+    chatAuthError.textContent = '';
+  }
+
+  function applyAuthUI(user){
+    currentUser = user;
+    if(user){
+      chatAuthGate.hidden = true;
+      chatForm.hidden = false;
+      chatUserAvatar.src = user.photoURL || 'https://www.gravatar.com/avatar/?d=mp&s=80';
+      chatUserName.textContent = user.displayName || user.email || 'Signed in';
+      chatUserSub.textContent  = user.email || 'Signed in with Google';
+      const ownerNow = isOwnerUser(user);
+      chatPanel.classList.toggle('owner-mode', ownerNow);
+      chatLauncher.classList.toggle('owner-mode', ownerNow);
+      if(chatHostStatus) chatHostStatus.textContent = ownerNow
+        ? 'You are signed in as the owner'
+        : 'Online • usually replies within a few hours';
+      chatInput.placeholder = ownerNow ? 'Reply to your visitors…' : 'Type your message…';
+      applyRegionToUI(visitorRegion);
+    }else{
+      chatForm.hidden = true;
+      chatAuthGate.hidden = false;
+      chatPanel.classList.remove('owner-mode');
+      chatLauncher.classList.remove('owner-mode');
+      if(chatHostStatus) chatHostStatus.textContent = 'Online • usually replies within a few hours';
+      applyRegionToUI(visitorRegion);
+    }
+  }
+
+  const provider = useFirebaseChat ? new GoogleAuthProvider() : null;
+  if(provider){
+    provider.setCustomParameters({ prompt: 'select_account' });
+  }
+
+  async function handleSignIn(){
+    if(!auth || !provider) return;
+    clearAuthError();
+    chatGoogleBtn.disabled = true;
+    try{
+      await signInWithPopup(auth, provider);
+    }catch(err){
+      console.error('Google sign-in error', err);
+      if(err && (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request')){
+        try{
+          await signInWithRedirect(auth, provider);
+          return;
+        }catch(redirErr){
+          console.error('Redirect sign-in error', redirErr);
+          showAuthError(redirErr?.message || 'Sign-in failed. Please try again.');
+        }
+      }else{
+        showAuthError(err?.message || 'Sign-in failed. Please try again.');
+      }
+    }finally{
+      chatGoogleBtn.disabled = false;
+    }
+  }
+
+  async function handleSignOut(){
+    if(!auth) return;
+    try{ await signOut(auth); }catch(err){ console.error('Sign-out error', err); }
+  }
+
+  chatGoogleBtn?.addEventListener('click', handleSignIn);
+  chatSignOutBtn?.addEventListener('click', handleSignOut);
+
+  /* ----- subscribe to messages + auth ----- */
+  if(useFirebaseChat){
+    firebaseApp = initializeApp(firebaseConfig);
+    db = getFirestore(firebaseApp);
+    auth = getAuth(firebaseApp);
+
+    setPersistence(auth, browserLocalPersistence).catch(err => console.warn('Auth persistence error', err));
+
+    getRedirectResult(auth).catch(err => {
+      if(err) console.warn('Redirect result error', err);
+    });
+
+    onAuthStateChanged(auth, user => { applyAuthUI(user); });
+
+    applyAuthUI(null);
+
+    const messagesRef = collection(db, 'chat_messages');
+    const messagesQuery = query(messagesRef, orderBy('createdAt'), limit(80));
+    unsubscribe = onSnapshot(messagesQuery, snapshot => {
+      const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      renderChatMessages(messages);
+    }, err => {
+      console.error('Chat snapshot failed', err);
+      showChatStatus('Unable to connect to chat. Check Firebase config and rules.');
+    });
+  } else {
+    showChatStatus('Chat requires Firebase configuration. Replace placeholders in the script with your Firebase project settings.');
+  }
+  </script>
 
 <!-- EMAILJS (same setup as your original site) -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
