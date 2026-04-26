@@ -1041,6 +1041,7 @@ footer .ft-name{
   cursor:pointer;transition:.2s;
 }
 .chat-signout:hover{background:rgba(255,77,109,.18);}
+.chat-auth-gate[hidden],.chat-form[hidden]{display:none !important;}
 
 @media (max-width:680px){
   .chat-panel{right:12px;left:12px;width:auto;bottom:12px;height:78vh;max-height:78vh;}
@@ -1829,7 +1830,7 @@ formEl.addEventListener('submit', async (e)=>{
 
   const useFirebaseChat = typeof firebaseConfig.apiKey === 'string' && firebaseConfig.apiKey !== 'YOUR_API_KEY';
 
-  const OWNER_EMAILS = ['ashraffusmandev@gmail.com'];
+  const OWNER_EMAILS = ['lawnixusman@gmail.com'];
   const OWNER_UIDS = [];
   const OWNER_DISPLAY_NAME = 'Ashraff Usman';
   const MAX_MSG_LEN = 500;
