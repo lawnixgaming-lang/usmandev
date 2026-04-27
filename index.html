@@ -521,6 +521,22 @@ section.block{
   background:rgba(124,92,255,.1);
   border:1px solid rgba(124,92,255,.22);
 }
+.project .features{
+  list-style:none;margin:8px 0 4px;padding:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;
+}
+.project .features li{
+  position:relative;
+  padding-left:18px;
+  font-size:13px;color:#cbd5e1;line-height:1.45;
+}
+.project .features li::before{
+  content:"";
+  position:absolute;left:2px;top:7px;
+  width:7px;height:7px;border-radius:50%;
+  background:linear-gradient(135deg,#00ffcc,#7c5cff);
+  box-shadow:0 0 8px rgba(0,255,204,.55);
+}
 
 /* ------ CONTACT ------ */
 .contact-grid{
@@ -1451,42 +1467,70 @@ body.loaded .opener.zoom{transform:scale(1);}
 <section class="block reveal" id="projects">
   <div class="section-eyebrow">// Projects</div>
   <h2 class="section-title"><span class="typewriter" data-typewriter data-text="My example projects."></span></h2>
-  <p class="section-sub">A few projects example i can produce base on what you want and scope.</p>
+  <p class="section-sub">A few real builds I've shipped  click around the live previews to see them in motion.</p>
   <div class="projects-grid stagger">
     <div class="project">
-      <div class="thumb"><img src="myhotel.png" alt="Hotel Booking Site preview" loading="lazy"></div>
+      <div class="thumb"><img src="myhotel.png" alt="Hotel Management System preview" loading="lazy"></div>
       <div class="body">
         <span class="tag">Hospitality</span>
-        <h3>Hotel Booking Site</h3>
-        <p>Full hotel browsing and room reservation experience with live availability.</p>
-        <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+        <h3>Hotel Management System</h3>
+        <p>Complete hotel platform with room browsing, real-time availability, online reservations, guest dashboard, admin panel for managing rooms and bookings, and an integrated payment flow.</p>
+        <ul class="features">
+          <li>Room Booking</li>
+          <li>Admin Panel</li>
+          <li>Auth</li>
+          <li>Payments</li>
+          <li>Dashboard</li>
+        </ul>
+        <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>PHP</span><span>MySQL</span></div>
       </div>
     </div>
     <div class="project">
-      <div class="thumb"><img src="myrestaurant.png" alt="Restaurant Website preview" loading="lazy"></div>
+      <div class="thumb"><img src="myrestaurant.png" alt="Restaurant Ordering System preview" loading="lazy"></div>
       <div class="body">
         <span class="tag">Food & Bev</span>
-        <h3>Restaurant Website</h3>
-        <p>Menu, reservations, and contact flow for a modern restaurant brand.</p>
-        <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+        <h3>Restaurant Ordering System</h3>
+        <p>Full restaurant platform with digital menu, table reservations, online ordering, cart, order tracking, and an admin dashboard to manage menu items, categories, and incoming orders.</p>
+        <ul class="features">
+          <li>Online Menu</li>
+          <li>Reservations</li>
+          <li>Cart & Orders</li>
+          <li>Admin Dashboard</li>
+          <li>Order Tracking</li>
+        </ul>
+        <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>PHP</span><span>MySQL</span></div>
       </div>
     </div>
     <div class="project">
-      <div class="thumb"><img src="mystore.png" alt="My Store preview" loading="lazy"></div>
+      <div class="thumb"><img src="mystore.png" alt="E-Commerce Store System preview" loading="lazy"></div>
       <div class="body">
         <span class="tag">E-Commerce</span>
-        <h3>My Store</h3>
-        <p>Custom storefront with product cards, cart, and checkout layout.</p>
-        <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+        <h3>E-Commerce Store System</h3>
+        <p>Full storefront with product catalog, search and filters, shopping cart, secure checkout, customer accounts, order history, and a complete admin panel for inventory, orders, and sales reports.</p>
+        <ul class="features">
+          <li>Product Catalog</li>
+          <li>Cart & Checkout</li>
+          <li>User Accounts</li>
+          <li>Inventory</li>
+          <li>Sales Reports</li>
+        </ul>
+        <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>PHP</span><span>MySQL</span></div>
       </div>
     </div>
     <div class="project">
-      <div class="thumb"><img src="booking.png" alt="Mobile Booking App preview" loading="lazy"></div>
+      <div class="thumb"><img src="booking.png" alt="Mobile Booking System preview" loading="lazy"></div>
       <div class="body">
         <span class="tag">Mobile App</span>
-        <h3>Booking App</h3>
-        <p>Native-feel mobile booking app for reservations and appointments on the go.</p>
-        <div class="stack"><span>Mobile</span><span>Android</span><span>UI/UX</span></div>
+        <h3>Mobile Booking System</h3>
+        <p>Native Android booking app with user sign-up, service browsing, real-time availability, appointment scheduling, push notifications, payment integration, and a backend dashboard for managing bookings and users.</p>
+        <ul class="features">
+          <li>User Auth</li>
+          <li>Scheduling</li>
+          <li>Push Notifications</li>
+          <li>Payments</li>
+          <li>Admin Backend</li>
+        </ul>
+        <div class="stack"><span>Android</span><span>Java</span><span>Firebase</span><span>REST API</span></div>
       </div>
     </div>
   </div>
