@@ -1211,6 +1211,82 @@ footer .ft-name{
   transition:opacity .35s ease, transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s;
 }
 
+/* ------ MUSIC PLAYER ------ */
+.music-player{
+  position:fixed;
+  left:28px;
+  bottom:28px;
+  z-index:238;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:min(330px,calc(100vw - 120px));
+  padding:10px 12px;
+  border-radius:18px;
+  background:rgba(7,10,18,.82);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 18px 50px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.music-toggle,.music-mute{
+  width:40px;
+  height:40px;
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  color:#05060a;
+  background:linear-gradient(135deg,#00ffcc,#ffd166);
+  cursor:pointer;
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.music-toggle:hover,.music-mute:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 28px -16px rgba(0,255,204,.75);
+}
+.music-mute{
+  width:34px;
+  height:34px;
+  color:#e6f1ff;
+  background:rgba(255,255,255,.06);
+}
+.music-toggle svg,.music-mute svg{width:18px;height:18px;display:block;}
+.music-meta{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.music-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  color:#fff;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.music-state{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:#8f9bae;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.music-volume{
+  width:74px;
+  accent-color:#00ffcc;
+  cursor:pointer;
+}
+.music-player.playing{
+  border-color:rgba(0,255,204,.28);
+  box-shadow:0 18px 50px -26px rgba(0,0,0,.95),0 0 34px -18px rgba(0,255,204,.8),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.music-player.playing .music-title{color:#cbf6ec;}
+
 /* ------ CHAT WIDGET ------ */
 .chat-launcher{
   position:fixed;
@@ -1785,6 +1861,13 @@ footer .ft-name{
   .chat-launcher svg{width:22px;height:22px;}
   .chat-panel-header{padding:14px;}
   .chat-host-avatar{width:40px;height:40px;}
+  .music-player{
+    left:14px;
+    bottom:78px;
+    width:calc(100vw - 28px);
+    padding:9px 10px;
+  }
+  .music-volume{width:64px;}
 }
 
 /* ------ RESPONSIVE ------ */
@@ -2245,6 +2328,23 @@ body.loaded .opener.zoom{transform:scale(1);}
 </div>
 
 <div class="toast" id="toast">Message sent successfully!</div>
+
+<div class="music-player" id="musicPlayer" aria-label="Website music player">
+  <audio id="siteMusic" src="music.mp3" preload="metadata" loop></audio>
+  <button class="music-toggle" id="musicToggle" type="button" aria-label="Play music" aria-pressed="false">
+    <svg class="music-play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7-11-7z"/></svg>
+    <svg class="music-pause-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M7 5h4v14H7V5Zm6 0h4v14h-4V5Z"/></svg>
+  </button>
+  <div class="music-meta">
+    <span class="music-title">Site Music</span>
+    <span class="music-state" id="musicState">Tap to play</span>
+  </div>
+  <button class="music-mute" id="musicMute" type="button" aria-label="Mute music" aria-pressed="false">
+    <svg class="music-volume-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+    <svg class="music-muted-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5"/><path d="m21 9-5 5"/></svg>
+  </button>
+  <input class="music-volume" id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.45" aria-label="Music volume">
+</div>
 
 <button class="chat-launcher" id="chatLauncher" type="button" aria-label="Open chat" aria-expanded="false">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -2722,6 +2822,83 @@ formEl.addEventListener('submit', async (e)=>{
     formEl.reset();
   }
 });
+
+/* ====================================================
+   MUSIC PLAYER  user-triggered because browsers block autoplay
+==================================================== */
+(function musicPlayer(){
+  const player = document.getElementById('musicPlayer');
+  const audio = document.getElementById('siteMusic');
+  const toggle = document.getElementById('musicToggle');
+  const mute = document.getElementById('musicMute');
+  const volume = document.getElementById('musicVolume');
+  const state = document.getElementById('musicState');
+  if(!player || !audio || !toggle || !mute || !volume || !state) return;
+
+  const playIcon = toggle.querySelector('.music-play-icon');
+  const pauseIcon = toggle.querySelector('.music-pause-icon');
+  const volumeIcon = mute.querySelector('.music-volume-icon');
+  const mutedIcon = mute.querySelector('.music-muted-icon');
+
+  const savedVolume = localStorage.getItem('siteMusicVolume');
+  const savedMuted = localStorage.getItem('siteMusicMuted') === 'true';
+  audio.volume = savedVolume === null ? Number(volume.value) : Math.max(0, Math.min(1, Number(savedVolume)));
+  audio.muted = savedMuted;
+  volume.value = String(audio.volume);
+
+  function setState(text){ state.textContent = text; }
+  function syncUI(){
+    const playing = !audio.paused && !audio.ended;
+    player.classList.toggle('playing', playing);
+    toggle.setAttribute('aria-pressed', String(playing));
+    toggle.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+    if(playIcon) playIcon.hidden = playing;
+    if(pauseIcon) pauseIcon.hidden = !playing;
+    const muted = audio.muted || audio.volume === 0;
+    mute.setAttribute('aria-pressed', String(muted));
+    mute.setAttribute('aria-label', muted ? 'Unmute music' : 'Mute music');
+    if(volumeIcon) volumeIcon.hidden = muted;
+    if(mutedIcon) mutedIcon.hidden = !muted;
+    if(!playing) setState(audio.error ? 'Music unavailable' : 'Tap to play');
+  }
+
+  toggle.addEventListener('click', async () => {
+    if(audio.paused){
+      try{
+        setState('Loading...');
+        await audio.play();
+        setState('Now playing');
+      }catch(err){
+        console.warn('Music play failed', err);
+        setState('Tap to play');
+      }
+    } else {
+      audio.pause();
+      setState('Paused');
+    }
+    syncUI();
+  });
+
+  mute.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    localStorage.setItem('siteMusicMuted', String(audio.muted));
+    syncUI();
+  });
+
+  volume.addEventListener('input', () => {
+    audio.volume = Number(volume.value);
+    if(audio.volume > 0) audio.muted = false;
+    localStorage.setItem('siteMusicVolume', String(audio.volume));
+    localStorage.setItem('siteMusicMuted', String(audio.muted));
+    syncUI();
+  });
+
+  audio.addEventListener('play', () => { setState('Now playing'); syncUI(); });
+  audio.addEventListener('pause', syncUI);
+  audio.addEventListener('volumechange', syncUI);
+  audio.addEventListener('error', () => { setState('Music unavailable'); syncUI(); });
+  syncUI();
+})();
 </script>
 
 <script type="module">
