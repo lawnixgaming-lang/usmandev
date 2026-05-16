@@ -1220,7 +1220,8 @@ footer .ft-name{
   display:flex;
   align-items:center;
   gap:10px;
-  width:min(330px,calc(100vw - 120px));
+  width:64px;
+  max-width:min(330px,calc(100vw - 120px));
   padding:10px 12px;
   border-radius:18px;
   background:rgba(7,10,18,.82);
@@ -1228,6 +1229,35 @@ footer .ft-name{
   box-shadow:0 18px 50px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.08);
   backdrop-filter:blur(18px);
   -webkit-backdrop-filter:blur(18px);
+  overflow:hidden;
+  transform-origin:left bottom;
+  animation:musicPulse 2.8s ease-out infinite;
+  transition:width .35s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+.music-player:hover,
+.music-player:focus-within,
+.music-player.open{
+  width:min(330px,calc(100vw - 120px));
+  transform:translateY(-2px);
+  animation:none;
+  border-color:rgba(0,255,204,.28);
+  box-shadow:0 22px 58px -28px rgba(0,0,0,.95),0 0 0 1px rgba(0,255,204,.14),0 0 34px -22px rgba(0,255,204,.8),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.music-player::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(120deg,transparent 0 34%,rgba(255,255,255,.16) 48%,transparent 62% 100%);
+  transform:translateX(-115%);
+  opacity:0;
+  pointer-events:none;
+}
+.music-player:hover::before,
+.music-player:focus-within::before,
+.music-player.open::before{
+  opacity:1;
+  animation:musicSheen 1.25s ease;
 }
 .music-toggle,.music-mute{
   width:40px;
@@ -1246,6 +1276,20 @@ footer .ft-name{
   transform:translateY(-2px);
   box-shadow:0 14px 28px -16px rgba(0,255,204,.75);
 }
+.music-toggle{
+  position:relative;
+  z-index:1;
+  box-shadow:0 0 0 0 rgba(0,255,204,.45),inset 0 1px 0 rgba(255,255,255,.35);
+}
+.music-toggle::after{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:16px;
+  border:1px solid rgba(0,255,204,.2);
+  opacity:.7;
+  pointer-events:none;
+}
 .music-mute{
   width:34px;
   height:34px;
@@ -1253,12 +1297,17 @@ footer .ft-name{
   background:rgba(255,255,255,.06);
 }
 .music-toggle svg,.music-mute svg{width:18px;height:18px;display:block;}
+.music-toggle svg[hidden],.music-mute svg[hidden]{display:none !important;}
 .music-meta{
   flex:1;
   min-width:0;
   display:flex;
   flex-direction:column;
   gap:3px;
+  opacity:0;
+  transform:translateX(-8px);
+  pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
 }
 .music-title{
   font-family:'Space Grotesk',sans-serif;
@@ -1276,16 +1325,58 @@ footer .ft-name{
   letter-spacing:.08em;
   text-transform:uppercase;
 }
-.music-volume{
+.music-range{
   width:74px;
   accent-color:#00ffcc;
   cursor:pointer;
+  flex:0 0 auto;
+  opacity:0;
+  transform:translateX(-8px);
+  pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
+}
+.music-mute{
+  opacity:0;
+  transform:translateX(-8px);
+  pointer-events:none;
+}
+.music-player:hover .music-meta,
+.music-player:hover .music-mute,
+.music-player:hover .music-range,
+.music-player:focus-within .music-meta,
+.music-player:focus-within .music-mute,
+.music-player:focus-within .music-range,
+.music-player.open .music-meta,
+.music-player.open .music-mute,
+.music-player.open .music-range{
+  opacity:1;
+  transform:translateX(0);
+  pointer-events:auto;
 }
 .music-player.playing{
   border-color:rgba(0,255,204,.28);
   box-shadow:0 18px 50px -26px rgba(0,0,0,.95),0 0 34px -18px rgba(0,255,204,.8),inset 0 1px 0 rgba(255,255,255,.08);
+  animation:musicPlayingPulse 2s ease-out infinite;
 }
 .music-player.playing .music-title{color:#cbf6ec;}
+.music-player.playing:hover,
+.music-player.playing:focus-within,
+.music-player.playing.open{animation:none;}
+
+@keyframes musicPulse{
+  0%{box-shadow:0 18px 50px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 0 rgba(0,255,204,.35);}
+  70%{box-shadow:0 18px 50px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 15px rgba(0,255,204,0);}
+  100%{box-shadow:0 18px 50px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 0 rgba(0,255,204,0);}
+}
+@keyframes musicPlayingPulse{
+  0%{box-shadow:0 18px 50px -26px rgba(0,0,0,.95),0 0 34px -18px rgba(0,255,204,.8),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 0 rgba(255,209,102,.35);}
+  70%{box-shadow:0 18px 50px -26px rgba(0,0,0,.95),0 0 34px -18px rgba(0,255,204,.8),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 16px rgba(255,209,102,0);}
+  100%{box-shadow:0 18px 50px -26px rgba(0,0,0,.95),0 0 34px -18px rgba(0,255,204,.8),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 0 rgba(255,209,102,0);}
+}
+@keyframes musicSheen{
+  from{transform:translateX(-115%);}
+  to{transform:translateX(115%);}
+}
 
 /* ------ CHAT WIDGET ------ */
 .chat-launcher{
@@ -1864,10 +1955,14 @@ footer .ft-name{
   .music-player{
     left:14px;
     bottom:78px;
-    width:calc(100vw - 28px);
+    width:58px;
+    max-width:calc(100vw - 28px);
     padding:9px 10px;
   }
-  .music-volume{width:64px;}
+  .music-player:hover,
+  .music-player:focus-within,
+  .music-player.open{width:calc(100vw - 28px);}
+  .music-range{width:64px;}
 }
 
 /* ------ RESPONSIVE ------ */
@@ -2343,7 +2438,7 @@ body.loaded .opener.zoom{transform:scale(1);}
     <svg class="music-volume-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
     <svg class="music-muted-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5"/><path d="m21 9-5 5"/></svg>
   </button>
-  <input class="music-volume" id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.45" aria-label="Music volume">
+  <input class="music-range" id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.45" aria-label="Music volume">
 </div>
 
 <button class="chat-launcher" id="chatLauncher" type="button" aria-label="Open chat" aria-expanded="false">
@@ -2431,6 +2526,112 @@ body.loaded .opener.zoom{transform:scale(1);}
     </div>
   </div>
   
+<script>
+(function musicPlayer(){
+  const player = document.getElementById('musicPlayer');
+  const audio = document.getElementById('siteMusic');
+  const toggle = document.getElementById('musicToggle');
+  const mute = document.getElementById('musicMute');
+  const range = document.getElementById('musicVolume');
+  const state = document.getElementById('musicState');
+  if(!player || !audio || !toggle || !mute || !range || !state) return;
+
+  const playIcon = toggle.querySelector('.music-play-icon');
+  const pauseIcon = toggle.querySelector('.music-pause-icon');
+  const volumeIcon = mute.querySelector('.music-volume-icon');
+  const mutedIcon = mute.querySelector('.music-muted-icon');
+
+  function readNumber(value, fallback){
+    const n = Number(value);
+    return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : fallback;
+  }
+
+  audio.volume = readNumber(localStorage.getItem('siteMusicVolume'), readNumber(range.value, 0.45));
+  audio.muted = localStorage.getItem('siteMusicMuted') === 'true';
+  range.value = String(audio.volume);
+
+  let closeTimer = null;
+  function setState(text){ state.textContent = text; }
+  function show(el, visible){ if(el) el.hidden = !visible; }
+  function setOpen(open){
+    player.classList.toggle('open', open);
+    player.setAttribute('aria-expanded', String(open));
+  }
+  function scheduleClose(){
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+      if(!player.matches(':hover') && !player.contains(document.activeElement)) setOpen(false);
+    }, 1800);
+  }
+  function syncUI(){
+    const playing = !audio.paused && !audio.ended;
+    const muted = audio.muted || audio.volume === 0;
+    player.classList.toggle('playing', playing);
+    player.classList.toggle('muted', muted);
+    toggle.setAttribute('aria-pressed', String(playing));
+    toggle.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+    mute.setAttribute('aria-pressed', String(muted));
+    mute.setAttribute('aria-label', muted ? 'Unmute music' : 'Mute music');
+    show(playIcon, !playing);
+    show(pauseIcon, playing);
+    show(volumeIcon, !muted);
+    show(mutedIcon, muted);
+    if(!playing && state.textContent !== 'Paused'){
+      setState(audio.error ? 'Music unavailable' : 'Tap to play');
+    }
+  }
+
+  toggle.addEventListener('click', async () => {
+    const wasOpen = player.classList.contains('open');
+    setOpen(true);
+    if(audio.paused){
+      try{
+        setState('Loading...');
+        await audio.play();
+        setState('Now playing');
+      }catch(err){
+        console.warn('Music play failed', err);
+        setState(audio.error ? 'Music unavailable' : 'Tap to play');
+      }
+    }else{
+      audio.pause();
+      setState('Paused');
+    }
+    syncUI();
+    if(wasOpen) scheduleClose();
+  });
+
+  mute.addEventListener('click', () => {
+    setOpen(true);
+    audio.muted = !audio.muted;
+    localStorage.setItem('siteMusicMuted', String(audio.muted));
+    syncUI();
+    scheduleClose();
+  });
+
+  range.addEventListener('input', () => {
+    setOpen(true);
+    audio.volume = readNumber(range.value, audio.volume);
+    if(audio.volume > 0) audio.muted = false;
+    localStorage.setItem('siteMusicVolume', String(audio.volume));
+    localStorage.setItem('siteMusicMuted', String(audio.muted));
+    syncUI();
+  });
+  range.addEventListener('change', scheduleClose);
+  player.addEventListener('mouseenter', () => { clearTimeout(closeTimer); setOpen(true); });
+  player.addEventListener('mouseleave', scheduleClose);
+  player.addEventListener('focusin', () => { clearTimeout(closeTimer); setOpen(true); });
+  player.addEventListener('focusout', scheduleClose);
+
+  audio.addEventListener('play', () => { setState('Now playing'); syncUI(); });
+  audio.addEventListener('pause', syncUI);
+  audio.addEventListener('volumechange', syncUI);
+  audio.addEventListener('error', () => { setState('Music unavailable'); syncUI(); });
+  player.setAttribute('aria-expanded', 'false');
+  syncUI();
+})();
+</script>
+
 <!-- THREE.JS via CDN -->
 <script type="importmap">
 {
@@ -2823,82 +3024,6 @@ formEl.addEventListener('submit', async (e)=>{
   }
 });
 
-/* ====================================================
-   MUSIC PLAYER  user-triggered because browsers block autoplay
-==================================================== */
-(function musicPlayer(){
-  const player = document.getElementById('musicPlayer');
-  const audio = document.getElementById('siteMusic');
-  const toggle = document.getElementById('musicToggle');
-  const mute = document.getElementById('musicMute');
-  const volume = document.getElementById('musicVolume');
-  const state = document.getElementById('musicState');
-  if(!player || !audio || !toggle || !mute || !volume || !state) return;
-
-  const playIcon = toggle.querySelector('.music-play-icon');
-  const pauseIcon = toggle.querySelector('.music-pause-icon');
-  const volumeIcon = mute.querySelector('.music-volume-icon');
-  const mutedIcon = mute.querySelector('.music-muted-icon');
-
-  const savedVolume = localStorage.getItem('siteMusicVolume');
-  const savedMuted = localStorage.getItem('siteMusicMuted') === 'true';
-  audio.volume = savedVolume === null ? Number(volume.value) : Math.max(0, Math.min(1, Number(savedVolume)));
-  audio.muted = savedMuted;
-  volume.value = String(audio.volume);
-
-  function setState(text){ state.textContent = text; }
-  function syncUI(){
-    const playing = !audio.paused && !audio.ended;
-    player.classList.toggle('playing', playing);
-    toggle.setAttribute('aria-pressed', String(playing));
-    toggle.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
-    if(playIcon) playIcon.hidden = playing;
-    if(pauseIcon) pauseIcon.hidden = !playing;
-    const muted = audio.muted || audio.volume === 0;
-    mute.setAttribute('aria-pressed', String(muted));
-    mute.setAttribute('aria-label', muted ? 'Unmute music' : 'Mute music');
-    if(volumeIcon) volumeIcon.hidden = muted;
-    if(mutedIcon) mutedIcon.hidden = !muted;
-    if(!playing) setState(audio.error ? 'Music unavailable' : 'Tap to play');
-  }
-
-  toggle.addEventListener('click', async () => {
-    if(audio.paused){
-      try{
-        setState('Loading...');
-        await audio.play();
-        setState('Now playing');
-      }catch(err){
-        console.warn('Music play failed', err);
-        setState('Tap to play');
-      }
-    } else {
-      audio.pause();
-      setState('Paused');
-    }
-    syncUI();
-  });
-
-  mute.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    localStorage.setItem('siteMusicMuted', String(audio.muted));
-    syncUI();
-  });
-
-  volume.addEventListener('input', () => {
-    audio.volume = Number(volume.value);
-    if(audio.volume > 0) audio.muted = false;
-    localStorage.setItem('siteMusicVolume', String(audio.volume));
-    localStorage.setItem('siteMusicMuted', String(audio.muted));
-    syncUI();
-  });
-
-  audio.addEventListener('play', () => { setState('Now playing'); syncUI(); });
-  audio.addEventListener('pause', syncUI);
-  audio.addEventListener('volumechange', syncUI);
-  audio.addEventListener('error', () => { setState('Music unavailable'); syncUI(); });
-  syncUI();
-})();
 </script>
 
 <script type="module">
