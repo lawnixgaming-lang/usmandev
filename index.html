@@ -2100,6 +2100,144 @@ footer .ft-name{
 /* prevent body scroll when nav is open */
 body.nav-locked{overflow:hidden;}
 
+/* ------ SITE LOADER ------ */
+body.loading{
+  overflow:hidden;
+}
+body.loading .page,
+body.loading .music-player,
+body.loading .chat-launcher,
+body.loading .chat-panel{
+  opacity:0;
+  pointer-events:none;
+}
+.site-loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  padding:28px;
+  background:
+    radial-gradient(circle at 24% 24%,rgba(0,255,204,.16),transparent 34%),
+    radial-gradient(circle at 78% 72%,rgba(124,92,255,.18),transparent 36%),
+    linear-gradient(180deg,#05060a,#070b12 52%,#05060a);
+  transition:opacity .65s ease, visibility 0s linear .65s;
+}
+.site-loader.done{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.loader-card{
+  width:min(440px,100%);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  padding:28px;
+  border-radius:24px;
+  background:rgba(7,10,18,.82);
+  border:1px solid rgba(0,255,204,.18);
+  box-shadow:0 30px 90px -34px rgba(0,255,204,.5),inset 0 1px 0 rgba(255,255,255,.1);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  overflow:hidden;
+  position:relative;
+}
+.loader-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 0 36%,rgba(255,255,255,.12) 48%,transparent 60% 100%);
+  transform:translateX(-120%);
+  animation:loaderSheen 1.7s ease-in-out infinite;
+  pointer-events:none;
+}
+.loader-brand{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.loader-mark{
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  color:#05060a;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:18px;
+  background:linear-gradient(135deg,#00ffcc,#ffd166);
+  box-shadow:0 0 0 0 rgba(0,255,204,.45);
+  animation:loaderPulse 1.8s ease-out infinite;
+}
+.loader-title{
+  min-width:0;
+}
+.loader-title strong{
+  display:block;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px;
+  line-height:1.05;
+  color:#fff;
+  letter-spacing:-.01em;
+}
+.loader-title span{
+  display:block;
+  margin-top:5px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#9aa6b8;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.loader-progress{
+  position:relative;
+  display:grid;
+  gap:10px;
+}
+.loader-track{
+  height:10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+}
+.loader-bar{
+  width:0%;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#00ffcc,#ffd166,#7c5cff);
+  box-shadow:0 0 22px rgba(0,255,204,.55);
+  transition:width .18s cubic-bezier(.2,.8,.2,1);
+}
+.loader-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#8f9bae;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.loader-percent{
+  color:#00ffcc;
+  font-weight:700;
+}
+@keyframes loaderPulse{
+  0%{box-shadow:0 0 0 0 rgba(0,255,204,.45);}
+  70%{box-shadow:0 0 0 18px rgba(0,255,204,0);}
+  100%{box-shadow:0 0 0 0 rgba(0,255,204,0);}
+}
+@keyframes loaderSheen{
+  from{transform:translateX(-120%);}
+  to{transform:translateX(120%);}
+}
+
 /* ------ HEADER SCROLL STATE ------ */
 header{transition:background .35s ease, border-color .35s ease, box-shadow .35s ease, padding .35s ease;}
 header.scrolled{
@@ -2151,7 +2289,93 @@ body.loaded .opener.zoom{transform:scale(1);}
 </style>
 </head>
 
-<body>
+<body class="loading">
+
+<div class="site-loader" id="siteLoader" role="status" aria-live="polite" aria-label="Loading Usman Dev Portfolio">
+  <div class="loader-card">
+    <div class="loader-brand">
+      <div class="loader-mark" aria-hidden="true">UD</div>
+      <div class="loader-title">
+        <strong>Usman Dev Portfolio</strong>
+        <span>Entering workspace</span>
+      </div>
+    </div>
+    <div class="loader-progress">
+      <div class="loader-track" aria-hidden="true"><div class="loader-bar" id="loaderBar"></div></div>
+      <div class="loader-meta"><span id="loaderText">Preparing interface</span><span class="loader-percent" id="loaderPercent">0%</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function siteLoader(){
+  const loader = document.getElementById('siteLoader');
+  const bar = document.getElementById('loaderBar');
+  const percentEl = document.getElementById('loaderPercent');
+  const textEl = document.getElementById('loaderText');
+  if(!loader || !bar || !percentEl || !textEl) return;
+
+  const steps = [
+    { at: 22, text: 'Loading visual system' },
+    { at: 48, text: 'Preparing projects' },
+    { at: 72, text: 'Warming up interactions' },
+    { at: 92, text: 'Entering portfolio' }
+  ];
+  let progress = 0;
+  let done = false;
+  const loaderStartedAt = performance.now();
+  const MIN_LOAD_MS = 5000;
+
+  function paint(value){
+    progress = Math.max(progress, Math.min(100, Math.round(value)));
+    bar.style.width = progress + '%';
+    percentEl.textContent = progress + '%';
+    for(const step of steps){
+      if(progress >= step.at) textEl.textContent = step.text;
+    }
+  }
+
+  const tick = setInterval(() => {
+    if(done) return;
+    const elapsed = performance.now() - loaderStartedAt;
+    const target = Math.min(94, (elapsed / MIN_LOAD_MS) * 94);
+    paint(Math.min(94, Math.max(progress + 1, target + Math.random() * 1.5)));
+  }, 180);
+
+  function finish(){
+    if(done) return;
+    const elapsed = performance.now() - loaderStartedAt;
+    if(elapsed < MIN_LOAD_MS){
+      setTimeout(finish, MIN_LOAD_MS - elapsed);
+      return;
+    }
+    done = true;
+    clearInterval(tick);
+    textEl.textContent = 'Welcome to Usman Dev';
+    let end = progress;
+    const finishTick = setInterval(() => {
+      end += Math.max(1, Math.ceil((100 - end) / 4));
+      paint(end);
+      if(end >= 100){
+        clearInterval(finishTick);
+        setTimeout(() => {
+          document.body.classList.remove('loading');
+          document.body.classList.add('loaded');
+          loader.classList.add('done');
+          setTimeout(() => loader.remove(), 800);
+        }, 260);
+      }
+    }, 55);
+  }
+
+  if(document.readyState === 'complete'){
+    finish();
+  } else {
+    window.addEventListener('load', finish, { once:true });
+  }
+  setTimeout(finish, MIN_LOAD_MS + 1600);
+})();
+</script>
 
 <!-- 3D BACKGROUND -->
 <canvas id="bg-canvas"></canvas>
@@ -2562,7 +2786,7 @@ body.loaded .opener.zoom{transform:scale(1);}
     clearTimeout(closeTimer);
     closeTimer = setTimeout(() => {
       if(!player.matches(':hover') && !player.contains(document.activeElement)) setOpen(false);
-    }, 1800);
+    }, 450);
   }
   function syncUI(){
     const playing = !audio.paused && !audio.ended;
@@ -2925,14 +3149,7 @@ fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
 /* ====================================================
    PAGE LOAD OPENER  fade hero in once everything is parsed
 ==================================================== */
-function fireLoaded(){ document.body.classList.add('loaded'); }
-if(document.readyState === 'complete' || document.readyState === 'interactive'){
-  requestAnimationFrame(fireLoaded);
-} else {
-  window.addEventListener('DOMContentLoaded', () => requestAnimationFrame(fireLoaded));
-}
-// safety  never leave hero invisible (opener takes ~3.3s total)
-setTimeout(fireLoaded, 3500);
+// The site loader above owns the first reveal and adds body.loaded at 100%.
 
 /* ====================================================
    HEADER SCROLL STATE + ACTIVE NAV LINK HIGHLIGHT
