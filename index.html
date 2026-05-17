@@ -2873,6 +2873,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const isMobile = matchMedia('(max-width: 980px)').matches || ('ontouchstart' in window && innerWidth < 1024);
 const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
@@ -2917,6 +2918,268 @@ const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrenc
   const points = new THREE.Points(geo,mat);
   scene.add(points);
 
+  const ambient = new THREE.AmbientLight(0x6fffe0, 0.42);
+  const key = new THREE.DirectionalLight(0x9ee8ff, 1.25);
+  key.position.set(3, 5, 4);
+  scene.add(ambient, key);
+
+  const dragonRigs = [];
+  const DRAGON_CONFIGS = [
+    {kind:'western', name:'emerald', color:'#00ffcc', emissive:'#0b3d36', phase:0.0, speed:0.34, scale:1.0, z:-2.2, fire:'#ff7a18'},
+    {kind:'western', name:'crimson', color:'#ff4d5d', emissive:'#3d0b16', phase:1.7, speed:0.42, scale:0.82, z:-2.85, fire:'#ff3355'},
+    {kind:'western', name:'ice', color:'#84d8ff', emissive:'#10344a', phase:3.0, speed:0.29, scale:0.72, z:-3.35, fire:'#8be9ff'},
+    {kind:'western', name:'shadow', color:'#7c5cff', emissive:'#1b123d', phase:4.4, speed:0.38, scale:0.9, z:-3.75, fire:'#a855f7'},
+    {kind:'chinese', name:'long', color:'#ffd166', emissive:'#463100', phase:5.5, speed:0.25, scale:1.0, z:-2.55, fire:'#ffd166'}
+  ];
+
+  DRAGON_CONFIGS.forEach(cfg => dragonRigs.push(createDragonRig(cfg)));
+
+  // CC0 / Public Domain source: Quaternius dragon, hosted by Mesh2Motion's CC0 sample assets.
+  const DRAGON_MODEL_URL = 'https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/main/static/models/model-dragon.glb';
+  const loader = new GLTFLoader();
+  loader.setCrossOrigin('anonymous');
+  loader.load(DRAGON_MODEL_URL, gltf => {
+    dragonRigs.filter(rig => rig.cfg.kind === 'western').forEach(rig => {
+      const dragonModel = cloneAndStyleModel(gltf.scene, rig.cfg);
+      rig.fallback.visible = false;
+      rig.model = dragonModel;
+      rig.group.add(dragonModel);
+    });
+  }, undefined, err => {
+    console.warn('Dragon GLB could not be loaded; using generated fallback dragons.', err);
+  });
+
+  function cloneAndStyleModel(source, cfg){
+    const dragonModel = source.clone(true);
+    dragonModel.traverse(obj => {
+      if(obj.isMesh){
+        obj.castShadow = false;
+        obj.receiveShadow = false;
+        if(obj.material){
+          obj.material = obj.material.clone();
+          if('color' in obj.material) obj.material.color = new THREE.Color(cfg.color);
+          obj.material.transparent = true;
+          obj.material.opacity = cfg.name === 'shadow' ? 0.72 : 0.84;
+          if('emissive' in obj.material){
+            obj.material.emissive = new THREE.Color(cfg.emissive);
+            obj.material.emissiveIntensity = 0.42;
+          }
+        }
+      }
+    });
+
+    const box = new THREE.Box3().setFromObject(dragonModel);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
+    dragonModel.position.sub(center);
+    const scale = ((isMobile ? 0.82 : 1.32) * cfg.scale) / Math.max(size.x, size.y, size.z);
+    dragonModel.scale.setScalar(scale);
+    dragonModel.rotation.set(0.08, Math.PI * 0.55, -0.1);
+    return dragonModel;
+  }
+
+  function createDragonRig(cfg){
+    const group = new THREE.Group();
+    const start = new THREE.Vector3(
+      Math.sin(cfg.phase) * (isMobile ? 1.2 : 2.5),
+      Math.cos(cfg.phase) * (isMobile ? 0.4 : 0.9),
+      cfg.z
+    );
+    group.position.copy(start);
+    scene.add(group);
+    const fallback = cfg.kind === 'chinese' ? createChineseDragon(cfg) : createFallbackDragon(cfg);
+    group.add(fallback);
+    const fireLight = new THREE.PointLight(new THREE.Color(cfg.fire), cfg.kind === 'chinese' ? 1.4 : 1.9, 5.5);
+    scene.add(fireLight);
+    const fire = createFireSystem(cfg);
+    scene.add(fire.points);
+    return {
+      cfg, group, fallback, model:null, fire, fireLight,
+      previous:start.clone(),
+      direction:new THREE.Vector3(-1, 0, 0),
+      mouth:new THREE.Vector3()
+    };
+  }
+
+  function createFallbackDragon(cfg){
+    const dragon = new THREE.Group();
+    const main = new THREE.Color(cfg.color);
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color:main, roughness:0.58, metalness:0.18, transparent:true, opacity:0.58,
+      emissive:new THREE.Color(cfg.emissive), emissiveIntensity:0.62
+    });
+    const wingMat = new THREE.MeshStandardMaterial({
+      color:main, roughness:0.5, transparent:true, opacity:0.19,
+      emissive:main, emissiveIntensity:0.7, side:THREE.DoubleSide
+    });
+    const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.28, 1.2, 5, 12), bodyMat);
+    body.rotation.z = Math.PI / 2;
+    const head = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.62, 5), bodyMat);
+    head.position.set(-0.9, 0.08, 0);
+    head.rotation.z = Math.PI / 2;
+    const tail = new THREE.Mesh(new THREE.ConeGeometry(0.16, 1.1, 5), bodyMat);
+    tail.position.set(0.86, -0.02, 0);
+    tail.rotation.z = -Math.PI / 2;
+    const wingGeo = new THREE.BufferGeometry();
+    wingGeo.setAttribute('position', new THREE.Float32BufferAttribute([
+      0,0,0, 0.55,0.78,-0.18, 1.05,0.04,-0.08,
+      0,0,0, 0.55,-0.78,-0.18, 1.05,-0.04,-0.08
+    ], 3));
+    wingGeo.computeVertexNormals();
+    const wingL = new THREE.Mesh(wingGeo, wingMat);
+    const wingR = wingL.clone();
+    wingL.position.set(-0.18, 0.1, 0.12);
+    wingR.position.set(-0.18, -0.1, -0.12);
+    wingR.rotation.x = Math.PI;
+    dragon.add(body, head, tail, wingL, wingR);
+    dragon.userData.wings = [wingL, wingR];
+    dragon.scale.setScalar((isMobile ? 0.48 : 0.72) * cfg.scale);
+    dragon.rotation.y = Math.PI;
+    return dragon;
+  }
+
+  function createChineseDragon(cfg){
+    const dragon = new THREE.Group();
+    const main = new THREE.Color(cfg.color);
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color:main, roughness:0.48, metalness:0.12, transparent:true, opacity:0.7,
+      emissive:new THREE.Color(cfg.emissive), emissiveIntensity:0.55
+    });
+    const accentMat = new THREE.MeshStandardMaterial({
+      color:0xff3355, roughness:0.55, transparent:true, opacity:0.7,
+      emissive:0x451016, emissiveIntensity:0.35
+    });
+    const segments = [];
+    for(let i=0;i<16;i++){
+      const radius = 0.22 - i * 0.007;
+      const seg = new THREE.Mesh(new THREE.SphereGeometry(radius, 12, 8), bodyMat);
+      seg.position.x = -i * 0.22;
+      dragon.add(seg);
+      segments.push(seg);
+    }
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 8), accentMat);
+    head.scale.set(1.25, 0.82, 0.8);
+    head.position.x = 0.18;
+    const hornGeo = new THREE.ConeGeometry(0.035, 0.32, 6);
+    const hornMat = new THREE.MeshStandardMaterial({color:0xfff0a6, emissive:0x5c4700, emissiveIntensity:0.4});
+    const hornA = new THREE.Mesh(hornGeo, hornMat);
+    const hornB = hornA.clone();
+    hornA.position.set(0.05, 0.22, 0.1);
+    hornB.position.set(0.05, 0.22, -0.1);
+    hornA.rotation.z = -0.55;
+    hornB.rotation.z = -0.55;
+    const whiskerGeo = new THREE.CylinderGeometry(0.01, 0.01, 0.75, 5);
+    const whiskerA = new THREE.Mesh(whiskerGeo, hornMat);
+    const whiskerB = whiskerA.clone();
+    whiskerA.position.set(0.26, -0.02, 0.24);
+    whiskerB.position.set(0.26, -0.02, -0.24);
+    whiskerA.rotation.set(1.2, 0.2, 0.95);
+    whiskerB.rotation.set(-1.2, -0.2, 0.95);
+    dragon.add(head, hornA, hornB, whiskerA, whiskerB);
+    dragon.userData.segments = segments;
+    dragon.scale.setScalar(isMobile ? 0.42 : 0.62);
+    return dragon;
+  }
+
+  function createFireSystem(cfg){
+    const count = isMobile ? 34 : 58;
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+    const life = new Float32Array(count);
+    const seed = new Float32Array(count);
+    for(let i=0;i<count;i++){
+      life[i] = Math.random();
+      seed[i] = Math.random() * Math.PI * 2;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const mat = new THREE.PointsMaterial({
+      size:isMobile ? 0.07 : 0.055, vertexColors:true, transparent:true, opacity:0.85,
+      depthWrite:false, blending:THREE.AdditiveBlending
+    });
+    return {
+      points:new THREE.Points(geo, mat),
+      geo, positions, colors, life, seed,
+      hot:new THREE.Color(cfg.fire),
+      ember:new THREE.Color(cfg.kind === 'chinese' ? '#ff3355' : '#ff8a00')
+    };
+  }
+
+  function updateFire(rig, t){
+    const fire = rig.fire;
+    const count = fire.life.length;
+    const burst = rig.cfg.kind === 'chinese'
+      ? Math.max(0, Math.sin(t * 1.05 + rig.cfg.phase) * 0.45 + 0.35)
+      : Math.max(0, Math.sin(t * 1.55 + rig.cfg.phase) * 0.7 + 0.25);
+    rig.mouth.copy(rig.group.position)
+      .addScaledVector(rig.direction, rig.cfg.kind === 'chinese' ? 0.38 : (isMobile ? 0.38 : 0.55))
+      .add(new THREE.Vector3(0, 0.1 + Math.sin(t * 2.2 + rig.cfg.phase) * 0.04, 0));
+    for(let i=0;i<count;i++){
+      const life = (fire.life[i] + t * (0.55 + rig.cfg.speed)) % 1;
+      const spread = life * life;
+      const pulse = Math.sin(t * 9 + fire.seed[i]) * 0.5 + 0.5;
+      const side = Math.sin(fire.seed[i] + t * 3) * (0.025 + spread * 0.22);
+      const lift = Math.cos(fire.seed[i] + t * 4) * (0.025 + spread * 0.25);
+      const stream = life * (isMobile ? 1.0 : 1.65) * burst;
+      fire.positions[i*3] = rig.mouth.x + rig.direction.x * stream + side * 0.35;
+      fire.positions[i*3+1] = rig.mouth.y + rig.direction.y * stream + side;
+      fire.positions[i*3+2] = rig.mouth.z + rig.direction.z * stream + lift;
+      const col = fire.hot.clone().lerp(fire.ember, Math.min(1, life * 1.15 + pulse * 0.16));
+      const fade = (1 - life) * burst;
+      fire.colors[i*3] = col.r * fade;
+      fire.colors[i*3+1] = col.g * fade;
+      fire.colors[i*3+2] = col.b * fade;
+    }
+    fire.geo.attributes.position.needsUpdate = true;
+    fire.geo.attributes.color.needsUpdate = true;
+    rig.fireLight.position.copy(rig.mouth).addScaledVector(rig.direction, 0.45);
+    rig.fireLight.intensity = (rig.cfg.kind === 'chinese' ? 0.8 : 1.15) * burst;
+  }
+
+  function updateDragonFlight(rig, t){
+    const cfg = rig.cfg;
+    const rangeX = (isMobile ? 1.55 : 3.25) * (cfg.kind === 'chinese' ? 1.05 : 1);
+    const rangeY = (isMobile ? 0.75 : 1.48) * (cfg.name === 'ice' ? 0.75 : 1);
+    const tt = t * cfg.speed + cfg.phase;
+    const next = new THREE.Vector3(
+      Math.sin(tt) * rangeX + Math.sin(tt * 2.1 + cfg.phase) * rangeX * 0.24,
+      Math.sin(tt * 1.55 + 0.6) * rangeY + Math.cos(tt * 3.1) * rangeY * 0.16,
+      cfg.z + Math.sin(tt * 1.25 + 2.5) * 0.42
+    );
+    const velocity = next.clone().sub(rig.previous);
+    if(velocity.lengthSq() > 0.000001){
+      rig.direction.lerp(velocity.normalize(), 0.08).normalize();
+    }
+    rig.previous.copy(next);
+    rig.group.position.lerp(next, 0.08);
+    const yaw = Math.atan2(rig.direction.z, rig.direction.x);
+    const bank = THREE.MathUtils.clamp(-rig.direction.x * 0.42, -0.46, 0.46);
+    rig.group.rotation.x = 0.05 + Math.sin(t * 2.1 + cfg.phase) * 0.04;
+    rig.group.rotation.y = -yaw + mx * 0.06;
+    rig.group.rotation.z = bank + Math.sin(t * 1.8 + cfg.phase) * 0.05;
+  }
+
+  function updateDragonBody(rig, t){
+    const cfg = rig.cfg;
+    if(rig.fallback.visible && rig.fallback.userData.wings){
+      rig.fallback.userData.wings.forEach((wing, idx) => {
+        wing.rotation.z = Math.sin(t * (5.2 + cfg.speed) + cfg.phase + idx) * 0.2;
+      });
+    }
+    if(cfg.kind === 'chinese' && rig.fallback.userData.segments){
+      rig.fallback.userData.segments.forEach((seg, idx) => {
+        seg.position.y = Math.sin(t * 3 + cfg.phase + idx * 0.55) * 0.12;
+        seg.position.z = Math.cos(t * 2.5 + cfg.phase + idx * 0.5) * 0.1;
+        seg.scale.setScalar(1 + Math.sin(t * 2.4 + idx) * 0.04);
+      });
+    }
+    if(rig.model){
+      rig.model.rotation.x = 0.08 + Math.sin(t * 3 + cfg.phase) * 0.05;
+      rig.model.rotation.z = -0.1 + Math.sin(t * 4.6 + cfg.phase) * 0.08;
+    }
+  }
+
   // resize  debounced; ignore tiny height changes (mobile URL bar show/hide)
   let lastW = innerWidth, lastH = innerHeight, resizeTO;
   function doResize(){
@@ -2954,9 +3217,15 @@ const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrenc
   function loop(){
     requestAnimationFrame(loop);
     if(!visible) return;
-    const t = clock.getElapsedTime();
+    clock.getDelta();
+    const t = clock.elapsedTime;
     points.rotation.y = t*0.04 + mx*0.5;
     points.rotation.x = t*0.02 + my*0.4 + scrollY*0.0006;
+    dragonRigs.forEach(rig => {
+      updateDragonFlight(rig, t);
+      updateDragonBody(rig, t);
+      updateFire(rig, t);
+    });
     renderer.render(scene,camera);
   }
   loop();
