@@ -485,57 +485,133 @@ section.block{
 }
 .stat .lbl{color:#9aa6b8;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:6px;}
 
-/* ------ SKILLS  infinite scrolling marquee ------ */
-.skills-marquee{
+/* ------ SKILLS  elliptical orbit ------ */
+.skills-orbit-scene{
   position:relative;
   width:100%;
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
-          mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
-}
-.skills-marquee + .skills-marquee{margin-top:18px;}
-.skills-track{
+  height:360px;
   display:flex;
-  gap:18px;
-  width:max-content;
-  animation:scroll-x 40s linear infinite;
-  will-change:transform;
+  align-items:center;
+  justify-content:center;
+  overflow:visible;
 }
-.skills-marquee.reverse .skills-track{animation-direction:reverse;animation-duration:48s;}
-.skills-marquee:hover .skills-track{animation-play-state:paused;}
-@keyframes scroll-x{
-  from{transform:translateX(0);}
-  to{transform:translateX(-50%);} /* track is duplicated, so 50% = one full set */
+.orbit-visual-ring{
+  position:absolute;
+  top:50%;left:50%;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.055);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+}
+.orbit-visual-ring.outer{ width:600px; height:260px; }
+.orbit-visual-ring.inner{ width:360px; height:155px; }
+/* center glow pulse */
+.orbit-core{
+  position:absolute;
+  top:50%;left:50%;
+  width:18px;height:18px;
+  border-radius:50%;
+  background:var(--accent);
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 0 8px rgba(122,162,255,.08),0 0 28px 6px rgba(122,162,255,.25);
+  animation:core-pulse 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes core-pulse{
+  0%,100%{box-shadow:0 0 0 8px rgba(122,162,255,.08),0 0 28px 6px rgba(122,162,255,.25);}
+  50%{box-shadow:0 0 0 14px rgba(122,162,255,.04),0 0 48px 14px rgba(122,162,255,.14);}
 }
 .skill{
-  position:relative;
-  flex:0 0 auto;
-  width:150px;
-  padding:22px 14px;border-radius:18px;
-  background:linear-gradient(180deg,rgba(20,24,40,.7),rgba(10,12,20,.5));
-  border:1px solid rgba(255,255,255,.06);
+  position:absolute;
+  top:50%;left:50%;
+  width:130px;
+  height:130px;
+  margin:-65px 0 0 -65px;
+  padding:10px 8px;
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(20,24,40,.88),rgba(10,12,20,.72));
+  border:1px solid rgba(255,255,255,.07);
   text-align:center;
-  transition:transform .3s, border-color .3s, box-shadow .3s;
   overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  cursor:default;
+  will-change:transform;
 }
 .skill::before{
   content:"";position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 0%,var(--c,var(--accent)) 0%,transparent 60%);
-  opacity:.0;transition:.3s;
+  background:radial-gradient(circle at 50% 0%,var(--c,var(--accent)) 0%,transparent 65%);
+  opacity:.07;
+  pointer-events:none;
 }
-.skill:hover{transform:translateY(-6px);border-color:var(--c,var(--accent));box-shadow:0 18px 40px -16px var(--c,var(--accent));}
-.skill:hover::before{opacity:.22;}
 .skill .icon{
-  width:48px;height:48px;margin:0 auto 12px;
-  display:grid;place-items:center;border-radius:12px;
+  width:44px;height:44px;margin:0;
+  display:grid;place-items:center;
+  border-radius:12px;
   background:rgba(0,0,0,.4);
   position:relative;z-index:1;
+  flex-shrink:0;
 }
-.skill .icon img,.skill .icon svg{width:30px;height:30px;}
+.skill .icon img,.skill .icon svg{width:28px;height:28px;}
 .skill .name{
   position:relative;z-index:1;
-  font-family:'Space Grotesk',sans-serif;font-size:14px;
-  font-weight:600;color:#e6f1ff;letter-spacing:.02em;
+  font-family:'Space Grotesk',sans-serif;font-size:12px;
+  font-weight:700;color:#e6f1ff;letter-spacing:.03em;
+  line-height:1;
+  pointer-events:none;
+}
+.skill .detail{
+  position:relative;z-index:1;
+  font-family:'Space Grotesk',sans-serif;font-size:10px;
+  font-weight:500;color:var(--c,var(--accent));
+  letter-spacing:.04em;opacity:.85;
+  line-height:1;
+  pointer-events:none;
+}
+
+/* ------ SKILLS DESCRIPTION GRID ------ */
+.skills-desc{
+  margin-top:48px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px 32px;
+}
+.skills-desc-group{
+  background:linear-gradient(160deg,rgba(20,24,40,.72),rgba(10,12,20,.52));
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;
+  padding:22px 24px;
+}
+.skills-desc-group h4{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);
+  margin:0 0 14px;
+}
+.skills-desc-list{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-direction:column;gap:10px;
+}
+.skills-desc-list li{
+  display:flex;align-items:flex-start;gap:10px;
+}
+.skills-desc-list li .sdot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--dot-c,var(--accent));
+  flex-shrink:0;margin-top:5px;
+}
+.skills-desc-list li .stext{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px;line-height:1.5;color:#c8d6f0;
+}
+.skills-desc-list li .stext strong{
+  color:#e6f1ff;font-weight:700;
+}
+@media(max-width:720px){
+  .skills-desc{grid-template-columns:1fr;}
 }
 
 /* ------ ROTATING HEADLINE TEXT ------ */
@@ -949,7 +1025,7 @@ nav a{padding:8px 0;}
 .stat:nth-child(3){border-color:rgba(124,92,255,.22);}
 .stat:nth-child(3) .num{color:#bfa8ff;}
 .skill{
-  border-radius:16px;
+  border-radius:18px;
   background:rgba(12,15,25,.72);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 16px 38px -30px rgba(0,0,0,.9);
 }
@@ -1170,6 +1246,7 @@ body::-webkit-scrollbar-thumb{
 .skill .icon{
   border:1px solid rgba(255,255,255,.08);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+  will-change:transform,border-radius,box-shadow;
 }
 .project .body{
   background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(0,0,0,.08));
@@ -1988,9 +2065,9 @@ footer .ft-name{
   .section-kicker{display:block;margin-bottom:36px;}
   .section-line{margin-top:22px;width:100%;}
   .about-grid{grid-template-columns:1fr;gap:24px;}
-  .skill{width:130px;padding:18px 12px;}
-  .skills-track{gap:14px;animation-duration:32s;}
-  .skills-marquee.reverse .skills-track{animation-duration:38s;}
+  .skills-orbit-scene{height:300px;}
+  .orbit-visual-ring.outer{width:460px;height:200px;}
+  .orbit-visual-ring.inner{width:280px;height:120px;}
   .services-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .projects-grid{grid-template-columns:1fr;gap:18px;}
   .project,.project:first-child{grid-column:auto;}
@@ -2064,8 +2141,9 @@ footer .ft-name{
   section.block{padding:70px 18px;}
   .section-sub{font-size:15.5px;margin-bottom:40px;}
   .about-card{padding:24px;}
-  .skill{width:120px;padding:16px 10px;}
-  .skills-track{gap:12px;}
+  .skills-orbit-scene{height:260px;}
+  .orbit-visual-ring.outer{width:360px;height:155px;}
+  .orbit-visual-ring.inner{width:215px;height:95px;}
   .services-grid{grid-template-columns:1fr;}
   .service{padding:22px;min-height:210px;}
   .service h3{min-height:0;}
@@ -2825,14 +2903,37 @@ if(document.readyState === 'complete' || document.readyState === 'interactive'){
     <div class="section-line" aria-hidden="true"></div>
   </div>
   <div class="stagger">
-    <!-- Row 1  frontend & languages -->
-    <div class="skills-marquee" aria-label="Frontend skills">
-      <div class="skills-track" id="skillsTrackTop"></div>
+    <div class="skills-orbit-scene" id="skillsOrbit" aria-label="Skills orbit">
+      <div class="orbit-visual-ring outer" aria-hidden="true"></div>
+      <div class="orbit-visual-ring inner" aria-hidden="true"></div>
+      <div class="orbit-core" aria-hidden="true"></div>
     </div>
-    <!-- Row 2  backend, full stack & databases (scrolls the other way) -->
-    <div class="skills-marquee reverse" aria-label="Backend skills">
-      <div class="skills-track" id="skillsTrackBottom"></div>
+  </div>
+
+  <!-- Skills description — always readable below the orbit -->
+  <div class="skills-desc">
+
+    <div class="skills-desc-group">
+      <h4>Frontend</h4>
+      <ul class="skills-desc-list">
+        <li><span class="sdot" style="--dot-c:#e34f26"></span><span class="stext"><strong>HTML &amp; CSS</strong> — Semantic markup, responsive layouts, and smooth animations built from scratch.</span></li>
+        <li><span class="sdot" style="--dot-c:#f7df1e"></span><span class="stext"><strong>JavaScript / TypeScript</strong> — Modern ES2024, async patterns, and type-safe codebases at scale.</span></li>
+        <li><span class="sdot" style="--dot-c:#61dafb"></span><span class="stext"><strong>React &amp; Vue</strong> — Component-driven UIs with hooks, Composition API, and state management.</span></li>
+        <li><span class="sdot" style="--dot-c:#38bdf8"></span><span class="stext"><strong>Tailwind &amp; Bootstrap</strong> — Rapid styling with utility-first CSS and pre-built component kits.</span></li>
+      </ul>
     </div>
+
+    <div class="skills-desc-group">
+      <h4>Backend &amp; Database</h4>
+      <ul class="skills-desc-list">
+        <li><span class="sdot" style="--dot-c:#ff2d20"></span><span class="stext"><strong>PHP &amp; Laravel</strong> — MVC architecture, REST APIs, authentication, and queues for production apps.</span></li>
+        <li><span class="sdot" style="--dot-c:#3c873a"></span><span class="stext"><strong>Node.js &amp; Express</strong> — Fast server-side JS with middleware pipelines and real-time capabilities.</span></li>
+        <li><span class="sdot" style="--dot-c:#3776ab"></span><span class="stext"><strong>Python</strong> — Scripting, automation, and lightweight AI/ML integrations.</span></li>
+        <li><span class="sdot" style="--dot-c:#00758f"></span><span class="stext"><strong>MySQL · PostgreSQL · MongoDB</strong> — Relational schemas, complex queries, and NoSQL document stores.</span></li>
+        <li><span class="sdot" style="--dot-c:#2496ed"></span><span class="stext"><strong>Git &amp; Docker</strong> — Version control workflows and containerised environments for consistent deploys.</span></li>
+      </ul>
+    </div>
+
   </div>
 </section>
 
@@ -3499,46 +3600,108 @@ primaryNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => 
 matchMedia('(min-width: 981px)').addEventListener('change', e => { if(e.matches) setNav(false); });
 
 /* ====================================================
-   SKILLS MARQUEE  build tracks and duplicate for seamless loop
+   SKILLS  elliptical orbit animation
 ==================================================== */
 const SKILLS_TOP = [
-  {name:'HTML',       c:'#e34f26', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'},
-  {name:'CSS',        c:'#264de4', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'},
-  {name:'JavaScript', c:'#f7df1e', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'},
-  {name:'TypeScript', c:'#3178c6', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg'},
-  {name:'React',      c:'#61dafb', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'},
-  {name:'Tailwind',   c:'#38bdf8', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'},
-  {name:'Bootstrap',  c:'#7952b3', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg'},
-  {name:'Vue',        c:'#42b883', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg'},
+  {name:'HTML',       detail:'Semantic & A11y',  c:'#e34f26', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'},
+  {name:'CSS',        detail:'Layouts & Anim',   c:'#264de4', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'},
+  {name:'JavaScript', detail:'ES2024 · DOM',     c:'#f7df1e', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'},
+  {name:'TypeScript', detail:'Typed & Scalable', c:'#3178c6', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg'},
+  {name:'React',      detail:'Hooks · Context',  c:'#61dafb', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'},
+  {name:'Tailwind',   detail:'Utility-First CSS',c:'#38bdf8', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'},
+  {name:'Bootstrap',  detail:'Rapid UI Kit',     c:'#7952b3', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg'},
+  {name:'Vue',        detail:'Composition API',  c:'#42b883', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg'},
 ];
 const SKILLS_BOTTOM = [
-  {name:'PHP',        c:'#777bb4', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg'},
-  {name:'Laravel',    c:'#ff2d20', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg'},
-  {name:'Node.js',    c:'#3c873a', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'},
-  {name:'Express',    c:'#9aa6b8', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg'},
-  {name:'Python',     c:'#3776ab', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'},
-  {name:'MySQL',      c:'#00758f', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'},
-  {name:'PostgreSQL', c:'#336791', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg'},
-  {name:'MongoDB',    c:'#4db33d', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'},
-  {name:'Git',        c:'#f05032', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'},
-  {name:'Docker',     c:'#2496ed', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'},
-  {name:'Full Stack', c:'#00ffcc', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg'},
+  {name:'PHP',        detail:'Server-Side Logic', c:'#777bb4', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg'},
+  {name:'Laravel',    detail:'MVC · REST APIs',   c:'#ff2d20', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg'},
+  {name:'Node.js',    detail:'Event Loop · JS',   c:'#3c873a', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'},
+  {name:'Express',    detail:'REST · Middleware',  c:'#9aa6b8', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg'},
+  {name:'Python',     detail:'Scripting · AI',    c:'#3776ab', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'},
+  {name:'MySQL',      detail:'Relational DB',     c:'#00758f', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'},
+  {name:'PostgreSQL', detail:'Advanced SQL',      c:'#336791', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg'},
+  {name:'MongoDB',    detail:'NoSQL · Atlas',     c:'#4db33d', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'},
+  {name:'Git',        detail:'Version Control',   c:'#f05032', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'},
+  {name:'Docker',     detail:'Containers · CI',   c:'#2496ed', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'},
+  {name:'Full Stack', detail:'End-to-End Dev',    c:'#00ffcc', icon:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg'},
 ];
-function skillCard(s){
-  return `<div class="skill" style="--c:${s.c}">
-    <div class="icon"><img src="${s.icon}" alt="${s.name}" loading="lazy"></div>
-    <div class="name">${s.name}</div>
-  </div>`;
-}
-function fillTrack(id, list){
-  const el = document.getElementById(id);
-  if(!el) return;
-  // duplicate the list so the -50% translate produces a seamless loop
-  const html = list.map(skillCard).join('') + list.map(skillCard).join('');
-  el.innerHTML = html;
-}
-fillTrack('skillsTrackTop', SKILLS_TOP);
-fillTrack('skillsTrackBottom', SKILLS_BOTTOM);
+
+(function initOrbit(){
+  const scene = document.getElementById('skillsOrbit');
+  if(!scene) return;
+  const ringOuter = scene.querySelector('.orbit-visual-ring.outer');
+  const ringInner = scene.querySelector('.orbit-visual-ring.inner');
+
+  /* ── card size ── */
+  const CARD = 130;
+  const HALF  = CARD / 2;
+
+  /* ── compute geometry from scene width (single source of truth) ── */
+  function calcGeometry(){
+    const w = Math.min(scene.offsetWidth, 700);
+    const s = w / 700;
+    const outerRx = 270 * s, outerRy = 115 * s;
+    const innerRx = 155 * s, innerRy =  65 * s;
+    /* sync visual rings to exact computed ellipse */
+    if(ringOuter){ ringOuter.style.width=(outerRx*2)+'px'; ringOuter.style.height=(outerRy*2)+'px'; }
+    if(ringInner){ ringInner.style.width=(innerRx*2)+'px'; ringInner.style.height=(innerRy*2)+'px'; }
+    return {
+      OUTER: { rx: outerRx, ry: outerRy },
+      INNER: { rx: innerRx, ry: innerRy }
+    };
+  }
+  let geo = calcGeometry();
+  window.addEventListener('resize', () => { geo = calcGeometry(); });
+
+  /* ── speed: radians per ms ── */
+  const SPEED_OUTER =  0.00028;
+  const SPEED_INNER = -0.00042;
+
+  function makeCard(s){
+    const el = document.createElement('div');
+    el.className = 'skill';
+    el.style.cssText = `--c:${s.c}; width:${CARD}px; height:${CARD}px; margin:-${HALF}px 0 0 -${HALF}px;`;
+    el.innerHTML = `<div class="icon"><img src="${s.icon}" alt="${s.name}" loading="lazy"></div>
+                    <div class="name">${s.name}</div>
+                    <div class="detail">${s.detail}</div>`;
+    scene.appendChild(el);
+    return el;
+  }
+
+  const outerEls = SKILLS_TOP.map(makeCard);
+  const innerEls = SKILLS_BOTTOM.map(makeCard);
+
+  /* evenly distributed starting angles */
+  const outerOffsets = SKILLS_TOP.map((_,i)    => (2*Math.PI / SKILLS_TOP.length)    * i);
+  const innerOffsets = SKILLS_BOTTOM.map((_,i)  => (2*Math.PI / SKILLS_BOTTOM.length) * i);
+
+  let outerAngle = 0, innerAngle = 0, lastTs = null;
+
+  function positionCards(els, offsets, baseAngle, orbit){
+    els.forEach((el, i) => {
+      const a = baseAngle + offsets[i];
+      const x = Math.cos(a) * orbit.rx;
+      const y = Math.sin(a) * orbit.ry;
+      /* depth: 0.78 (back) → 1.0 (front) */
+      const depth = 0.78 + 0.22 * ((y + orbit.ry) / (orbit.ry * 2));
+      el.style.transform = `translate(${x}px, ${y}px) scale(${depth.toFixed(3)})`;
+      el.style.zIndex    = Math.round(depth * 8);
+    });
+  }
+
+  function tick(ts){
+    if(lastTs === null) lastTs = ts;
+    const dt = Math.min(ts - lastTs, 64); /* cap delta so a tab-blur doesn't jump */
+    lastTs = ts;
+    outerAngle += SPEED_OUTER * dt;
+    innerAngle += SPEED_INNER * dt;
+    positionCards(outerEls, outerOffsets, outerAngle, geo.OUTER);
+    positionCards(innerEls, innerOffsets, innerAngle, geo.INNER);
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();
 
 /* ====================================================
    ROTATING HEADLINE  pairs of words appear/disappear in a loop
